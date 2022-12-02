@@ -21,7 +21,7 @@ arma::vec one_step(arma::mat A, arma::mat B, arma::vec u_n){
     
     // Now we solve the system with arma::solve, can implement own function later
     arma::vec u_n1;
-    u_n1 = arma::solve(A, b);
+    u_n1 = arma::solve(A, b, arma::solve_opts::likely_sympd);
 
     return u_n1;
 }
