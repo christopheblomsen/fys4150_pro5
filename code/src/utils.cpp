@@ -83,3 +83,15 @@ void make_mat(arma::cx_vec &a, arma::cx_vec &b, arma::cx_double r,
 //     std::vector<arma::cx_mat> data{A, B};
 //     return data;
 // }
+// this function solves the linear matrix equation to find the n+1 step
+arma::vec one_step(arma::mat A, arma::mat B, arma::vec u_n){
+    
+    // First step 
+    arma::vec b = B * u_n;
+    
+    // Now we solve the system with arma::solve, can implement own function later
+    arma::vec u_n1;
+    u_n1 = arma::solve(A, b);
+
+    return u_n1;
+}
