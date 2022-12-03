@@ -6,83 +6,94 @@ using namespace std::complex_literals;
 // takes an index pair (i,j) and gets the
 // single index k in the vector
 int index2k(int i, int j, int M){
-    return i + j*(M-2);
+    return i + j*M;
 }
 
+// This method will be used later in the make_mat
 void make_vec(arma::cx_vec &a, arma::cx_vec &b, int M,
               double h, double dt, arma::mat V, arma::cx_double r){
     arma::cx_double coeff = arma::cx_double(0, dt/2.);
-    for (int j = 0; j < V.n_rows; j++){
-        for (int i = 0; i < V.n_rows; i++){
-            a(i*V.n_cols + j) = 1. + 4.*r + coeff*V(i,j);
-            b(i*V.n_cols + j) = 1. - 4.*r - coeff*V(i,j);
+    std::cout << size(a) << std::endl;
+    for (int j = 0; j < M-2; j++){
+        std::cout << j << "test" << std::endl;
+        for (int i = 0; i < M-2; i++){
+            int k = index2k(i, j, M);
+            std::cout << k << std::endl;
+            // a(i*V.n_cols + j) = 1. + 4.*r + coeff*V(i,j);
+            // b(i*V.n_cols + j) = 1. - 4.*r - coeff*V(i,j);
+            a(k) = 1. + 4.*r + coeff*V(i,j);
+            b(k) = 1. - 4.*r - coeff*V(i,j);
         }
     }
 }
 
-void make_mat(arma::cx_vec &a, arma::cx_vec &b, arma::cx_double r,
-              int M, arma::sp_cx_mat &A, arma::sp_cx_mat &B){
+void make_mat(int M, double h, double dt, arma::mat V, arma::sp_cx_mat &A, arma::sp_cx_mat &B){
+    //init
     int N = M-2;
-    for (int i = 0; i <= M-3; i++){
-        for (int j = 0; j < M-2; j++){
-            // int k = index2k(i, j, M);
-            std::cout << "i: " << i << std::endl;
-            std::cout << "j: " << j << std::endl;
-            // std::cout << "k: " << k << std::endl;
-            A(i, i) = a(i, j);
-            B(i, i) = b(i, j);
+    int L = N*N;
+    int k = 0;
+    arma::cx_double r = 1i*dt/(2.*h*h);
+    arma::cx_double term = 1i*dt/2.;
+    arma::cx_vec a(L, arma::fill::zeros);
+    arma::cx_vec b(L, arma::fill::zeros);
+
+    // make_vec(a, b, M, h, dt, V, r);
+    // std::cout << N << std::endl;
+    // std::cout << size(a) << std::endl;
+    for (int i=0; i < N; i++){
+        for (int j=0; j < N; j++){
+            k = index2k(i, j, N);
+            // std::cout << k << std::endl;
+            a(k) = 1. + 4.*r + term*V(i,j);
+            b(k) = 1. - 4.*r - term*V(i,j);
         }
     }
 
+    std::cout << "so far so good" << std::endl;
+    for (int i=0; i < L; i++){
+        A(i, i) = a(i);
+        B(i, i) = b(i);
+    }
+
+
+    // Setting up tri mat
+    A(0, 0) = a(0);
+    A(0, 1) = -r;
+    A(L-1, L-2) = -r;
+    A(L-1, L-1) = a(L-1);
+
+    B(0, 0) = b(0);
+    B(0, 1) = r;
+    B(L-1, L-2) = r;
+    B(L-1, L-1) = b(L-1);
+
+    for (int i=1; i < L-1; i++){
+        A(i, i-1) = -r;
+        A(i, i+1) = -r;
+
+        B(i, i-1) = r;
+        B(i, i+1) = r;
+    }
+
+    // This is not neccesarry if we have filled with zeros, but for testing
+    for (int i=N; i < L; i+=N){
+        A(i, i-1) = 0.;
+        A(i-1, i) = 0.;
+
+        B(i, i-1) = 0.;
+        B(i-1, i) = 0.;
+    }
+    for (int i=0; i < L-N; i++){
+        A(i, N+i) = -r;
+        A(N+i, i) = -r;
+
+        B(i, N+i) = r;
+        B(N+i, i) = r;
+    }
+
+
 }
 
-// arma::cx_double a_coeff(int k, arma::cx_double r, double dt, arma::cx_double v){
-//     arma::cx_double a;
-//     a = 1. + 4.*r + 1i*dt/2. * v;
-//     return a;
-// }
-
-// arma::cx_double b_coeff(int k, arma::cx_double r, double dt){
-//     arma::cx_double b;
-//     b = 1. - 4.*r - 1i*dt/2. * v;
-//     return b;
-// }
-
-// std::vector<arma::cx_mat> make_mat(int M, double h, double dt, arma::cx_mat V){
-//     // int N = (M-2);
-//     std::cout << V << std::endl;
-//     int N = 3;
-//     arma::cx_mat A = arma::cx_mat(N, N, arma::fill::eye);
-//     arma::cx_mat B = arma::cx_mat(N, N, arma::fill::eye);
-//     // std::cout << A << std::endl;
-//     arma::cx_double r = 1i*dt/(2.*h*h);
-//     for (int i = 0; i <= N; i++){
-//         for (int j = 0; j < N; j++){
-//             std::cout << "j: " << j << std::endl;
-//             arma::cx_vec v(arma::ones);
-//             int k = index2k(i, j, M);
-//             std::cout << k <<std::endl;
-//             arma::cx_double a = a_coeff(k, r, dt, v(k));
-//             std::cout << a << std::endl;
-//             // A(i, i) = a_coeff(k, r, dt);
-//             // std::cout << A(k, k) << std::endl;
-//             // B(i, i) = b_coeff(k, r, dt);
-//         }
-//         for (int j = 0; j < N; j++){
-//             int k = index2k(i, j, M);
-//             int k1 = index2k(i+1, j, M);
-//             int k2 = index2k(i, j+1, M);
-
-//             A(k1, k) = -r;
-//             A(k, k2) = -r;
-
-//             B(k1, k) = r;
-//             B(k, k2) = r;
-//         }
-//     }
-//     std::vector<arma::cx_mat> data{A, B};
-//     return data;
-// }
 // this function solves the linear matrix equation to find the n+1 step
 arma::vec one_step(arma::mat A, arma::mat B, arma::vec u_n){
     

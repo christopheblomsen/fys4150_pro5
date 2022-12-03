@@ -14,6 +14,7 @@ void make_vec(arma::cx_vec &a, arma::cx_vec &b, int M,
 void make_mat(arma::cx_vec &a, arma::cx_vec &b, arma::cx_double r,
               int M, arma::sp_cx_mat &A, arma::sp_cx_mat &B);
 
+void make_mat(int M, double h, double dt, arma::mat V, arma::sp_cx_mat &A, arma::sp_cx_mat &B);
 /* arma::cx_double a_coeff(int k, arma::cx_double r, arma::cx_double v); */
 /* arma::cx_double b_coeff(int k, arma::cx_double r); */
 
