@@ -24,6 +24,8 @@ int main(int argc, char *argv[]) {
     test.make_mat();
     arma::cx_mat U = test.create_u_mat(xc, yc, x, y, sigma_x, sigma_y, px, py);
 
+    test.normalized_U(U);
+
     std::cout << std::endl;
     std::cout << U << std::endl;
 

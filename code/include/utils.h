@@ -59,6 +59,8 @@ struct PDESolver{
                               double sigma_x, double sigma_y,
                               double px, double py);
 
+    void normalized_U(arma::cx_mat &U);
+
     arma::cx_vec one_step(arma::cx_vec u_n);
 };
 #endif // UTILS_H_

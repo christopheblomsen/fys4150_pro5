@@ -122,15 +122,11 @@ arma::cx_mat PDESolver::create_u_mat(double xc, double yx,
         }
     }
 
-    // for (int i=0; i < N; i++){
-    //     for (int j=0; j < 2; j++){
-    //         U(j, i) = 0;
-    //         U(i, j) = 0;
-    //     }
-    // }
-
-    // std::cout << U(0,0) << std::endl;
     return U;
+}
+
+void PDESolver::normalized_U(arma::cx_mat &U){
+    U /= std::sqrt(arma::accu(arma::conj(U)%U));
 }
 
 // this function solves the linear matrix equation to find the n+1 step
