@@ -92,15 +92,63 @@ void PDESolver::make_mat(){
     fill_mat(a, b);
 }
 
+arma::cx_double PDESolver::create_u_coeff(double xc, double yc,
+                                          double x, double y,
+                                          double sigma_x, double sigma_y,
+                                          double px, double py){
+    double x_term = -(x - xc)*(x - xc)/(2.*sigma_x*sigma_x);
+    double y_term = -(y - yc)*(y - yc)/(2.*sigma_y*sigma_y);
+    arma::cx_double x_momentum = 1i*px*(x - xc);
+    arma::cx_double y_momentum = 1i*py*(y - yc);
+
+    arma::cx_double term1 = std::exp(x_term + y_term);
+
+    arma::cx_double u = term1 + x_momentum + y_momentum;
+    return u;
+}
+
+arma::cx_mat PDESolver::create_u_mat(double xc, double yx,
+                                     double x, double y,
+                                     double sigma_x, double sigma_y,
+                                     double px, double py){
+
+    arma::cx_mat U(L, L, arma::fill::zeros);
+    for (int i=1; i < L-1; i++){
+        for (int j=1; j < L-1; j++){
+            U(i, j) = create_u_coeff(xc, yx,
+                                     x, y,
+                                     sigma_x, sigma_y,
+                                     px, py);
+        }
+    }
+
+    // for (int i=0; i < N; i++){
+    //     for (int j=0; j < 2; j++){
+    //         U(j, i) = 0;
+    //         U(i, j) = 0;
+    //     }
+    // }
+
+    // std::cout << U(0,0) << std::endl;
+    return U;
+}
+
 // this function solves the linear matrix equation to find the n+1 step
-arma::vec PDESolver::one_step(arma::mat A, arma::mat B, arma::vec u_n){
+arma::cx_vec PDESolver::one_step(arma::cx_vec u_n){
     
-    // First step 
-    arma::vec b = B * u_n;
-    
-    // Now we solve the system with arma::solve, can implement own function later
-    arma::vec u_n1;
-    u_n1 = arma::solve(A, b, arma::solve_opts::likely_sympd);
+    // // First step
+    // arma::cx_vec b = B * u_n;
+
+    // // Now we solve the system with arma::solve, can implement own function later
+    // arma::cx_vec u_n1;
+    // u_n1 = arma::solve(A, b, arma::solve_opts::likely_sympd);
+
+    arma::superlu_opts opts;
+    opts.symmetric = true;
+
+    arma::cx_vec u_n1;
+    u_n1 = arma::zeros<arma::cx_vec>(u_n.n_elem);
+    u_n1 = arma::spsolve(A, B*u_n, "superlu", opts);
 
     return u_n1;
 }

@@ -49,6 +49,16 @@ struct PDESolver{
     // Fills the rest of the matrixes
     void fill_mat(arma::cx_vec &a, arma::cx_vec &b);
 
-    arma::vec one_step(arma::mat A, arma::mat B, arma::vec u_n);
+    arma::cx_double create_u_coeff(double xc, double yc,
+                                   double x, double y,
+                                   double sigma_x, double sigma_y,
+                                   double px, double py);
+
+    arma::cx_mat create_u_mat(double xc, double yx,
+                              double x, double y,
+                              double sigma_x, double sigma_y,
+                              double px, double py);
+
+    arma::cx_vec one_step(arma::cx_vec u_n);
 };
 #endif // UTILS_H_
