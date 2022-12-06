@@ -4,7 +4,7 @@
 # @file
 # @version 0.1
 
-all: compile link clean
+all: compile link clean run
 
 utils:
 	g++ -c -I include src/utils.cpp
@@ -16,6 +16,9 @@ compile: utils full
 
 link:
 	g++ -o main main.o utils.o -larmadillo
+
+run:
+	./main
 
 clean:
 	@rm -rf *.o
