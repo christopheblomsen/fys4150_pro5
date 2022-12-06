@@ -1,12 +1,16 @@
 #include "utils.h"
 #include <vector>
 #include <iostream>
+#include<iomanip>
+
 
 
 int main(int argc, char *argv[]) {
-
-    int M = 5;
-    double h = 0.005;
+    
+    double h = 0.005; 
+    int M = 1./h+1.; //using h to get M. n_steps = M-1 and n_steps*h = 1...
+    //std::cout << M << std::endl;
+    //int M = 7;
     double dt = 2.5e-5;
 
     double xc = 0.25;
@@ -21,10 +25,22 @@ int main(int argc, char *argv[]) {
 
     //define V here I guess
 
-    arma::mat V = arma::zeros(M-2,M-2);
-    V(0,2) = 5;
-    std::cout << V << std::endl;
     
+    //problem 5 with specified V
+    arma::mat V = arma::zeros(M-2,M-2);
+    int middle_index = (M-2-1)/2;
+
+    int x_s = 0.02/h;
+    int x_p = 0.02/h +1; //x_p = 5
+    double V_0 = 100;
+    
+    //filling V 
+    for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
+        for (int y = 0; y< M-2;y++){
+            V(y,i) = V_0;
+        }
+    }
+
     PDESolver test = PDESolver(M, h, dt,V);
 
     test.make_mat();
