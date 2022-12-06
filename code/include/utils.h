@@ -6,13 +6,14 @@
 
 struct PDESolver{
 
-    PDESolver(int M_input, double h_input, double dt_input);
+    PDESolver(int M_input, double h_input, double dt_input,arma::mat V_input);
 
     int M;
     int N;
     int L;
     double h;
     double dt;
+    
 
     // Use normal matrix to see the print and correct
     /* arma::cx_mat A; */

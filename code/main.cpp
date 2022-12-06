@@ -19,15 +19,22 @@ int main(int argc, char *argv[]) {
     double sigma_y = 0.05;
     double py = 0;
 
-    PDESolver test = PDESolver(M, h, dt);
+    //define V here I guess
+
+    arma::mat V = arma::zeros(M-2,M-2);
+    V(0,2) = 5;
+    std::cout << V << std::endl;
+    
+    PDESolver test = PDESolver(M, h, dt,V);
 
     test.make_mat();
-    arma::cx_mat U = test.create_u_mat(xc, yc, x, y, sigma_x, sigma_y, px, py);
+    //std::cout << test.A << std::endl;
+    ///arma::cx_mat U = test.create_u_mat(xc, yc, x, y, sigma_x, sigma_y, px, py);
 
-    test.normalized_U(U);
+    ///test.normalized_U(U);
 
-    std::cout << std::endl;
-    std::cout << U << std::endl;
+    ///std::cout << std::endl;
+    ///std::cout << U << std::endl;
 
     // std::cout << test.A << std::endl;
     // std::cout << test.B << std::endl;
