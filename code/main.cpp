@@ -40,6 +40,22 @@ int main(int argc, char *argv[]) {
             V(y,i) = V_0;
         }
     }
+    int y_s = 0.05/h;
+    for (int y = middle_index+y_s/2.;y<=middle_index+2*y_s/2;y++){
+        for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
+            V(y,i) = 0;
+        }
+    }
+    for (int y = middle_index-2*y_s/2.;y<=middle_index-y_s/2;y++){
+        for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
+            V(y,i) = 0;
+        }
+    } 
+    std::ofstream ofile;
+    //std::string filename = "L_" + std::to_string(N) + "_T_"  + std::to_string(temp) + "_" + rand + ".txt";
+    ofile.open("lol.txt");
+    ofile << V << std::endl;
+    ofile.close(); 
 
     PDESolver test = PDESolver(M, h, dt,V);
 
