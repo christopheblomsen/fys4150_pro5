@@ -3,7 +3,7 @@
 
 using namespace std::complex_literals;
 
-PDESolver::PDESolver(int M_input, double h_input, double dt_input){
+PDESolver::PDESolver(int M_input, double h_input, double dt_input,arma::mat V_input){
     M = M_input;
     N = M-2;
     L = N*N;
@@ -14,7 +14,7 @@ PDESolver::PDESolver(int M_input, double h_input, double dt_input){
     B = arma::sp_cx_mat(L, L);
     // A = arma::cx_mat(L, L);
     // B = arma::cx_mat(L, L);
-    V = arma::mat(L, L, arma::fill::eye);
+    V = V_input; //arma::mat(L, L, arma::fill::eye);
 
     r = 1i*dt/(2.*h*h);
     term = 1i*dt/2.;
