@@ -62,6 +62,10 @@ struct PDESolver{
 
     void normalized_U(arma::cx_mat &U);
 
+    arma::cx_cube simulation(arma::cx_mat U, double T);
+
+    arma::cx_vec extract_vec(arma::cx_mat U);
+
     arma::cx_vec one_step(arma::cx_vec u_n);
 };
 #endif // UTILS_H_
