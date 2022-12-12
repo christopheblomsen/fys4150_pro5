@@ -28,6 +28,12 @@ int PDESolver::index2k(int i, int j){
     // return i*(M-2) + j;
 }
 
+std::vector<int> PDESolver::k2ij(int k){
+    int i = k%N;
+    int j = (int)(k/N);
+    return {i, j};
+}
+
 // Makes the a and b vectors that are the main diagonal in
 // the A and B matrixes
 void PDESolver::make_vec(arma::cx_vec &a, arma::cx_vec &b){
@@ -135,22 +141,21 @@ void PDESolver::normalized_U(arma::cx_mat &U){
 arma::cx_cube PDESolver::simulation(arma::cx_mat U, double T){
     // int n = (int)(T/dt);
     int n = 2;
-    arma::cx_cube sim_box(L, L, n);
+    arma::cx_cube sim_box(N, N, n);
+    arma::cx_mat temp(N, N);
+    temp = U;
 
-    std::cout << sim_box.slice(0).size() << std::endl;
-    std::cout << U.size() << std::endl;
+    std::cout << sim_box << std::endl;
+    std::cout << temp << std::endl;
 
-    sim_box.slice(0) = U;
+    sim_box.slice(0) = temp;
 
     for (int k=1; k < n; k++){
+        std::cout << k << std::endl;
+        temp = sim_box.slice(k-1);
         arma::cx_vec u_n = extract_vec(U);
         arma::cx_vec u_n1 = one_step(u_n);
-        for (int i=0; i < N; i++){
-            for (int j=0; j < N; j++){
-                U(i, j) = u_n1(index2k(i, j));
-            }
-        }
-        sim_box.slice(k) = U;
+        sim_box.slice(k) = temp;
     }
     return sim_box;
 }
