@@ -3,52 +3,94 @@
 #include <vector>
 #include <iostream>
 #include <iomanip>
+#include <string>
+#include <fstream>
+#include <sstream>
 
+bool exists(const std::string& name) {
+    std::ifstream f(name.c_str());
+    return f.good();
+}
 
+void making_potential(std::string filename, int M,
+                      double h, double dt, int slit){
+    std::cout << filename << " did not exist and will be created" << std::endl;
+    Box box(M, h, dt, filename, slit);
+    box.make_file();
+}
 
-int main(int argc, char *argv[]) {
-
+int main(int argc, char** argv) {
     arma::mat V;
-    double h = 0.005;
-    int M = (int)(1./h) + 1; //using h to get M. n_steps = M-1 and n_steps*h = 1...
-    // int M = 5;
-    double dt = 2.5e-5;
+    int slit, M;
+    double h, dt, T, x, xc, sigma_x, px, y, yc, sigma_y, py, v0;
+    std::string potential;
 
-    double T = 0.008;
-
-    double x = 0;
-    double xc = 0.25;
-    double sigma_x = 0.05;
-    double px = 200.;
-
-    double y = 0;
-    double yc = 0.5;
-    double sigma_y = 0.05;
-    double py = 0.;
-
-    double v0 = 0;
-    
     if (argc == 2){
-            std::string filename = argv[1];
-            V.load(arma::csv_name(filename));
-    }
-    else if (argc == 3){
-        Box box(M, h, dt,argv[1]);
-        V = box.double_slit();
         std::string filename = argv[1];
-        box.write2file(filename, V);
+        arma::mat input;
+        input.load(arma::csv_name(filename));
+        input.shed_row(0);
+
+        h = input(0);
+        dt = input(1);
+        T = input(2);
+
+        x = input(3);
+        xc = input(4);
+        sigma_x = input(5);
+        px = input(6);
+
+        y = input(7);
+        yc = input(8);
+        sigma_y = input(9);
+        py = input(10);
+
+        v0 = input(11);
+        slit = input(12);
+
+        M = (int)(1./h) + 1; //using h to get M. n_steps = M-1 and n_steps*h = 1...
     }
     else{
         std::cout << "Need to run with input parameters" << std::endl;
-        std::cout << "argv[1] is the filename of the csv potential" << std::endl;
-        std::cout << "argv[2] ís only if you want to remake the potential file" << std::endl;
+        std::cout << "argv[1] is the filename of the input parameters" << std::endl;
         return 1;
     }
 
+    switch (slit){
+        case 0:
+            potential = "no_slit.csv";
+            if (!exists(potential)){
+                making_potential(potential, M, h, dt, slit);
+            }
+            break;
+        case 1:
+            potential = "single_slit.csv";
+            if (!exists(potential)){
+                making_potential(potential, M, h, dt, slit);
+            }
+            break;
+        case 2:
+            potential = "double_slit.csv";
+            if (!exists(potential)){
+                making_potential(potential, M, h, dt, slit);
+            }
+            break;
+        case 3:
+            potential = "triple_slit.csv";
+            if (!exists(potential)){
+                making_potential(potential, M, h, dt, slit);
+            }
+            break;
+        default:
+            std::cout << "Potential file not understood" << std::endl;
+
+    }
+    V.load(arma::csv_name(potential));
+
     PDESolver test = PDESolver(M, h, dt,V);
 
-    // int n_steps = (int)(T/dt);
-    int n_steps = 2;
+    int n_steps = (int)(T/dt);
+    // // int n_steps = 2;
     int L = test.L;
     std::cout << L << std::endl;
 
@@ -66,13 +108,13 @@ int main(int argc, char *argv[]) {
     std::cout << "simulation done?" << std::endl;
     U.save("test.bin");
 
-    // test.normalized_U(U);
+    test.normalized_U(U);
 
     // std::cout << std::endl;
     // std::cout << sim << std::endl;
 
-    // std::cout << test.A << std::endl;
-    // std::cout << test.B << std::endl;
+    std::cout << test.A << std::endl;
+    std::cout << test.B << std::endl;
 
     return 0;
 }

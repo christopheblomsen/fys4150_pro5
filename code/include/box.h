@@ -5,11 +5,13 @@
 #include <iostream>
 
 struct Box{
-    Box(int M_input, double h_input, double dt_input,std::string slit_input);
+    Box(int M_input, double h_input, double dt_input,
+        std::string filename_in, int slit_input);
     int M;
     double h;
     double dt;
-    std::string slit;
+    std::string filename;
+    int slit;
 
     void make_file();
     arma::mat double_slit();
