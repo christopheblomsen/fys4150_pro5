@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "PDESolver.h"
 #include "box.h"
 #include <vector>
 #include <iostream>
@@ -7,30 +8,24 @@
 #include <fstream>
 #include <sstream>
 
-bool exists(const std::string& name) {
-    std::ifstream f(name.c_str());
-    return f.good();
-}
 
-void making_potential(std::string filename, int M,
-                      double h, double dt, int slit){
-    std::cout << filename << " did not exist and will be created" << std::endl;
-    Box box(M, h, dt, filename, slit);
-    box.make_file();
-}
-
-int main(int argc, char** argv) {
-    arma::mat V;
+int main(int argc, char** argv){
+    // Define all parameters
+    arma::mat V, input;
     int slit, M;
     double h, dt, T, x, xc, sigma_x, px, y, yc, sigma_y, py, v0;
-    std::string potential;
+    std::string potential, filename, savefile;
 
+    // make sure that input csv file is given
     if (argc == 2){
-        std::string filename = argv[1];
-        arma::mat input;
+        // for reading and saving the data
+        filename = argv[1];
+        size_t lastindex = filename.find_last_of(".");
+        savefile = filename.substr(0, lastindex)+".bin";
         input.load(arma::csv_name(filename));
         input.shed_row(0);
 
+        // initialization of variables
         h = input(0);
         dt = input(1);
         T = input(2);
@@ -53,53 +48,17 @@ int main(int argc, char** argv) {
         std::cout << "argv[1] is the filename of the input parameters" << std::endl;
         return 1;
     }
+    // Sets up the box with wall
+    Box box(M, h, dt, filename, slit);
+    V = box.potential_well();
 
-    switch (slit){
-        case 0:
-            potential = "no_slit.csv";
-            if (!exists(potential)){
-                making_potential(potential, M, h, dt, slit);
-            }
-            break;
-        case 1:
-            potential = "single_slit.csv";
-            if (!exists(potential)){
-                making_potential(potential, M, h, dt, slit);
-            }
-            break;
-        case 2:
-            potential = "double_slit.csv";
-            if (!exists(potential)){
-                making_potential(potential, M, h, dt, slit);
-            }
-            break;
-        case 3:
-            potential = "triple_slit.csv";
-            if (!exists(potential)){
-                making_potential(potential, M, h, dt, slit);
-            }
-            break;
-        default:
-            std::cout << "Potential file not understood" << std::endl;
-            return 1;
-
-    }
-    V.load(arma::csv_name(potential));
-
-    PDESolver test = PDESolver(M, h, dt,V);
+    PDESolver test = PDESolver(M, h, dt, V);
 
     int n_steps = (int)(T/dt);
-    // int n_steps = 2;
-    int L = test.L;
-    int N = test.N;
-    std::cout << L << std::endl;
 
     test.make_mat();
-    //std::cout << test.A << std::endl;
-    arma::cx_mat U0 = test.create_u_mat(xc, yc, sigma_x, sigma_y, px, py);
-    // arma::cx_mat U;
-    arma::cx_mat U(L, n_steps);
-    std::cout << "mat done" << std::endl;
+    // arma::cx_mat U0 = test.create_u_mat(xc, yc, sigma_x, sigma_y, px, py);
+    // arma::cx_mat U(test.L, n_steps);
     // test with cube
     // arma::cx_cube sim = test.simulation(U0, T);
     // arma::cx_vec u;
@@ -115,17 +74,10 @@ int main(int argc, char** argv) {
     // std::cout << sim << std::endl;
 
     // without cube
-    U.col(0) = test.extract_vec(U0);
-    std::cout << "so far" << std::endl;
-    for (int i=1; i < n_steps; i++){
-        U.col(i) = test.one_step(U.col(i - 1));
-    }
-    std::cout << "simulation done?" << std::endl;
-    U.save("test.bin");
-
-    // std::cout << std::endl;
-    // std::cout << sim << std::endl;
-
+    std::cout << "Starting simulation" << std::endl;
+    arma::cx_mat U = test.simulation(xc, yc, sigma_x, sigma_y, px, py, T);
+    std::cout << "Simulation done" << std::endl;
+    U.save(savefile);
 
     return 0;
 }

@@ -8,7 +8,7 @@ import sys
 def get_data(problem):
     # Open binary file
     data = pa.cx_mat()
-    data.load('test.bin', pa.arma_binary)
+    data.load(problem, pa.arma_binary)
     U = np.array(data, dtype=np.clongdouble)
     print(np.shape(U))
     return U
@@ -82,6 +82,7 @@ def make_animation(P_cube):
 
 
 
+problem = sys.argv[1]
 h = 0.005
 dt = 2.5e-5
 N = int(1 / h - 1)
@@ -90,7 +91,7 @@ x_points = np.linspace(0, 1, N)
 y_points = np.linspace(0, 1, N)
 x, y = np.meshgrid(x_points, y_points)
 
-U = get_data('test.bin')
+U = get_data(problem)
 t_end = dt * len(U[0, :])
 print(f't_end:{t_end}')
 t_points = np.linspace(0, t_end, len(U[0, :]))

@@ -1,4 +1,5 @@
 #include "box.h"
+#include "utils.h"
 #include <armadillo>
 
 Box::Box(int M_input, double h_input, double dt_input,
@@ -11,19 +12,39 @@ Box::Box(int M_input, double h_input, double dt_input,
 
 }
 
+arma::mat Box::potential_well(){
+    arma::mat V;
+    std::string potential = potential_file(slit);
+    if (!exists(potential)){
+        making_potential(potential);
+    }
+    V.load(arma::csv_name(potential));
+    return V;
+}
+
+void Box::making_potential(std::string potential){
+    std::cout << potential << " did not exist and will be created" << std::endl;
+    Box box(M, h, dt, potential, slit);
+    box.make_file();
+}
 
 void Box::make_file(){
+    std::string filename;
     switch (slit){
         case 0:
+            filename = "no_slit.csv";
             write2file(filename, no_slit());
             break;
         case 1:
+            filename = "single_slit.csv";
             write2file(filename, single_slit());
             break;
         case 2:
+            filename = "double_slit.csv";
             write2file(filename, double_slit());
             break;
         case 3:
+            filename = "triple_slit.csv";
             write2file(filename, triple_slit());
             break;
         default:
