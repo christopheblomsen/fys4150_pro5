@@ -10,7 +10,10 @@ struct Box{
     double h;
     double dt;
 
-    arma::mat filler_5();
+    arma::mat double_slit();
+    arma::mat single_slit();
+    arma::mat triple_slit();
+
 
     void write2file(std::string filename, arma::mat V);
 };
