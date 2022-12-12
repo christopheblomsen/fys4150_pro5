@@ -33,6 +33,8 @@ struct PDESolver{
     // single index k in the vector
     int index2k(int i, int j);
 
+    std::vector<int> k2ij(int k);
+
     // Makes the a and b vectors that are the main diagonal in
     // the A and B matrixes
     void make_vec(arma::cx_vec &a, arma::cx_vec &b);
@@ -56,7 +58,6 @@ struct PDESolver{
                                    double px, double py);
 
     arma::cx_mat create_u_mat(double xc, double yx,
-                              double x, double y,
                               double sigma_x, double sigma_y,
                               double px, double py);
 

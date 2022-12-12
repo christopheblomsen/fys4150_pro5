@@ -24,8 +24,13 @@ PDESolver::PDESolver(int M_input, double h_input, double dt_input,arma::mat V_in
 // takes an index pair (i,j) and gets the
 // single index k in the vector
 int PDESolver::index2k(int i, int j){
-    return i + j*(M-2);
-    // return i*(M-2) + j;
+    return i + j*N;
+}
+
+std::vector<int> PDESolver::k2ij(int k){
+    int i = k%N;
+    int j = (int)(k/N);
+    return {i, j};
 }
 
 // Makes the a and b vectors that are the main diagonal in
@@ -104,14 +109,13 @@ arma::cx_double PDESolver::create_u_coeff(double xc, double yc,
     arma::cx_double x_momentum = 1i*px*(x - xc);
     arma::cx_double y_momentum = 1i*py*(y - yc);
 
-    arma::cx_double term1 = std::exp(x_term + y_term);
+    arma::cx_double term1 = std::exp(x_term + y_term + x_momentum + y_momentum);
 
-    arma::cx_double u = term1 + x_momentum + y_momentum;
-    return u;
+    // arma::cx_double u = term1 + x_momentum + y_momentum;
+    return term1;
 }
 
 arma::cx_mat PDESolver::create_u_mat(double xc, double yx,
-                                     double x, double y,
                                      double sigma_x, double sigma_y,
                                      double px, double py){
 
@@ -134,24 +138,29 @@ void PDESolver::normalized_U(arma::cx_mat &U){
 }
 
 arma::cx_cube PDESolver::simulation(arma::cx_mat U, double T){
-    // int n = (int)(T/dt);
-    int n = 2;
-    arma::cx_cube sim_box(L, L, n);
+    int n = (int)(T/dt);
+    arma::cx_cube sim_box(N, N, n);
 
-    std::cout << sim_box.slice(0).size() << std::endl;
+    std::cout << sim_box.size() << std::endl;
     std::cout << U.size() << std::endl;
 
+    // sim_box.slice(0) = temp;
     sim_box.slice(0) = U;
 
-    for (int k=1; k < n; k++){
+    for (int t=1; t < n; t++){
+        U = sim_box.slice(t-1);
         arma::cx_vec u_n = extract_vec(U);
         arma::cx_vec u_n1 = one_step(u_n);
-        for (int i=0; i < N; i++){
-            for (int j=0; j < N; j++){
-                U(i, j) = u_n1(index2k(i, j));
-            }
+        for (int k=0; k < N; k++){
+            // int i, j = k2ij(k);
+            int i = k%N;
+            int j = k/N;
+            // std::vector<int> vec = k2ij(k);
+            // i = vec(0);
+            // j = vec(1);
+            U(i, j) = u_n1(k);
         }
-        sim_box.slice(k) = U;
+        sim_box.slice(t) = U;
     }
     return sim_box;
 }
