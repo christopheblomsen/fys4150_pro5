@@ -35,20 +35,17 @@ int main(int argc, char** argv) {
         dt = input(1);
         T = input(2);
 
-        x = input(3);
-        xc = input(4);
-        sigma_x = input(5);
-        px = input(6);
+        xc = input(3);
+        sigma_x = input(4);
+        px = input(5);
 
-        y = input(7);
-        yc = input(8);
-        sigma_y = input(9);
-        py = input(10);
+        yc = input(6);
+        sigma_y = input(7);
+        py = input(8);
 
-        // never really need to change it for different slit
-        // v0 = input(11);
-        slit = input(11);
-
+        v0 = input(9);
+        slit = input(10);
+	 
         M = (int)(1./h) + 1; //using h to get M. n_steps = M-1 and n_steps*h = 1...
     }
     else{
@@ -84,6 +81,7 @@ int main(int argc, char** argv) {
             break;
         default:
             std::cout << "Potential file not understood" << std::endl;
+            return 1;
 
     }
     V.load(arma::csv_name(potential));
