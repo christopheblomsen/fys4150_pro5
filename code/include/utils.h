@@ -56,7 +56,6 @@ struct PDESolver{
                                    double px, double py);
 
     arma::cx_mat create_u_mat(double xc, double yx,
-                              double x, double y,
                               double sigma_x, double sigma_y,
                               double px, double py);
 

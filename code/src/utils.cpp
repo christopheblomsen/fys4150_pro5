@@ -111,7 +111,6 @@ arma::cx_double PDESolver::create_u_coeff(double xc, double yc,
 }
 
 arma::cx_mat PDESolver::create_u_mat(double xc, double yx,
-                                     double x, double y,
                                      double sigma_x, double sigma_y,
                                      double px, double py){
 
