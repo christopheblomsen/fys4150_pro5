@@ -148,7 +148,7 @@ arma::cx_cube PDESolver::simulation(arma::cx_mat U, double T){
     sim_box.slice(0) = U;
 
     for (int t=1; t < n; t++){
-        U = sim_box.slice(t-1);
+        // U = sim_box.slice(t-1);
         arma::cx_vec u_n = extract_vec(U);
         arma::cx_vec u_n1 = one_step(u_n);
         for (int k=0; k < N; k++){

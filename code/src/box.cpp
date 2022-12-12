@@ -44,7 +44,7 @@ arma::mat Box::double_slit(){
     //filling x
     for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
         for (int y = 0; y< M-2;y++){
-            V(y,i) = V_0;
+            V(i,y) = V_0;
         }
     }
 
@@ -52,13 +52,13 @@ arma::mat Box::double_slit(){
     int y_s = 0.05/h;
     for (int y = middle_index+y_s/2.;y<=middle_index+2*y_s/2;y++){
         for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
-            V(y,i) = 0;
+            V(i,y) = 0;
         }
     }
     //creating second slit
     for (int y = middle_index-2*y_s/2.;y<=middle_index-y_s/2;y++){
         for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
-            V(y,i) = 0;
+            V(i,y) = 0;
         }
     }
     return V;
@@ -79,14 +79,14 @@ arma::mat Box::single_slit(){
     //filling x
     for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
         for (int y = 0; y< M-2;y++){
-            V(y,i) = V_0;
+            V(i,y) = V_0;
         }
     }
 
     //creating first slip
     for (int y = middle_index-y_s/2.;y<=middle_index+y_s/2;y++){
         for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
-            V(y,i) = 0;
+            V(i,y) = 0;
         }
     }
     
@@ -108,14 +108,14 @@ arma::mat Box::no_slit(){
     //filling x
     for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
         for (int y = 0; y< M-2;y++){
-            V(y,i) = V_0;
+            V(i,y) = V_0;
         }
     }
 
     ////creating first slip
     //for (int y = middle_index-y_s/2.;y<=middle_index+y_s/2;y++){
     //    for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
-    //        V(y,i) = 0;
+    //        V(i,y) = 0;
     //    }
     //}
     
@@ -135,21 +135,21 @@ arma::mat Box::triple_slit(){
     //filling x
     for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
         for (int y = 0; y< M-2;y++){
-            V(y,i) = V_0;
+            V(i,y) = V_0;
         }
     }
 
     //creating first slip
     for (int y = middle_index-y_s/2;y<=middle_index+y_s/2;y++){
         for (int i = middle_index-x_s/2;i<=middle_index+x_s/2;i++){
-            V(y,i) = 0;
+            V(i,y) = 0;
         }
     }
     
 
     //for (int y = middle_index+y_s/2.;y<=middle_index+2*y_s/2;y++){
     //    for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
-    //        V(y,i) = 0;
+    //        V(i,y) = 0;
     //    }
     //}
 
@@ -157,7 +157,7 @@ arma::mat Box::triple_slit(){
     //creating second slit
     for (int y = middle_index+y_s/2+y_s;y <= middle_index + y_s/2+y_s+y_s;y++){
         for (int i = middle_index-x_s/2;i<=middle_index+x_s/2;i++){
-            V(y,i) = 0;
+            V(i,y) = 0;
         }
     }
 
@@ -165,7 +165,7 @@ arma::mat Box::triple_slit(){
      //creating third slit
     for (int y = middle_index-y_s/2-y_s-y_s;y <= middle_index-y_s/2-y_s;y++){
         for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
-            V(y,i) = 0;
+            V(i,y) = 0;
         }
     }
     return V;
