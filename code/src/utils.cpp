@@ -104,10 +104,10 @@ arma::cx_double PDESolver::create_u_coeff(double xc, double yc,
     arma::cx_double x_momentum = 1i*px*(x - xc);
     arma::cx_double y_momentum = 1i*py*(y - yc);
 
-    arma::cx_double term1 = std::exp(x_term + y_term);
+    arma::cx_double term1 = std::exp(x_term + y_term + x_momentum + y_momentum);
 
-    arma::cx_double u = term1 + x_momentum + y_momentum;
-    return u;
+    // arma::cx_double u = term1 + x_momentum + y_momentum;
+    return term1;
 }
 
 arma::cx_mat PDESolver::create_u_mat(double xc, double yx,
