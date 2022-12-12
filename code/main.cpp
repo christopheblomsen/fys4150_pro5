@@ -27,13 +27,13 @@ int main(int argc, char *argv[]) {
     double py = 0.;
 
     double v0 = 0;
-
+    
     if (argc == 2){
             std::string filename = argv[1];
             V.load(arma::csv_name(filename));
     }
     else if (argc == 3){
-        Box box(M, h, dt);
+        Box box(M, h, dt,argv[1]);
         V = box.double_slit();
         std::string filename = argv[1];
         box.write2file(filename, V);

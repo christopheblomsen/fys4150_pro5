@@ -1,12 +1,48 @@
 #include "box.h"
 #include <armadillo>
 
-Box::Box(int M_input, double h_input, double dt_input){
+Box::Box(int M_input, double h_input, double dt_input,std::string slit_input){
     M = M_input;
     h = h_input;
     dt = dt_input;
+    slit = slit_input;
 
 }
+
+
+void Box::make_file(){
+    if (slit == "no"){
+        std::string filename = "no_slit.csv";
+        //arma::mat V = no_slit();
+        write2file(filename,no_slit());
+
+
+    }
+    else if (slit == "single"){
+        std::string filename = "single_slit.csv";
+        //arma::mat V = single_slit();
+        write2file(filename,single_slit());
+        
+    }
+
+    else if (slit == "double"){
+        std::string filename = "double_slit.csv";
+        //arma::mat V = double_slit();
+        write2file(filename,double_slit());
+        
+    }
+
+    else if (slit == "triple"){
+        std::string filename = "triple_slit.csv";
+        //arma::mat V = triple_slit();
+        write2file(filename,triple_slit());
+        
+    }
+    else{
+    }
+
+}
+
 
 arma::mat Box::double_slit(){
     arma::mat V = arma::zeros(M-2, M-2);
