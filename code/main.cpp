@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
 
         v0 = input(9);
         slit = input(10);
-	 
+
         M = (int)(1./h) + 1; //using h to get M. n_steps = M-1 and n_steps*h = 1...
     }
     else{
@@ -88,32 +88,44 @@ int main(int argc, char** argv) {
 
     PDESolver test = PDESolver(M, h, dt,V);
 
-    int n_steps = (int)(T/dt);
-    // // int n_steps = 2;
+    // int n_steps = (int)(T/dt);
+    int n_steps = 2;
     int L = test.L;
+    int N = test.N;
     std::cout << L << std::endl;
 
     test.make_mat();
     //std::cout << test.A << std::endl;
-    arma::cx_mat U0 = test.create_u_mat(xc, yc, x, y, sigma_x, sigma_y, px, py);
-    arma::cx_mat U(L, n_steps);
+    arma::cx_mat U0 = test.create_u_mat(xc, yc, sigma_x, sigma_y, px, py);
+    arma::cx_mat U;
+    // arma::cx_mat U(L, n_steps);
     std::cout << "mat done" << std::endl;
-    // arma::cx_cube sim = test.simulation(U, 1);
-    U.col(0) = test.extract_vec(U0);
-    std::cout << "so far" << std::endl;
-    for (int i=1; i < n_steps; i++){
-        U.col(i) = test.one_step(U.col(i - 1));
-    }
-    std::cout << "simulation done?" << std::endl;
-    U.save("test.bin");
+    // test with cube
+    arma::cx_cube sim = test.simulation(U0, T);
+    // arma::cx_vec u;
+    // arma::cx_cube sim(N, N, n_steps);
+    // sim.slice(0) = U0;
+    sim.save("sim.bin");
 
-    test.normalized_U(U);
+    // for (int i=1; i < n_steps; i++){
+    //     U = sim.slice(i-1);
+    // //     u =
+    //     sim.slice(i) = U;
+    // }
+    // std::cout << sim << std::endl;
+
+    // without cube
+    // U.col(0) = test.extract_vec(U0);
+    // std::cout << "so far" << std::endl;
+    // for (int i=1; i < n_steps; i++){
+    //     U.col(i) = test.one_step(U.col(i - 1));
+    // }
+    // std::cout << "simulation done?" << std::endl;
+    // U.save("test.bin");
 
     // std::cout << std::endl;
     // std::cout << sim << std::endl;
 
-    std::cout << test.A << std::endl;
-    std::cout << test.B << std::endl;
 
     return 0;
 }

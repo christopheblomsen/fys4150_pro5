@@ -24,7 +24,7 @@ PDESolver::PDESolver(int M_input, double h_input, double dt_input,arma::mat V_in
 // takes an index pair (i,j) and gets the
 // single index k in the vector
 int PDESolver::index2k(int i, int j){
-    return i + j*(M-2);
+    return i + j*N;
     // return i*(M-2) + j;
 }
 
@@ -139,23 +139,30 @@ void PDESolver::normalized_U(arma::cx_mat &U){
 }
 
 arma::cx_cube PDESolver::simulation(arma::cx_mat U, double T){
-    // int n = (int)(T/dt);
-    int n = 2;
+    int n = (int)(T/dt);
     arma::cx_cube sim_box(N, N, n);
-    arma::cx_mat temp(N, N);
-    temp = U;
+    arma::cx_mat temp = U;
 
-    std::cout << sim_box << std::endl;
-    std::cout << temp << std::endl;
+    std::cout << sim_box.size() << std::endl;
+    std::cout << temp.size() << std::endl;
 
     sim_box.slice(0) = temp;
+    // sim_box.slice(0) = U;
 
-    for (int k=1; k < n; k++){
-        std::cout << k << std::endl;
-        temp = sim_box.slice(k-1);
-        arma::cx_vec u_n = extract_vec(U);
+    for (int t=1; t < n; t++){
+        temp = sim_box.slice(t-1);
+        arma::cx_vec u_n = extract_vec(temp);
         arma::cx_vec u_n1 = one_step(u_n);
-        sim_box.slice(k) = temp;
+        for (int k=0; k < N; k++){
+            // int i, j = k2ij(k);
+            int i = k%N;
+            int j = k/N;
+            // std::vector<int> vec = k2ij(k);
+            // i = vec(0);
+            // j = vec(1);
+            temp(i, j) = u_n1(k);
+        }
+        sim_box.slice(t) = temp;
     }
     return sim_box;
 }
