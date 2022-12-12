@@ -109,7 +109,17 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{$https://g
 	% ===========================================
 	\section{Methods}\label{sec:methods}
 	% ===========================================
-	
+	The bare Schrödinger equation can be written as 
+	\begin{equation}
+		i \frac{\partial u}{\partial t} = -\frac{\partial^2 u}{\partial x^2} - \frac{\partial^2 u}{\partial y^2} + v(x,y) u.
+	\end{equation}
+	We will solve this equation by discretizing it according to the Crank-Nicolson approach. The Crank-Nicolson approach is given by 
+	\begin{equation}
+		\frac{u^{n+1}-u^{n}}{\Delta t} = \frac{1}{2}    \left(     F_i^{n+1} + F_i^n     \right),
+	\end{equation}
+	where $u^n$ is the dimentionless wavefunction, in two dimentions, at time step $n$. $u^{n+1}$ is then the wavefunction at time step $n+1$.
+
+
 	
 	
 	
