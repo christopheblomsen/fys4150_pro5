@@ -25,6 +25,7 @@ PDESolver::PDESolver(int M_input, double h_input, double dt_input,arma::mat V_in
 // single index k in the vector
 int PDESolver::index2k(int i, int j){
     return i + j*(M-2);
+    // return i*(M-2) + j;
 }
 
 // Makes the a and b vectors that are the main diagonal in
@@ -82,6 +83,8 @@ void PDESolver::make_mat(){
     arma::cx_vec b(L, arma::fill::zeros);
 
     make_vec(a, b);
+
+    // std::cout << "vec done" << std::endl;
     for (int k=0; k < L; k++){
         A(k, k) = a(k);
         B(k, k) = b(k);
@@ -112,16 +115,17 @@ arma::cx_mat PDESolver::create_u_mat(double xc, double yx,
                                      double sigma_x, double sigma_y,
                                      double px, double py){
 
-    arma::cx_mat U(L, L, arma::fill::zeros);
-    for (int i=1; i < L-1; i++){
-        for (int j=1; j < L-1; j++){
+    arma::cx_mat U(N, N, arma::fill::zeros);
+    for (int i=0; i < N; i++){
+        for (int j=0; j < N; j++){
             U(i, j) = create_u_coeff(xc, yx,
-                                     x, y,
+                                     i*h, j*h,
                                      sigma_x, sigma_y,
                                      px, py);
         }
     }
 
+    normalized_U(U);
     return U;
 }
 
@@ -129,6 +133,40 @@ void PDESolver::normalized_U(arma::cx_mat &U){
     U /= std::sqrt(arma::accu(arma::conj(U)%U));
 }
 
+arma::cx_cube PDESolver::simulation(arma::cx_mat U, double T){
+    // int n = (int)(T/dt);
+    int n = 2;
+    arma::cx_cube sim_box(L, L, n);
+
+    std::cout << sim_box.slice(0).size() << std::endl;
+    std::cout << U.size() << std::endl;
+
+    sim_box.slice(0) = U;
+
+    for (int k=1; k < n; k++){
+        arma::cx_vec u_n = extract_vec(U);
+        arma::cx_vec u_n1 = one_step(u_n);
+        for (int i=0; i < N; i++){
+            for (int j=0; j < N; j++){
+                U(i, j) = u_n1(index2k(i, j));
+            }
+        }
+        sim_box.slice(k) = U;
+    }
+    return sim_box;
+}
+
+arma::cx_vec PDESolver::extract_vec(arma::cx_mat U){
+    arma::cx_vec u_n;
+    u_n = arma::cx_vec(L, arma::fill::zeros);
+    for (int i=0; i < N; i++){
+        for (int j=0; j < N; j++){
+            u_n(index2k(i, j)) = U(i, j);
+        }
+    }
+
+    return u_n;
+}
 // this function solves the linear matrix equation to find the n+1 step
 arma::cx_vec PDESolver::one_step(arma::cx_vec u_n){
     
