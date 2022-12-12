@@ -38,7 +38,7 @@ arma::mat Box::double_slit(){
 
     int x_s = int(0.02/h);
     int x_p = int(0.02/h +1); //x_p = 5
-    double V_0 = 1e6;
+    double V_0 = 1e10;
 
     //filling V
     //filling x

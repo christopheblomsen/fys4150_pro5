@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
 
         v0 = input(9);
         slit = input(10);
-
+	 
         M = (int)(1./h) + 1; //using h to get M. n_steps = M-1 and n_steps*h = 1...
     }
     else{
