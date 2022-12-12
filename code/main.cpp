@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     }
     else if (argc == 3){
         Box box(M, h, dt);
-        V = box.filler_5();
+        V = box.double_slit();
         std::string filename = argv[1];
         box.write2file(filename, V);
     }

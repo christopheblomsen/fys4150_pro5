@@ -13,6 +13,7 @@ struct Box{
     arma::mat double_slit();
     arma::mat single_slit();
     arma::mat triple_slit();
+    arma::mat no_slit();
 
 
     void write2file(std::string filename, arma::mat V);
