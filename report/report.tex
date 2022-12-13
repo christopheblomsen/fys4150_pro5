@@ -110,23 +110,47 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{$https://g
 	\section{Methods}\label{sec:methods}
 	% ===========================================
 	The bare Schrödinger equation can be written as 
-	\begin{equation}
+
+	\begin{equation}\label{eq:bare Schrodinger}
 		i \frac{\partial u}{\partial t} = -\frac{\partial^2 u}{\partial x^2} - \frac{\partial^2 u}{\partial y^2} + v(x,y) u.
-	\end{equation}
-	We will solve this equation by discretizing it according to the Crank-Nicolson approach. The Crank-Nicolson approach is given by 
+	\end{equation} 
+	
+	In order to solve equation \ref{eq:bare Schrodinger} numerically, we must discetize all the terms and approximate
+	the derivatives. The discretization is done by introducing a grid of points in the
+	$xy$ plane containing all the values of $x$ and $y$ we will use. The time is discretized by using points, with equal spacing, along the time axis.\\ \\
+	The first order time derivative on the left hand side of equation \ref{eq:bare Schrodinger} is approximated using the Crank-Nicolson approach.
+	This general approach is given by
+	
 	\begin{equation}
-		\frac{u^{n+1}-u^{n}}{\Delta t} = \frac{1}{2}    \left(     F_i^{n+1} + F_i^n     \right),
+		\frac{u^{n+1}-u^{n}}{\Delta t} = \frac{1}{2}    \left(     F^{n+1} + F^n     \right),
 	\end{equation}
-	where $u^n$ is the dimentionless wavefunction, in two dimentions, at time step $n$. $u^{n+1}$ is then the wavefunction at time step $n+1$.
+	
+	where $u^n$, in our case, is the dimentionless wavefunction in two dimentions. The superscript denotes the time step of $u$ and $\Delta t$ is the length of the time step, i.e. the spacing between points on the time axis.
+	The $F^{n+1}$ and $F^n$ terms are given by the backward Euler and the forward Euler methods respectively. $F^n$ is therefore given by  
+	\begin{equation}
+		F^n = \frac{u^{n+1}-u^n}{\Delta t} 
+	\end{equation}  	
+	
+	and 
+
+	\begin{equation}
+		F^{n} = \frac{u^{n}-u^{n-1}}{\Delta t}  \Rightarrow F^{n+1} = \frac{u^{n+1}-u^{n}}{\Delta t}
+	\end{equation}  	
+	
 
 
+	We will solve this equation, in time, by discretizing it according to the Crank-Nicolson approach. 
+	The double spatial derivatives will be discretized according to the Taylor approximations of second order. In the $x$ direction, the double spatial derivative is therefore given by
+	\begin{equation}
+		\frac{\partial^2 u}{\partial x^2} = \frac{u}{}
+	\end{equation}
 	
 	
 	
 	% ===========================================
 	\section{Results}\label{sec:results}
 	% ===========================================
-	
+	heihei
 	
 		
 	% ===========================================
