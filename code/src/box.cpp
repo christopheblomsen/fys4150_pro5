@@ -64,8 +64,8 @@ arma::mat Box::no_slit(){
     //filling V
     //filling x
     for (int i = 0; i<=(M-3); i++){
-            V(i,M-3) = V_0;
-            V(i,0) = V_0;
+            V(M-3,i) = V_0;
+            V(0,i) = V_0;
     }
 
     ////creating first slip
