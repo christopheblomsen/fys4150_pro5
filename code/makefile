@@ -24,10 +24,10 @@ link:
 	g++ -o main main.o utils.o box.o PDESolver.o -larmadillo -O2
 
 run:
-	@./run_all.sh
+	@shell_scripts/run_all.sh
 
 animate:
-	@./animate.sh
+	@shell_scripts/animate.sh
 
 clean:
 	@rm -rf *.o
