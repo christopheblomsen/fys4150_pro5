@@ -42,7 +42,8 @@ This project can either be built with running
 ```Shell
 make
 ```
-This will run all of the simulations for all of the subproblems. If this is not wanted
+This will run all of the simulations for all of the subproblems, and create the `data` directory for all the binaries. 
+If this is not wanted
 
 ```Shell
 g++ -I include src/* main.cpp -o main -larmadillo -O2
@@ -77,6 +78,8 @@ Where `foo.bin` is the binary file that is to be visualized, and `savefile` is t
 ```Shell
 make animate
 ```
+
+Which will create a new `animation` directory with all of the `.mp4
 
 ### Report
 The report can be found in the [`report/`](report/) sub directory. Where all the figures can be found in the [`report/figures`](report/figures/)
