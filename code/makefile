@@ -4,7 +4,7 @@
 # @file
 # @version 0.1
 
-all: compile link clean
+all: compile link clean run
 
 utils:
 	g++ -c -I include src/utils.cpp
@@ -24,7 +24,10 @@ link:
 	g++ -o main main.o utils.o box.o PDESolver.o -larmadillo -O2
 
 run:
-	./main
+	@./run_all.sh
+
+animate:
+	@./animate.sh
 
 clean:
 	@rm -rf *.o
