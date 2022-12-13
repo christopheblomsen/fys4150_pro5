@@ -2,8 +2,14 @@
 
 This repo will solve the Schrödinger equation numerically using `C++` and then visualize it using `Python`. 
 
-Dependencies
-============
+### Table of contents
+- [Dependencies](#dependencies)
+- [Build](#build)
+- [Visuailze](#visuailze)
+- [Report](#report)
+
+### Dependencies
+
 - `c++`
   - [`armadillo`](https://arma.sourceforge.net/)
 - `Python`
@@ -55,3 +61,6 @@ Where `foo.bin` is the binary file that is to be visualized, and `savefile` is t
 ```Shell
 make animate
 ```
+
+### Report
+The report can be found in the [`report/`](report/) sub directory. Where all the figures can be found in the [`report/figures`](report/figures/)
