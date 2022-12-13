@@ -2,8 +2,10 @@
 #include "PDESolver.h"
 #include <armadillo>
 
+// For complex numbers
 using namespace std::complex_literals;
 
+// Constructor
 PDESolver::PDESolver(int M_input, double h_input, double dt_input,arma::mat V_input){
     M = M_input;
     N = M-2;
@@ -13,25 +15,16 @@ PDESolver::PDESolver(int M_input, double h_input, double dt_input,arma::mat V_in
 
     A = arma::sp_cx_mat(L, L);
     B = arma::sp_cx_mat(L, L);
-    // A = arma::cx_mat(L, L);
-    // B = arma::cx_mat(L, L);
-    V = V_input; //arma::mat(L, L, arma::fill::eye);
+    V = V_input;
 
     r = 1i*dt/(2.*h*h);
     term = 1i*dt/2.;
-
 }
 
 // takes an index pair (i,j) and gets the
 // single index k in the vector
 int PDESolver::index2k(int i, int j){
     return i + j*N;
-}
-
-std::vector<int> PDESolver::k2ij(int k){
-    int i = k%N;
-    int j = (int)(k/N);
-    return {i, j};
 }
 
 // Makes the a and b vectors that are the main diagonal in
@@ -101,6 +94,7 @@ void PDESolver::make_mat(){
     fill_mat(a, b);
 }
 
+// Creates the u coefficients in the U matrix
 arma::cx_double PDESolver::create_u_coeff(double xc, double yc,
                                           double x, double y,
                                           double sigma_x, double sigma_y,
@@ -110,12 +104,12 @@ arma::cx_double PDESolver::create_u_coeff(double xc, double yc,
     arma::cx_double x_momentum = 1i*px*(x - xc);
     arma::cx_double y_momentum = 1i*py*(y - yc);
 
-    arma::cx_double term1 = std::exp(x_term + y_term + x_momentum + y_momentum);
+    arma::cx_double u = std::exp(x_term + y_term + x_momentum + y_momentum);
 
-    // arma::cx_double u = term1 + x_momentum + y_momentum;
-    return term1;
+    return u;
 }
 
+// Creates the U matrix
 arma::cx_mat PDESolver::create_u_mat(double xc, double yx,
                                      double sigma_x, double sigma_y,
                                      double px, double py){
@@ -134,10 +128,34 @@ arma::cx_mat PDESolver::create_u_mat(double xc, double yx,
     return U;
 }
 
+// Normalize the U matrix
 void PDESolver::normalized_U(arma::cx_mat &U){
     U /= std::sqrt(arma::accu(arma::conj(U)%U));
 }
 
+// Evolves the system from an initile state
+arma::cx_mat PDESolver::evolve(arma::cx_mat U0, double T){
+    int n_steps = (int)(T/dt);
+    arma::cx_mat U(L, n_steps);
+
+    U.col(0) = extract_vec(U0);
+    for (int i=0; i < n_steps-1; i++){
+        U.col(i+1) = one_step(U.col(i));
+    }
+    return U;
+}
+
+// Simulates the system and saves as a matrix
+// where each column is the corresponding timestep
+arma::cx_mat PDESolver::simulation(double xc, double yc,
+                                   double sigma_x, double sigma_y,
+                                   double px, double py, double T){
+    arma::cx_mat U0 = create_u_mat(xc, yc, sigma_x, sigma_y, px, py);
+    arma::cx_mat U = evolve(U0, T);
+    return U;
+}
+
+// Runs the simulation and saves as cube, not working
 arma::cx_cube PDESolver::simulation(arma::cx_mat U, double T){
     int n = (int)(T/dt);
     arma::cx_cube sim_box(N, N, n);
@@ -166,25 +184,7 @@ arma::cx_cube PDESolver::simulation(arma::cx_mat U, double T){
     return sim_box;
 }
 
-arma::cx_mat PDESolver::evolve(arma::cx_mat U0, double T){
-    int n_steps = (int)(T/dt);
-    arma::cx_mat U(L, n_steps);
-
-    U.col(0) = extract_vec(U0);
-    for (int i=0; i < n_steps-1; i++){
-        U.col(i+1) = one_step(U.col(i));
-    }
-    return U;
-}
-
-arma::cx_mat PDESolver::simulation(double xc, double yc,
-                                   double sigma_x, double sigma_y,
-                                   double px, double py, double T){
-    arma::cx_mat U0 = create_u_mat(xc, yc, sigma_x, sigma_y, px, py);
-    arma::cx_mat U = evolve(U0, T);
-    return U;
-}
-
+// Extracts the column vector from U
 arma::cx_vec PDESolver::extract_vec(arma::cx_mat U){
     arma::cx_vec u_n;
     u_n = arma::cx_vec(L, arma::fill::zeros);
@@ -196,21 +196,15 @@ arma::cx_vec PDESolver::extract_vec(arma::cx_mat U){
 
     return u_n;
 }
+
 // this function solves the linear matrix equation to find the n+1 step
 arma::cx_vec PDESolver::one_step(arma::cx_vec u_n){
-    
-    // // First step
-    // arma::cx_vec b = B * u_n;
-
-    // // Now we solve the system with arma::solve, can implement own function later
-    // arma::cx_vec u_n1;
-    // u_n1 = arma::solve(A, b, arma::solve_opts::likely_sympd);
-
     arma::superlu_opts opts;
     opts.symmetric = true;
 
     arma::cx_vec u_n1;
-    u_n1 = arma::zeros<arma::cx_vec>(u_n.n_elem);
+    u_n1 = arma::cx_vec(u_n.n_elem, arma::fill::zeros);
+    // u_n1 = arma::zeros<arma::cx_vec>(u_n.n_elem);
     u_n1 = arma::spsolve(A, B*u_n, "superlu", opts);
 
     return u_n1;

@@ -12,19 +12,21 @@ utils:
 box:
 	g++ -c -I include src/box.cpp
 
+PDESolver:
+	g++ -c -I include src/PDESolver.cpp
+
 full:
 	g++ -c -I include main.cpp
 
-compile: utils full box
+compile: utils PDESolver box full
 
 link:
-	g++ -o main main.o utils.o box.o -larmadillo
+	g++ -o main main.o utils.o box.o PDESolver.o -larmadillo -O2
 
 run:
 	./main
 
 clean:
 	@rm -rf *.o
-
 
 # end

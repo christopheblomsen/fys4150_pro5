@@ -7,6 +7,7 @@
 
 struct PDESolver{
 
+    // Constructor
     PDESolver(int M_input, double h_input, double dt_input,arma::mat V_input);
 
     int M;
@@ -16,9 +17,6 @@ struct PDESolver{
     double dt;
     
 
-    // Use normal matrix to see the print and correct
-    /* arma::cx_mat A; */
-    /* arma::cx_mat B; */
     arma::sp_cx_mat A;
     arma::sp_cx_mat B;
     arma::mat V;
@@ -33,8 +31,6 @@ struct PDESolver{
     // takes an index pair (i,j) and gets the
     // single index k in the vector
     int index2k(int i, int j);
-
-    std::vector<int> k2ij(int k);
 
     // Makes the a and b vectors that are the main diagonal in
     // the A and B matrixes
@@ -53,27 +49,36 @@ struct PDESolver{
     // Fills the rest of the matrixes
     void fill_mat(arma::cx_vec &a, arma::cx_vec &b);
 
+    // Creates the u coefficients in the U matrix
     arma::cx_double create_u_coeff(double xc, double yc,
                                    double x, double y,
                                    double sigma_x, double sigma_y,
                                    double px, double py);
 
+    // Creates the U matrix
     arma::cx_mat create_u_mat(double xc, double yx,
                               double sigma_x, double sigma_y,
                               double px, double py);
 
+    // Normalize the U matrix
     void normalized_U(arma::cx_mat &U);
 
+    // Evolves the system from an initile state
     arma::cx_mat evolve(arma::cx_mat U0, double T);
 
+    // Runs the simulation and saves as cube, not working
     arma::cx_cube simulation(arma::cx_mat U, double T);
 
+    // Simulates the system and saves as a matrix
+    // where each column is the corresponding timestep
     arma::cx_mat simulation(double xc, double yc,
                             double sigma_x, double sigma_y,
                             double px, double py, double T);
 
+    // Extracts the column vector from U
     arma::cx_vec extract_vec(arma::cx_mat U);
 
+    // this function solves the linear matrix equation to find the n+1 step
     arma::cx_vec one_step(arma::cx_vec u_n);
 };
 #endif // PDESOLVER_H_

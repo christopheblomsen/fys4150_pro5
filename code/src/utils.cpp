@@ -1,11 +1,13 @@
 #include "utils.h"
 
+// Checks if a file exists in directory
 bool exists(const std::string& name) {
-    std::ifstream f(name.c_str());
-    return f.good();
+    std::ifstream file(name.c_str());
+    return file.good();
 }
 
-
+// Used in src/Box.cpp make_file method
+// to get the filename for the different slits
 std::string potential_file(int slit){
     std::string filename;
     switch (slit){
