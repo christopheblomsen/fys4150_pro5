@@ -1,6 +1,5 @@
 #include "box.h"
 #include "utils.h"
-#include <armadillo>
 
 // Constructor
 Box::Box(int M_input, double h_input, double dt_input,
@@ -56,7 +55,7 @@ arma::mat Box::no_slit(){
     int middle_index = (M-2-1)/2;
 
     int x_s = int(0.02/h);
-    int x_p = int(0.02/h +1); //x_p = 5
+    int x_p = int(0.02/h +1);
     int y_s = 0.05/h;
 
     //filling V
@@ -65,13 +64,6 @@ arma::mat Box::no_slit(){
             V(M-3,i) = V_0;
             V(0,i) = V_0;
     }
-
-    ////creating first slip
-    //for (int y = middle_index-y_s/2.;y<=middle_index+y_s/2;y++){
-    //    for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
-    //        V(i,y) = 0;
-    //    }
-    //}
 
     return V;
 }
@@ -82,7 +74,7 @@ arma::mat Box::single_slit(){
     int middle_index = (M-2-1)/2;
 
     int x_s = int(0.02/h);
-    int x_p = int(0.02/h +1); //x_p = 5
+    int x_p = int(0.02/h +1);
     int y_s = 0.05/h;
 
     //filling V
@@ -109,7 +101,7 @@ arma::mat Box::double_slit(){
     int middle_index = (M-2-1)/2;
 
     int x_s = int(0.02/h);
-    int x_p = int(0.02/h + 1); //x_p = 5
+    int x_p = int(0.02/h + 1);
 
     //filling V
     //filling x

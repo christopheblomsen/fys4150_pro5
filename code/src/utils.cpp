@@ -28,3 +28,17 @@ std::string potential_file(int slit){
     }
     return filename;
 }
+
+// Gets the savefile name for the binary file
+std::string get_name(std::string filename){
+    std::string savefile, tempfile;
+
+    // removes the path from filename
+    size_t first_index = filename.find_last_of("/");
+    tempfile = filename.substr(first_index + 1, size(filename));
+
+    // removes the .csv and adds .bin
+    size_t last_index = tempfile.find_last_of(".");
+    savefile = tempfile.substr(0, last_index) + ".bin";
+    return savefile;
+}

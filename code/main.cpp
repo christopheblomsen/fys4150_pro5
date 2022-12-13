@@ -6,12 +6,8 @@
 #include "utils.h"
 #include "PDESolver.h"
 #include "box.h"
-#include <vector>
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <fstream>
-#include <sstream>
+// #include <iomanip>
+// #include <sstream>
 
 
 int main(int argc, char** argv){
@@ -25,8 +21,7 @@ int main(int argc, char** argv){
     if (argc == 2){
         // for reading and saving the data
         filename = argv[1];
-        size_t lastindex = filename.find_last_of(".");
-        savefile = filename.substr(0, lastindex)+".bin";
+        savefile = get_name(filename);
 
         input.load(arma::csv_name(filename));
         input.shed_row(0);
@@ -60,7 +55,7 @@ int main(int argc, char** argv){
 
     PDESolver test = PDESolver(M, h, dt, V);
 
-    int n_steps = (int)(T/dt);
+    // int n_steps = (int)(T/dt);
 
     test.make_mat();
     // arma::cx_mat U0 = test.create_u_mat(xc, yc, sigma_x, sigma_y, px, py);
@@ -83,7 +78,7 @@ int main(int argc, char** argv){
     std::cout << "Starting simulation" << std::endl;
     arma::cx_mat U = test.simulation(xc, yc, sigma_x, sigma_y, px, py, T);
     std::cout << "Simulation done" << std::endl;
-    U.save("./data/"+savefile);
+    U.save(savefile);
 
     return 0;
 }
