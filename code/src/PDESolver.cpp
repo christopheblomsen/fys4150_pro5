@@ -204,7 +204,6 @@ arma::cx_vec PDESolver::one_step(arma::cx_vec u_n){
 
     arma::cx_vec u_n1;
     u_n1 = arma::cx_vec(u_n.n_elem, arma::fill::zeros);
-    // u_n1 = arma::zeros<arma::cx_vec>(u_n.n_elem);
     u_n1 = arma::spsolve(A, B*u_n, "superlu", opts);
 
     return u_n1;
