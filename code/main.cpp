@@ -1,3 +1,8 @@
+// Build
+// g++ -I include src/* main.cpp -o main -larmadillo -O2
+//
+// Run
+// ./main input_parameters.csv
 #include "utils.h"
 #include "PDESolver.h"
 #include "box.h"
@@ -22,6 +27,7 @@ int main(int argc, char** argv){
         filename = argv[1];
         size_t lastindex = filename.find_last_of(".");
         savefile = filename.substr(0, lastindex)+".bin";
+
         input.load(arma::csv_name(filename));
         input.shed_row(0);
 
