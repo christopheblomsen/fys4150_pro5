@@ -192,6 +192,7 @@ def make_animation(P_cube, savefile, t_points,
 
 
     # Function that takes care of updating the z data and other things for each frame
+    plt.tight_layout()
     def animation(i):
         # Update z data
         img.set_data((P_cube[:, :, i]))
