@@ -12,4 +12,7 @@ bool exists(const std::string& name);
 // to get the filename for the different slits
 std::string potential_file(int slit);
 
+// Gets the savefile name for the binary file
+std::string get_name(std::string filename);
+
 #endif // UTILS_H_

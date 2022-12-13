@@ -110,23 +110,73 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{$https://g
 	\section{Methods}\label{sec:methods}
 	% ===========================================
 	The bare Schrödinger equation can be written as 
-	\begin{equation}
+
+	\begin{equation}\label{eq:bare Schrodinger}
 		i \frac{\partial u}{\partial t} = -\frac{\partial^2 u}{\partial x^2} - \frac{\partial^2 u}{\partial y^2} + v(x,y) u.
-	\end{equation}
-	We will solve this equation by discretizing it according to the Crank-Nicolson approach. The Crank-Nicolson approach is given by 
+	\end{equation} 
+	
+	In order to solve equation \ref{eq:bare Schrodinger} numerically, we must discetize all the terms and approximate
+	the derivatives. The discretization is done by introducing a grid of points in the
+	$xy$ plane containing all the values of $x$ and $y$ we will use. The time is discretized by using points, with equal spacing, along the time axis.\\ \\
+	The first order time derivative on the left hand side of equation \ref{eq:bare Schrodinger} is approximated using the forward Euler method given by
 	\begin{equation}
-		\frac{u^{n+1}-u^{n}}{\Delta t} = \frac{1}{2}    \left(     F_i^{n+1} + F_i^n     \right),
+		\frac{\partial u}{\partial t} \approx \frac{u^{n+1}-u^n}{\Delta t},
 	\end{equation}
-	where $u^n$ is the dimentionless wavefunction, in two dimentions, at time step $n$. $u^{n+1}$ is then the wavefunction at time step $n+1$.
+
+	where $u^n$, in our case, is the dimentionless wavefunction in two dimentions.
+	The superscript denotes the time step of $u$ and $\Delta t$ is the length of the time
+	step, i.e. the spacing between points on the time axis.	For the second order spatial derivatives
+	on the right hand side of equation \ref{eq:bare Schrodinger}
+	we use Taylor approximations of second order. In the $x$ direction,
+	the double spatial derivative is then given by
+	
+	\begin{equation}\label{ex:double x}
+		\frac{\partial^2 u_{i,j}}{\partial x^2} \approx \frac{u_{i+1,j}-2u_{i,j}+u_{i-1,j}}{h^2},
+	\end{equation}
+	where the subscript denotes the $x$ and $y$ spatial step and $h$ is the spatial step size.
+	The equation for the $y$ direction is a matter of flipping the variables from
+	$x \rightarrow y$ and $i \rightarrow j$.
+	in equation \ref{ex:double x}. The approximations for the derivatives are used in
+	the Crank-Nicolson approach, which, is given by
+	
+	\begin{equation}
+		\frac{u^{n+1}-u^{n}}{\Delta t} = \frac{1}{2}    \left(     F^{n+1} + F^n     \right),
+	\end{equation}
+
+	where the $F^{n+1}$ and $F^n$ terms are the right hand side of equation \ref{eq:bare Schrodinger}
+	evaluated at different time steps. The superscript denotes the time step of the given variable, and $\Delta t$ is the length of the time step,
+	i.e. the spacing between points on the time axis.\\ \\
+
+	We rewrite equation \ref{eq:bare Schrodinger} into 
+
+	Rewriting the terms in equation \ref{eq:bare Schrodinger}
+	according to the Crank-Nicolson approach we get 
+
+	\begin{equation}
+	\frac{u^n_{i,j}}{\Delta t} = \frac{i}{2}\left(  (\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + v(x,y) u        \right)
+	\end{equation}
+	
+
+	
+	
+	
+	Writing out all the terms in equation \ref{eq:bare Schrodinger}
+	according to the Crank-Nicolson approach, and keeping the terms at time step $n+1$ on the left hand side and terms 
+	at time step $n$ on the right hand side we get 
 
 
 	
+
+	
+
+
 	
 	
 	% ===========================================
 	\section{Results}\label{sec:results}
 	% ===========================================
-	
+	heihei
+	- halla
 	
 		
 	% ===========================================

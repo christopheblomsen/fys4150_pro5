@@ -1,6 +1,5 @@
 #include "utils.h"
 #include "PDESolver.h"
-#include <armadillo>
 
 // For complex numbers
 using namespace std::complex_literals;
