@@ -5,6 +5,7 @@
 Box::Box(int M_input, double h_input, double dt_input,
          std::string filename_in, int slit_input, double V_0_input){
     M = M_input;
+    N = (M-2);
     h = h_input;
     dt = dt_input;
     filename = filename_in;
@@ -51,8 +52,8 @@ void Box::make_file(std::string potential){
 
 // The potential well with no slit
 arma::mat Box::no_slit(){
-    arma::mat V = arma::zeros(M-2, M-2);
-    int middle_index = (M-2-1)/2;
+    arma::mat V = arma::zeros(N, N);
+    int middle_index = (N-1)/2;
 
     int x_s = int(0.02/h);
     int x_p = int(0.02/h +1);
@@ -60,8 +61,8 @@ arma::mat Box::no_slit(){
 
     //filling V
     //filling x
-    for (int i = 0; i <= (M-3); i++){
-            V(M-3,i) = V_0;
+    for (int i = 0; i < N; i++){
+            V(N-1,i) = V_0;
             V(0,i) = V_0;
     }
 
@@ -70,17 +71,17 @@ arma::mat Box::no_slit(){
  
 // The potential well with one slit
 arma::mat Box::single_slit(){
-    arma::mat V = arma::zeros(M-2, M-2);
-    int middle_index = (M-2-1)/2;
+    arma::mat V = arma::zeros(N, N);
+    int middle_index = (N-1)/2;
 
     int x_s = int(0.02/h);
-    int x_p = int(0.02/h +1);
+    int x_p = int(0.02/h + 1);
     int y_s = 0.05/h;
 
     //filling V
     //filling x
     for (int i = middle_index - x_s/2.; i <= middle_index + x_s/2; i++){
-        for (int y = 0; y < M-2; y++){
+        for (int y = 0; y < N; y++){
             V(i,y) = V_0;
         }
     }
@@ -97,8 +98,8 @@ arma::mat Box::single_slit(){
 
 // The potential well with two slits
 arma::mat Box::double_slit(){
-    arma::mat V = arma::zeros(M-2, M-2);
-    int middle_index = (M-2-1)/2;
+    arma::mat V = arma::zeros(N, N);
+    int middle_index = (N-1)/2;
 
     int x_s = int(0.02/h);
     int x_p = int(0.02/h + 1);
@@ -106,7 +107,7 @@ arma::mat Box::double_slit(){
     //filling V
     //filling x
     for (int i = middle_index - x_s/2.; i <= middle_index + x_s/2; i++){
-        for (int y = 0; y < M-2; y++){
+        for (int y = 0; y < N; y++){
             V(i,y) = V_0;
         }
     }
@@ -129,8 +130,8 @@ arma::mat Box::double_slit(){
 
 // The potential well with three slits
 arma::mat Box::triple_slit(){
-    arma::mat V = arma::zeros(M-2, M-2);
-    int middle_index = (M-2-1)/2;
+    arma::mat V = arma::zeros(N, N);
+    int middle_index = (N-1)/2;
 
     int x_s = int(0.02/h);
     int x_p = int(0.02/h + 1);
@@ -139,7 +140,7 @@ arma::mat Box::triple_slit(){
     //filling V
     //filling x
     for (int i = middle_index - x_s/2.;i <= middle_index + x_s/2; i++){
-        for (int y = 0; y < M-2; y++){
+        for (int y = 0; y < N; y++){
             V(i,y) = V_0;
         }
     }

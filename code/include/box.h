@@ -19,6 +19,7 @@ struct Box{
     std::string filename;
     int slit;
     double V_0;
+    int N;
 
     // Loads the potential well into a matrix
     arma::mat potential_well();

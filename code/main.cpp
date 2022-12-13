@@ -6,8 +6,6 @@
 #include "utils.h"
 #include "PDESolver.h"
 #include "box.h"
-// #include <iomanip>
-// #include <sstream>
 
 
 int main(int argc, char** argv){
@@ -53,30 +51,9 @@ int main(int argc, char** argv){
     Box box(M, h, dt, filename, slit, v0);
     V = box.potential_well();
 
-    PDESolver test = PDESolver(M, h, dt, V);
-
-    // int n_steps = (int)(T/dt);
-
-    test.make_mat();
-    // arma::cx_mat U0 = test.create_u_mat(xc, yc, sigma_x, sigma_y, px, py);
-    // arma::cx_mat U(test.L, n_steps);
-    // test with cube
-    // arma::cx_cube sim = test.simulation(U0, T);
-    // arma::cx_vec u;
-    // arma::cx_cube sim(N, N, n_steps);
-    // sim.slice(0) = U0;
-    // sim.save("sim.bin");
-
-    // for (int i=1; i < n_steps; i++){
-    //     U = sim.slice(i-1);
-    // //     u =
-    //     sim.slice(i) = U;
-    // }
-    // std::cout << sim << std::endl;
-
-    // without cube
+    PDESolver PDE = PDESolver(M, h, dt, V);
     std::cout << "Starting simulation" << std::endl;
-    arma::cx_mat U = test.simulation(xc, yc, sigma_x, sigma_y, px, py, T);
+    arma::cx_mat U = PDE.simulation(xc, yc, sigma_x, sigma_y, px, py, T);
     std::cout << "Simulation done" << std::endl;
     U.save(savefile);
 

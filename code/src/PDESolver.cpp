@@ -149,6 +149,7 @@ arma::cx_mat PDESolver::evolve(arma::cx_mat U0, double T){
 arma::cx_mat PDESolver::simulation(double xc, double yc,
                                    double sigma_x, double sigma_y,
                                    double px, double py, double T){
+    make_mat();
     arma::cx_mat U0 = create_u_mat(xc, yc, sigma_x, sigma_y, px, py);
     arma::cx_mat U = evolve(U0, T);
     return U;
