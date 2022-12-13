@@ -59,14 +59,13 @@ arma::mat Box::no_slit(){
     int x_p = int(0.02/h +1); //x_p = 5
     int y_s = 0.05/h;
 
-    double V_0 = 1e6;
+    double V_0 = 1e10;
 
     //filling V
     //filling x
-    for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
-        for (int y = 0; y< M-2;y++){
-            V(i,y) = V_0;
-        }
+    for (int i = 0; i<=(M-3); i++){
+            V(i,M-3) = V_0;
+            V(i,0) = V_0;
     }
 
     ////creating first slip
@@ -88,7 +87,7 @@ arma::mat Box::single_slit(){
     int x_p = int(0.02/h +1); //x_p = 5
     int y_s = 0.05/h;
 
-    double V_0 = 1e6;
+    double V_0 = 1e10;
 
     //filling V
     //filling x
@@ -149,7 +148,7 @@ arma::mat Box::triple_slit(){
     int x_s = int(0.02/h);
     int x_p = int(0.02/h +1); //x_p = 5
     int y_s = 0.05/h;
-    double V_0 = 1e6;
+    double V_0 = 1e10;
 
     //filling V
     //filling x
