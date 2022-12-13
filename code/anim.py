@@ -107,7 +107,7 @@ def make_animation(P_cube, savefile):
                         repeat=True, blit=0)
 
     # Run the animation!
-    anim.save(savefile + '_anim.mp4', writer='ffmpeg', fps=30, dpi=300)
+    anim.save(f'{savefile}_anim.mp4', writer='ffmpeg', fps=30, dpi=300)
     plt.show()
 
 
