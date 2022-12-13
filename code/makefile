@@ -4,7 +4,7 @@
 # @file
 # @version 0.1
 
-all: compile link clean
+all: compile link clean run
 
 utils:
 	g++ -c -I include src/utils.cpp

@@ -55,7 +55,7 @@ int main(int argc, char** argv){
         return 1;
     }
     // Sets up the box with wall
-    Box box(M, h, dt, filename, slit);
+    Box box(M, h, dt, filename, slit, v0);
     V = box.potential_well();
 
     PDESolver test = PDESolver(M, h, dt, V);
@@ -83,7 +83,7 @@ int main(int argc, char** argv){
     std::cout << "Starting simulation" << std::endl;
     arma::cx_mat U = test.simulation(xc, yc, sigma_x, sigma_y, px, py, T);
     std::cout << "Simulation done" << std::endl;
-    U.save(savefile);
+    U.save("./data/"+savefile);
 
     return 0;
 }

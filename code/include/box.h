@@ -10,7 +10,7 @@
 struct Box{
     // Constructor
     Box(int M_input, double h_input, double dt_input,
-        std::string filename_in, int slit_input);
+        std::string filename_in, int slit_input, double V_0_input);
 
     // public variables
     int M;
@@ -18,6 +18,7 @@ struct Box{
     double dt;
     std::string filename;
     int slit;
+    double V_0;
 
     // Loads the potential well into a matrix
     arma::mat potential_well();
