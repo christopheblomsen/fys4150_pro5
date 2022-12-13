@@ -40,6 +40,8 @@ code/*
 
 # Unignore all with extensions
 code/!*.*
+code/src/*cpp
+code/include/*h
 
 # Unignore all dirs
 code/!*/
