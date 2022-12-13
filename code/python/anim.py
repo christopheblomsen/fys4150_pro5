@@ -3,7 +3,7 @@ Makes animations of the probability out of arma binary files
 
 Run
 
-python anim.py binary_data.bin animation_suffix
+python anim.py binary_data.bin animation_prefix
 """
 
 

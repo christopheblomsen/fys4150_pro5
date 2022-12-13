@@ -18,7 +18,7 @@ x_points = np.linspace(0, 1, N)
 y_points = np.linspace(0, 1, N)
 x, y = np.meshgrid(x_points, y_points)
 
-U = get_data('problem8.bin')
+U = get_data('problem8_double_slit.bin')
 
 t_end = dt * len(U[0, :])
 t_points = np.linspace(0, t_end, len(U[0, :]))

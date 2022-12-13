@@ -1,3 +1,6 @@
+"""
+A collection of functions used for the python analysis
+"""
 import numpy as np
 import numpy as np
 import pyarma as pa
@@ -102,7 +105,7 @@ def make_colourmap(P_cube, savefile, time_index,
     title = make_title(savefile)
 
     # Add a colourbar
-    cbar = fig.colorbar(img, ax=ax)
+    cbar = fig.colorbar(img, ax=ax, fraction=0.046, pad=0.04)
     cbar.set_label(title, fontsize=fontsize)
     cbar.ax.tick_params(labelsize=fontsize)
 
@@ -171,14 +174,17 @@ def make_animation(P_cube, savefile, t_points,
     plt.xticks(fontsize=fontsize)
     plt.yticks(fontsize=fontsize)
 
+    title = ' '.join(savefile.split('_')[1:]).capitalize()
+    plt.title(title)
+
     # Add a colourbar
-    cbar = fig.colorbar(img, ax=ax)
+    cbar = fig.colorbar(img, ax=ax, fraction=0.046, pad=0.04)
     cbar.set_label('P', fontsize=fontsize)
     cbar.ax.tick_params(labelsize=fontsize)
 
     # Add a text element showing the time
     time_txt = plt.text(0.95, 0.95,
-                        't = {:.3e}'.format(t_min),
+                        't = {:.3e}[s]'.format(t_min),
                         color='white',
                         horizontalalignment='right',
                         verticalalignment='top',
@@ -192,7 +198,7 @@ def make_animation(P_cube, savefile, t_points,
 
         # Update the time label
         current_time = t_min + i * dt
-        time_txt.set_text('t = {:.3e}'.format(current_time))
+        time_txt.set_text('t = {:.3e}[s]'.format(current_time))
 
         return img
 
