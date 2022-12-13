@@ -4,18 +4,34 @@ This repo will solve the Schrödinger equation numerically using `C++` and then 
 
 ### Table of contents
 - [Dependencies](#dependencies)
+- [Code structure](#code-structure)
+  - [PDESolver](#pdesolver)
+  - [Box](#box)
+  - [Utils](#utils)
 - [Build](#build)
 - [Visuailze](#visuailze)
 - [Report](#report)
 
 ### Dependencies
 
-- `c++`
+- `C++`
   - [`armadillo`](https://arma.sourceforge.net/)
 - `Python`
   - [`numpy`](https://numpy.org/)
   - [`matplotlib`](https://matplotlib.org/)
   - [`pyarma`](https://pyarma.sourceforge.io/)
+
+### Code structure
+The code is built up from two classes in `C++`. Where all the header files can be found in the [`include`](code/include/) directory, and the source files in [`src`](code/src/).
+
+#### PDESolver
+The [`PDESolver`](code/PDESolver.cpp) takes care setting up the system and doing the time evolution with the [Crank–Nicolson method](https://en.wikipedia.org/wiki/Crank%E2%80%93Nicolson_method). 
+
+#### Box
+The [`box`](code/box.cpp) only takes care setting up the slits. Where we have for simplified getting the slits by having a potential equal to infinity, numerically speaking. 
+
+#### Utils
+A collection of functions used over the different files.
 
 ### Build
 All of the following assumes you are in the [`code`](code/) repository.
