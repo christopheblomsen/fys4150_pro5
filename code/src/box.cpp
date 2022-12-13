@@ -4,13 +4,13 @@
 
 // Constructor
 Box::Box(int M_input, double h_input, double dt_input,
-         std::string filename_in, int slit_input){
+         std::string filename_in, int slit_input, double V_0_input){
     M = M_input;
     h = h_input;
     dt = dt_input;
     filename = filename_in;
     slit = slit_input;
-
+    V_0 = V_0_input;
 }
 
 // Loads the potential well into a matrix
@@ -59,11 +59,9 @@ arma::mat Box::no_slit(){
     int x_p = int(0.02/h +1); //x_p = 5
     int y_s = 0.05/h;
 
-    double V_0 = 1e10;
-
     //filling V
     //filling x
-    for (int i = 0; i<=(M-3); i++){
+    for (int i = 0; i <= (M-3); i++){
             V(M-3,i) = V_0;
             V(0,i) = V_0;
     }
@@ -87,19 +85,17 @@ arma::mat Box::single_slit(){
     int x_p = int(0.02/h +1); //x_p = 5
     int y_s = 0.05/h;
 
-    double V_0 = 1e10;
-
     //filling V
     //filling x
-    for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
-        for (int y = 0; y< M-2;y++){
+    for (int i = middle_index - x_s/2.; i <= middle_index + x_s/2; i++){
+        for (int y = 0; y < M-2; y++){
             V(i,y) = V_0;
         }
     }
 
     //creating first slip
-    for (int y = middle_index-y_s/2.;y<=middle_index+y_s/2;y++){
-        for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
+    for (int y = middle_index - y_s/2.; y <= middle_index + y_s/2; y++){
+        for (int i = middle_index - x_s/2.;i <= middle_index + x_s/2; i++){
             V(i,y) = 0;
         }
     }
@@ -113,27 +109,26 @@ arma::mat Box::double_slit(){
     int middle_index = (M-2-1)/2;
 
     int x_s = int(0.02/h);
-    int x_p = int(0.02/h +1); //x_p = 5
-    double V_0 = 1e10;
+    int x_p = int(0.02/h + 1); //x_p = 5
 
     //filling V
     //filling x
-    for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
-        for (int y = 0; y< M-2;y++){
+    for (int i = middle_index - x_s/2.; i <= middle_index + x_s/2; i++){
+        for (int y = 0; y < M-2; y++){
             V(i,y) = V_0;
         }
     }
 
     //creating first slip
     int y_s = 0.05/h;
-    for (int y = middle_index+y_s/2.;y<=middle_index+2*y_s/2;y++){
-        for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
+    for (int y = middle_index + y_s/2.; y <= middle_index + 2*y_s/2; y++){
+        for (int i = middle_index - x_s/2.; i <= middle_index + x_s/2; i++){
             V(i,y) = 0;
         }
     }
     //creating second slit
-    for (int y = middle_index-2*y_s/2.;y<=middle_index-y_s/2;y++){
-        for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
+    for (int y = middle_index - 2*y_s/2.; y <= middle_index - y_s/2; y++){
+        for (int i = middle_index - x_s/2.; i <= middle_index + x_s/2; i++){
             V(i,y) = 0;
         }
     }
@@ -146,44 +141,35 @@ arma::mat Box::triple_slit(){
     int middle_index = (M-2-1)/2;
 
     int x_s = int(0.02/h);
-    int x_p = int(0.02/h +1); //x_p = 5
+    int x_p = int(0.02/h + 1);
     int y_s = 0.05/h;
-    double V_0 = 1e10;
 
     //filling V
     //filling x
-    for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
-        for (int y = 0; y< M-2;y++){
+    for (int i = middle_index - x_s/2.;i <= middle_index + x_s/2; i++){
+        for (int y = 0; y < M-2; y++){
             V(i,y) = V_0;
         }
     }
 
     //creating first slip
-    for (int y = middle_index-y_s/2;y<=middle_index+y_s/2;y++){
-        for (int i = middle_index-x_s/2;i<=middle_index+x_s/2;i++){
+    for (int y = middle_index - y_s/2; y <= middle_index + y_s/2; y++){
+        for (int i = middle_index - x_s/2; i <= middle_index + x_s/2; i++){
             V(i,y) = 0;
         }
     }
     
-
-    //for (int y = middle_index+y_s/2.;y<=middle_index+2*y_s/2;y++){
-    //    for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
-    //        V(i,y) = 0;
-    //    }
-    //}
-
-
     //creating second slit
-    for (int y = middle_index+y_s/2+y_s;y <= middle_index + y_s/2+y_s+y_s;y++){
-        for (int i = middle_index-x_s/2;i<=middle_index+x_s/2;i++){
+    for (int y = middle_index + y_s/2 + y_s; y <= middle_index + y_s/2 + y_s + y_s; y++){
+        for (int i = middle_index - x_s/2; i <= middle_index + x_s/2; i++){
             V(i,y) = 0;
         }
     }
 
 
      //creating third slit
-    for (int y = middle_index-y_s/2-y_s-y_s;y <= middle_index-y_s/2-y_s;y++){
-        for (int i = middle_index-x_s/2.;i<=middle_index+x_s/2;i++){
+    for (int y = middle_index - y_s/2 - y_s - y_s; y <= middle_index - y_s/2 - y_s; y++){
+        for (int i = middle_index - x_s/2.; i <= middle_index + x_s/2; i++){
             V(i,y) = 0;
         }
     }
