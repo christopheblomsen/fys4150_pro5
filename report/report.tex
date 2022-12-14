@@ -89,14 +89,12 @@
 	
 	%This is how we create an abstract section.
 	\begin{abstract}
-	This paper solve numerically the 2D time dependent Schrödinger equation for a single particle 
-	interacting through different slit (0,1,2,3 slits). For solving this PDE we will apply the 
-	Crank-Nicolson method. For convergence check we verified that the probability of finding our
-	particle inside the box remain 1 at all time. The total probability was conserved within an 
-	error margin of  $10^{-14}$. We studied the distribution probability of the particle at certain
-	time and we explored the detection probability going through our three kind of slit setup. 
-	You can find all the code in the following Github repo:	
-	\href{https://github.com/christopheblomsen/fys4150_pro5}{https://github.com/christopheblomsen/fys4150\_pro5}
+This paper solves the 2D time-dependent Schrödinger equation numerically for a single particle
+	interacting through the different slits. To solve this PDE, we will apply the
+	Crank-Nicolson method. For convergence check, we verified that the probability of finding our particle inside the box remains 1 at all times. The total probability was conserved within an
+	error margin of  $10^{-14}$. We studied the particle's distribution probability at a certain time and explored the detection probability through our three kinds of slit setup.
+	The code can be found in a GitHub repo:		\href{https://github.com/christopheblomsen/fys4150_pro5}{https://github.com/christopheblomsen/fys4150\_pro5}
+
 \end{abstract}
 	\maketitle	
 	
@@ -105,81 +103,74 @@
 	\section{Introduction} \label{sec:introduction}
 	% ===========================================
 
-	Light as always been an intriguing phenomena in physics. It began during the ancient Greece
-	period were Democritus argued that all things in the universe are composed of indivisible 
-	sub-components, i.e, particles. At the beginning of the eleventh century Ibn al-Haytham 
-	wrote a physics book describing light no longer as a particle but as a wave, using a 
-	pinhole lens to reflect, refract rays of light. This started a heated debate about the 
-	wave-particle duality of light. All physicist joined one of the two side and tried to 
+	Light has always been an intriguing phenomenon in physics. It began in ancient Greece when Democritus argued that all things in the universe are composed of indivisible
+	sub-components, i.e., particles. At the beginning of the eleventh century Ibn al-Haytham
+	wrote a physics book describing light no longer as a particle but as a wave, using a
+	pinhole lens to reflect, and refract rays of light. This started a heated debate about the
+	wave-particle duality of light. All physicists joined one of the two sides and tried to
 	prove that light was either a wave or a particle. \\
-	
-	In 1801, Thomas Young develop the double-slit experiment from Huygens-Fresnel principle
+
+	In 1801, Thomas Young developed the double-slit experiment from the Huygens-Fresnel principle
 	resulting in the discovery of wave interference of light\cite{ThomasYoung}.
 
-	
-	This experiment did not solve the debate but the wave property of light began to dominate 
-	scientific thinking. We will need the introduction of Quantum Mechanics to show that 
-	light can behave as a particle and as a wave with the Schrödinger'equation being derived 
+
+	This experiment did not solve the debate, but the wave property of light began to dominate
+	scientific thinking. We will need the introduction of Quantum Mechanics to show that
+	light can behave as a particle and as a wave, with the Schrödinger'equation being derived
 	from the wave equation. \\
-	
-	In this report we use the 2D time-dependent Schrodinger's equation to simulate a particle's
-	motion in different slit methods, namely no slit, one, two or three slits. Since the 
-	equation is a PDE being similar to the heat equation we will apply the Crank-Nicolson method.
-	This is a finite difference method in time originally used to solve the heat equation\cite{Crank1947APM}. \\
-	
+
+	In this report, we use the 2D time-dependent Schrodinger's equation to simulate a particle's
+	motion in different slit methods, namely no slit, one, two or three slits. Since the equation is a PDE, similar to the heat equation, we will apply the Crank-Nicolson method.
+Originally this finite difference method was used to solve the heat equation\cite{Crank1947APM}. \\
+
 	In section \ref{sec:theory} we will overview the theoretical aspect of our problem by introducing
-	the Schrödinger equation with some light quantum mechanics notion. Then in section \ref{sec:methods}
-	we will introduce the numerical solution applied with the Crank-Nicolson method and the simulation
-	done. After that we will briefly introduce all results obtained from the simulation in section 
-	\ref{sec:results}. Finally we will discuss those results in section \ref{sec:discussion} and
-	in section  \ref{sec:conclusion} we provide a short summary. 
-	
-	
+	the Schrödinger equation with some light quantum mechanical motion. Then in section \ref{sec:methods}
+	we will introduce the numerical solution applied with the Crank-Nicolson method and the simulation. After that, we will briefly introduce all results obtained from the simulation in the section
+	\ref{sec:results}. Finally, we will discuss those results in section \ref{sec:discussion}, and
+	in section  \ref{sec:conclusion}, we provide a summary.
+
 	% ===========================================
 	\section{Theory} \label{sec:theory}
 	% ===========================================
 	The time-dependent Schrödinger equation is defined as
-	
+
 	\begin{equation}
 	i \hbar \frac{d}{d t}|\Psi\rangle=\hat{H}|\Psi\rangle \label{eq:schro_eq}
 	\end{equation}
-	
-	where $\hat{H}$ is the Hamiltonian operator representing the total energy of the system
-	and $|\Psi\rangle$ is the vector state in the Hilbert space. $|\Psi\rangle$ is a vector 
-	containing all possible information on the system at specific time t. However the true 
-	physical meaning of $|\Psi\rangle$ remain an open question as it is impossible to 
-	physically observe $|\Psi\rangle$ \colorbox{red}{maybe ref?}. To obtain the information
-	from $|\Psi\rangle$ we have to apply a certain operator on it giving us a probability 
-	through the Born rule \colorbox{red}{maybe ref?} \\
 
-	
-	In this paper we will consider the case of a single, non-relativistic particle in two dimensions.
-	We will also be working in the position space so we can express our vector
-	in terms of the orthonormal basis of the position space $|x_i\rangle$. This allows us 
-	from the Born rule to calculate the probability of finding our particle between 
+	where $\hat{H}$ is the Hamiltonian operator representing the total energy of the system
+	and $|\Psi\rangle$ is the vector state in the Hilbert space. $|\Psi\rangle$ is a vector
+	containing all possible information on the system at a specific time $t$. However, the actual physical meaning of $|\Psi\rangle$ remains an open question as it is impossible to
+	physically observe $|\Psi\rangle$ \cite{griffiths:quantumn}. To obtain the information
+	from $|\Psi\rangle$, we have to apply a certain operator on it, giving us a probability
+	through the Born rule.\\
+
+
+	In this paper, we will consider the case of a single, non-relativistic particle in two dimensions.
+	We will also work in the position space to express our vector
+	in terms of the orthonormal basis of the position space $|x_i\rangle$. This allows us
+	, from the Born rule to calculate the probability of finding our particle between
 	$x_i$ with the discretization of  $|\Psi\rangle$  at time $t_n$
-	
+
 	\begin{equation}
 		P(x_i;t_n) = \langle x_i |\Psi\rangle = |\Psi^n_i|^2 =  \Psi^{n\dagger}_i\Psi^n_i
 	\end{equation}
-	
+
 	with $\Psi^\dagger$ being the complex-conjugate and assuming normalization of $
 	|\Psi\rangle$. \\
-	
-	By expressing our 2D Hamiltonian operator we can then rewrite our eq. \ref{eq:schro_eq} 
-	
-	
+
+	By expressing our 2D Hamiltonian operator, we can then rewrite our eq. \ref{eq:schro_eq}
+
+
 	\colorbox{red}{look ugly}
-	
+
 	\begin{align*}
 		& \quad i \hbar \frac{\partial}{\partial t} \Psi(x, y, t)= \\
 		& \left[-\frac{\hbar^{2}}{2 m}\left(\frac{\partial^{2}}{\partial x^{2}}+\frac{\partial^{2}}{\partial y^{2}}\right)+V(x, y, t)\right] \Psi(x, y, t) \tag{2} \label{eq:explicit_scho}
 	\end{align*}
-	
-	
-	For simplification in our simulation we will scale away all dimension in Eq.
-	Eq. \ref{eq:explicit_scho}. 
-	
+
+
+	To simplify our simulation, we will scale away all dimensions in \eqref{eq:explicit_scho}.
 	
 	% ===========================================
 	\section{Methods}\label{sec:methods}
