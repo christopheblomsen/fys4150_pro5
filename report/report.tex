@@ -274,7 +274,10 @@ Originally this finite difference method was used to solve the heat equation\cit
 	i.e. $u^{0}$, we use an un-normalized Gaussian wave packet given by
 
 	\begin{equation}\label{eq:wave packet}
-		u(x,y,t=0) = e^{-\frac{(x-x_c)^2}{2 \sigma_x^2} - \frac{(y-y_c)^2}{2 \sigma_y^2} + i p_x (x-x_c) + i p_y (y-y_c)}.
+	\begin{split}
+		u(x,y,t=0) = \exp\Big(&-\frac{(x-x_c)^2}{2 \sigma_x^2} - \frac{(y-y_c)^2}{2 \sigma_y^2} \\
+		&+ i p_x (x-x_c) + i p_y (y-y_c)\Big). \\
+	\end{split}
 	\end{equation}
 	
 	\noindent
