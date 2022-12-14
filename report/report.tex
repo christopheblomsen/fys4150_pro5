@@ -89,7 +89,14 @@
 	
 	%This is how we create an abstract section.
 	\begin{abstract}
-Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{https://github.com/christopheblomsen/fys4150\_pro5}
+	This paper solve numerically the 2D time dependent Schrödinger equation for a single particle 
+	interacting through different slit (0,1,2,3 slits). For solving this PDE we will apply the 
+	Crank-Nicolson method. For convergence check we verified that the probability of finding our
+	particle inside the box remain 1 at all time. The total probability was conserved within an 
+	error margin of  $10^{-14}$. We studied the distribution probability of the particle at certain
+	time and we explored the detection probability going through our three kind of slit setup. 
+	You can find all the code in the following Github repo:	
+	\href{https://github.com/christopheblomsen/fys4150_pro5}{https://github.com/christopheblomsen/fys4150\_pro5}
 \end{abstract}
 	\maketitle	
 	
@@ -229,8 +236,8 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{https://gi
 	\onecolumngrid
 	\begin{equation}
 		\begin{aligned}
-		\frac{u^{n+1}_{i,j}-u^{n}_{i,j}}{\Delta t} &=  \frac{1}{2}\left(\left(i(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n+1}
-	    +   \left(i(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n} \right)\\
+		\frac{u^{n+1}_{i,j}-u^{n}_{i,j}}{\Delta t} &=  \frac{1}{2}\left(\left(i(\frac{\partial^2 u_{i,j}}{\partial x^2} + \frac{\partial^2 u_{i,j}}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n+1}
+	    +   \left(i(\frac{\partial^2 u_{i,j}}{\partial x^2} + \frac{\partial^2 u_{i,j}}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n} \right)\\
 		&=  \frac{1}{2}\Big(    \frac{i}{h^2}\left(  u^{n+1}_{i+1,j}-2u^{n+1}_{i,j}+u^{n+1}_{i-1,j}   +u^{n+1}_{i,j+1}-2u^{n+1}_{i,j}+u^{n+1}_{i,j-1}\right)-iv_{i,j}u^{n+1}_{i,j}\\
 		&+ \frac{i}{h^2}\left(  u^{n}_{i+1,j}-2u^{n}_{i,j}+u^{n}_{i-1,j}   +u^{n}_{i,j+1}-2u^{n}_{i,j}+u^{n}_{i,j-1}\right)-iv_{i,j}u^{n}_{i,j}      \Big)\\ 
 		&\ \\
@@ -368,6 +375,7 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{https://gi
 		\caption{}
 		\label{fig:prob9_triple}
 	\end{figure}
+
 	% ===========================================
 	\section{Discussion}\label{sec:discussion}
 	% ===========================================
@@ -376,6 +384,18 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{https://gi
 	\section{Conclusion}\label{sec:conclusion}
 	% ===========================================
 	
+	In this paper we simulated a single non-relativistic particle obeying 
+	Schrodinger's equation through three types of slit setup, single, double
+	or triple slit. We observed that going through a slit most of the wave-
+	function was reflected while a small part passed through. We saw the 
+	interference pattern characteristic for a wave. \\
+	
+	We also represented the detection probability if we would have placed 
+	a detector screen behind the wall at $x=0.8$. We found maxima and 
+	minima due to constructive or destructive interference. \\
+	
+	All simulation passed the convergence check by conserving the total 
+	probability value with a negligible error of order  $10^{-14}$. \\
 	
 	
 	
