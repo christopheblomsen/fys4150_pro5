@@ -81,5 +81,7 @@ make animate
 
 Which will create a new `animation` directory with all of the `.mp4
 
+But all animations are uploaded to youtube at [https://www.youtube.com/watch?v=6SQEoxnW6Yk&list=PLkOjS3Q17MZaZeQ6vd_3mROJriEFFc2_S&ab_channel=ChristopheKristianBlomsen](https://www.youtube.com/watch?v=6SQEoxnW6Yk&list=PLkOjS3Q17MZaZeQ6vd_3mROJriEFFc2_S&ab_channel=ChristopheKristianBlomsen)
+
 ### Report
 The report can be found in the [`report/`](report/) sub directory. Where all the figures can be found in the [`report/figures`](report/figures/)
