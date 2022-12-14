@@ -199,13 +199,11 @@
 	$xy$ plane containing all the values of $x$ and $y$ we will use. The time is discretized by using points, with equal spacing, along the time axis.\\ \\
 	The first order time derivative on the left hand side of equation \ref{eq:bare Schrodinger} is approximated using the forward Euler method given by
 	\begin{equation}
-		\frac{\partial u}{\partial t} \approx \frac{u^{n+1}-u^n}{\Delta t},
+		\frac{\partial u^{n}}{\partial t} \approx \frac{u^{n+1}-u^n}{\Delta t},
 	\end{equation}
 
 	\noindent
 	where $u^n$, in our case, is the dimensionless wave-function in two dimensions.
-
-	\noindent
 	The superscript denotes the time step of $u$ and $\Delta t$ is the length of the time
 	step, i.e. the spacing between points on the time axis.	For the second order spatial derivatives
 	on the right hand side of equation \ref{eq:bare Schrodinger}
@@ -233,7 +231,7 @@
 	\noindent
 	Rewriting equation \ref{eq:bare Schrodinger}
 	according to the Crank-Nicolson approach we get 
-	\begin{equation}
+	\begin{equation}\label{eq:algo}
 		\begin{aligned}
 		\frac{u^{n+1}_{i,j}-u^{n}_{i,j}}{\Delta t} &=  \frac{1}{2}\Big(\left(i\left(\frac{\partial^2 u_{i,j}}{\partial x^2} + \frac{\partial^2 u_{i,j}}{\partial y^2}\right) -i v_{i,j} u_{i,j}\right)^{n+1} \\
 	    &+   \left(i(\frac{\partial^2 u_{i,j}}{\partial x^2} + \frac{\partial^2 u_{i,j}}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n} \Big)\\
@@ -252,12 +250,12 @@
 		&+u^{n}_{i,j+1}-2u^{n}_{i,j}+u^{n}_{i,j-1}\Big)-\frac{i\Delta t}{2}v_{i,j}u^{n}_{i,j},
 		\end{aligned}
 	\end{equation}
-	\twocolumngrid
+	%\twocolumngrid
 	
 	\noindent
 	where we have used that $r = \frac{i\Delta t}{2h^2}$. The terms at time
 	step $n+1$ are on the left hand side and terms at time step $n$ are on the right
-	hand side.\\ \\
+	hand side.\\
 	
 	\noindent
 	By using the Dirichlet boundary conditions in the $xy$ plane, i.e.
@@ -265,9 +263,14 @@
 		\item $u(x=0, y, t) = 0$
 		\item $u(x=1, y, t) = 0$
 		\item $u(x, y=0, t) = 0$ 
-		\item $u(x, y=1, t) = 0$
+		\item $u(x, y=1, t) = 0$,
 	\end{itemize}
-	The above equation 
+	we can write the result of equation \ref{eq:algo} as a matrix
+	equation on the form 
+	\begin{equation}
+	Au^{n+1} = Bu^n,	
+	\end{equation} 
+	which can easily be solved.
 
 	
 
