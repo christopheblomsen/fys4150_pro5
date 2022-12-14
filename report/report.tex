@@ -141,9 +141,13 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{https://gi
 	The bare Schrödinger equation can be written as 
 
 	\begin{equation}\label{eq:bare Schrodinger}
-		i \frac{\partial u}{\partial t} = -\frac{\partial^2 u}{\partial x^2} - \frac{\partial^2 u}{\partial y^2} + v(x,y) u.
+		\begin{split}
+		i \frac{\partial u}{\partial t} &= -\frac{\partial^2 u}{\partial x^2} - \frac{\partial^2 u}{\partial y^2} + v(x,y) u\\
+		\Rightarrow \ \ \frac{\partial u}{\partial t} &= i\left(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2}\right) - iv(x,y) u.
+		\end{split}
 	\end{equation} 
 	
+	\noindent
 	In order to solve equation \ref{eq:bare Schrodinger} numerically, we must discetize all the terms and approximate
 	the derivatives. The discretization is done by introducing a grid of points in the
 	$xy$ plane containing all the values of $x$ and $y$ we will use. The time is discretized by using points, with equal spacing, along the time axis.\\ \\
@@ -152,6 +156,7 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{https://gi
 		\frac{\partial u}{\partial t} \approx \frac{u^{n+1}-u^n}{\Delta t},
 	\end{equation}
 
+	\noindent
 	where $u^n$, in our case, is the dimentionless wavefunction in two dimentions.
 	The superscript denotes the time step of $u$ and $\Delta t$ is the length of the time
 	step, i.e. the spacing between points on the time axis.	For the second order spatial derivatives
@@ -172,29 +177,33 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{https://gi
 		\frac{u^{n+1}-u^{n}}{\Delta t} = \frac{1}{2}    \left(     F^{n+1} + F^n     \right),
 	\end{equation}
 
+	\noindent
 	where the $F^{n+1}$ and $F^n$ terms are the right hand side of equation \ref{eq:bare Schrodinger}
-	evaluated at different time steps. The superscript denotes the time step of the given variable, and $\Delta t$ is the length of the time step,
+	evaluated at the specified time steps. The superscript denotes the time step of the given variable, and $\Delta t$ is the length of the time step,
 	i.e. the spacing between points on the time axis.\\ \\
 
-	We rewrite equation \ref{eq:bare Schrodinger} into 
-
-	Rewriting the terms in equation \ref{eq:bare Schrodinger}
+	\noindent
+	Rewriting equation \ref{eq:bare Schrodinger}
 	according to the Crank-Nicolson approach we get 
-
+	\onecolumngrid
 	\begin{equation}
-	\frac{u^n_{i,j}}{\Delta t} = \frac{i}{2}\left(  (\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + v(x,y) u        \right)
+		\begin{aligned}
+		\frac{u^{n+1}_{i,j}-u^{n}_{i,j}}{\Delta t} &=  \frac{1}{2}\left(\left(i(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n+1}
+	    +   \left(i(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n} \right)\\
+		&=  \frac{1}{2}\Big(    \frac{i}{h^2}\left(  u^{n+1}_{i+1,j}-2u^{n+1}_{i,j}+u^{n+1}_{i-1,j}   +u^{n+1}_{i,j+1}-2u^{n+1}_{i,j}+u^{n+1}_{i,j-1}\right)-iv_{i,j}u^{n+1}_{i,j}\\
+		&+ \frac{i}{h^2}\left(  u^{n}_{i+1,j}-2u^{n}_{i,j}+u^{n}_{i-1,j}   +u^{n}_{i,j+1}-2u^{n}_{i,j}+u^{n}_{i,j-1}\right)-iv_{i,j}u^{n}_{i,j}      \Big)\\ 
+		&\ \\
+		&\Rightarrow \\ 
+		&\ \\
+		&u^{n+1}_{i,j} -r\Big(  u^{n+1}_{i+1,j}-2u^{n+1}_{i,j}+u^{n+1}_{i-1,j}   +u^{n+1}_{i,j+1}-2u^{n+1}_{i,j}+u^{n+1}_{i,j-1}\Big) +\frac{i\Delta t}{2}v_{i,j}u^{n+1}_{i,j}\\
+		&= u^n_{i,j}+ r\Big(  u^{n}_{i+1,j}-2u^{n}_{i,j}+u^{n}_{i-1,j}   +u^{n}_{i,j+1}-2u^{n}_{i,j}+u^{n}_{i,j-1}\Big)-\frac{i\Delta t}{2}v_{i,j}u^{n}_{i,j},
+		\end{aligned}
 	\end{equation}
-	
-
-	
-	
-	
-	Writing out all the terms in equation \ref{eq:bare Schrodinger}
-	according to the Crank-Nicolson approach, and keeping the terms at time step $n+1$ on the left hand side and terms 
-	at time step $n$ on the right hand side we get 
-
-
-	
+	\twocolumngrid
+	\noindent
+	where we have used that $r = \frac{i\Delta t}{2h^2}$. The terms at time
+	step $n+1$ are on the left hand side and terms at time step $n$ are on the right
+	hand side.
 
 	
 
