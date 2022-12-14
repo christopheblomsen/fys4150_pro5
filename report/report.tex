@@ -131,8 +131,46 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{https://gi
 	% ===========================================
 	\section{Theory} \label{sec:theory}
 	% ===========================================
+	The time-dependent Schrödinger equation is defined as
+	
+	\begin{equation}
+	i \hbar \frac{d}{d t}|\Psi\rangle=\hat{H}|\Psi\rangle \label{eq:schro_eq}
+	\end{equation}
+	
+	where $\hat{H}$ is the Hamiltonian operator representing the total energy of the system
+	and $|\Psi\rangle$ is the vector state in the Hilbert space. $|\Psi\rangle$ is a vector 
+	containing all possible information on the system at specific time t. However the true 
+	physical meaning of $|\Psi\rangle$ remain an open question as it is impossible to 
+	physically observe $|\Psi\rangle$ \colorbox{red}{maybe ref?}. To obtain the information
+	from $|\Psi\rangle$ we have to apply a certain operator on it giving us a probability 
+	through the Born rule \colorbox{red}{maybe ref?} \\
+
+	
+	In this paper we will consider the case of a single, non-relativistic particle in two dimensions. We will also be working in the position space so we can express our vector
+	in terms of the orthonormal basis of the position space $|x_i\rangle$. This allows us 
+	from the Born rule to calculate the probability of finding our particle between 
+	$x_i$ with the discretization of  $|\Psi\rangle$  at time $t_n$
+	
+	\begin{equation}
+		P(x_i;t_n) = \langle x_i |\Psi\rangle = |\Psi^n_i|^2 =  \Psi^{n\dagger}_i\Psi^n_i
+	\end{equation}
+	
+	with $\Psi^\dagger$ being the complex-conjugate and assuming normalization of $
+	|\Psi\rangle$. \\
+	
+	By expressing our 2D Hamiltonian operator we can then rewrite our eq. \ref{eq:schro_eq} 
 	
 	
+	\colorbox{red}{look ugly}
+	
+	\begin{align*}
+		& \quad i \hbar \frac{\partial}{\partial t} \Psi(x, y, t)= \\
+		& \left[-\frac{\hbar^{2}}{2 m}\left(\frac{\partial^{2}}{\partial x^{2}}+\frac{\partial^{2}}{\partial y^{2}}\right)+V(x, y, t)\right] \Psi(x, y, t) \tag{2} \label{eq:explicit_scho}
+	\end{align*}
+	
+	
+	For simplification in our simulation we will scale away all dimension in Eq.
+	Eq. \ref{eq:explicit_scho}. 
 	
 	
 	% ===========================================
@@ -144,7 +182,7 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{https://gi
 		i \frac{\partial u}{\partial t} = -\frac{\partial^2 u}{\partial x^2} - \frac{\partial^2 u}{\partial y^2} + v(x,y) u.
 	\end{equation} 
 	
-	In order to solve equation \ref{eq:bare Schrodinger} numerically, we must discetize all the terms and approximate
+	In order to solve equation \ref{eq:bare Schrodinger} numerically, we must discretize all the terms and approximate
 	the derivatives. The discretization is done by introducing a grid of points in the
 	$xy$ plane containing all the values of $x$ and $y$ we will use. The time is discretized by using points, with equal spacing, along the time axis.\\ \\
 	The first order time derivative on the left hand side of equation \ref{eq:bare Schrodinger} is approximated using the forward Euler method given by
@@ -152,7 +190,7 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{https://gi
 		\frac{\partial u}{\partial t} \approx \frac{u^{n+1}-u^n}{\Delta t},
 	\end{equation}
 
-	where $u^n$, in our case, is the dimentionless wavefunction in two dimentions.
+	where $u^n$, in our case, is the dimensionless wave-function in two dimensions.
 	The superscript denotes the time step of $u$ and $\Delta t$ is the length of the time
 	step, i.e. the spacing between points on the time axis.	For the second order spatial derivatives
 	on the right hand side of equation \ref{eq:bare Schrodinger}
@@ -307,7 +345,7 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{https://gi
 	
 	
 	\onecolumngrid
-	\section*{Refrences}
+	\section*{References}
 	%\bibliographystyle{apalike}
 	\bibliography{refs}
 	
