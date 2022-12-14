@@ -75,7 +75,7 @@
 
 \begin{document}
 	
-	\title{Solving the Schrödinger Equation Using the 2D Crank-Nicolson Method}  % self-explanatory
+	\title{\Huge{Solving the Schrödinger Equation Using the 2D Crank-Nicolson Method}}  % self-explanatory
 	\author{Eloi Martaillé Richard,
 	\
 	Christophe Kristian Blomsen,
@@ -176,6 +176,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\section{Methods}\label{sec:methods}
 	% ===========================================
 	\subsection{The Bare Schrödinger Equation}
+	\noindent
 	The bare Schrödinger equation is dimentionless and can be written as 
 
 	\begin{equation}\label{eq:bare Schrodinger}
@@ -196,7 +197,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 
 	\noindent
 	where $u^n$, in our case, is the dimensionless wave-function in two dimensions.
-	The superscript denotes the time step of $u$ and $\Delta t$ is the length of the time
+	The superscript denotes the time point of $u$ and $\Delta t$ is the length of the time
 	step, i.e. the spacing between points on the time axis.	For the second order spatial derivatives
 	on the right hand side of equation \ref{eq:bare Schrodinger}
 	we use Taylor approximations of second order. In the $x$ direction,
@@ -205,7 +206,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\begin{equation}\label{ex:double x}
 		\frac{\partial^2 u_{i,j}}{\partial x^2} \approx \frac{u_{i+1,j}-2u_{i,j}+u_{i-1,j}}{h^2},
 	\end{equation}
-	where the subscript denotes the $x$ and $y$ spatial step and $h$ is the spatial step size.
+	where the subscript denotes the $x$ and $y$ spatial points and $h$ is the spatial step size.
 	The equation for the $y$ direction is a matter of flipping the variables from
 	$x \rightarrow y$ and $i \rightarrow j$.
 	in equation \ref{ex:double x}.
@@ -221,7 +222,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 
 	\noindent
 	where the $F^{n+1}$ and $F^n$ terms are the right hand side of equation \ref{eq:bare Schrodinger}
-	evaluated at the specified time steps. The superscript denotes the time step of the given variable, and $\Delta t$ is the length of the time step,
+	evaluated at the specified time points. The superscript denotes the time point of the given variable, and $\Delta t$ is the length of the time step,
 	i.e. the spacing between points on the time axis.\\ \\
 
 	\noindent
@@ -248,7 +249,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\end{equation}
 	\noindent
 	where we have used that $r = \frac{i\Delta t}{2h^2}$. The terms at time
-	step $n+1$ are on the left hand side and terms at time step $n$ are on the right
+	point $n+1$ are on the left hand side and terms at time point $n$ are on the right
 	hand side.\\
 	
 
@@ -281,10 +282,12 @@ Originally this finite difference method was used to solve the heat equation\cit
 	coordinates of the wave packet, $\sigma_x$ and $\sigma_y$ are the standard
 	deviations in the $x$ and $y$ directions respectively and $p_x$ and $p_y$
 	are the momenta of the wave packet. Since we use dimentionless units, we let 
-	$x \in [0,1]$, $y \in [0,1]$ and $t \in [0,T]$.\\ \\
+	$x \in [0,1]$, $y \in [0,1]$ and $t \in [0,T]$.\\
 	
 	\noindent
-	The potet
+	The potential, $V$, we use to simulate the slits is zero everywhere except 
+	for the locations where the barrier is located. The potential in the
+	barrier will be constant and given by $v_0$.    
 
 
 	
@@ -310,12 +313,15 @@ Originally this finite difference method was used to solve the heat equation\cit
 	$\sigma_y$    & $5\cross10^{-2}$               &\quad $1\cross10^{-1}$     \\
 	$p_y$             & $0$                                    &\quad $0$                         \\
 	$v_0$             & $0$                                    &\quad $1\cross10^{10}$    \\
+	Wall thickness      & $2\cross10^{-2}$               & $2\cross10^{-2}$        \\
+	Slit aperture          & $0$                                     & $5\cross10{-2}$        \\
+	Wall between slits & $5\cross10^{-2}$          & $5\cross10^{-2}$            \\
 	\hline
 	\end{tabular}
 	\end{table}
 	The resulting absolute error of these systems can, as functions of time, be seen in figure \ref{fig:prob7_error}.
 	
-	\begin{figure}[h!]
+	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem7_error.pdf}
 		\caption{Absolute error versus time, using the system parameters in table \ref{tab:1}}
@@ -323,67 +329,69 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\end{figure}
 	We then find how the wave packet probability propagates through the two-slit system. First at time $t=0$.
 
-	\begin{figure}[h!]
+	\begin{figure}[H]
 		\centering
 		\includegraphics[clip,width=0.49\textwidth]{figures/problem8_P_0.000.pdf}
 		\caption{}
 		\label{fig:prob_P0}
 	\end{figure}
-	Here, $x$ and $y$ are defined as the numbers of pixels we use $x, y\in[0, 200]$. We have then the system at time $t = 10^{-3}$ in figure \ref{fig:prob8_P1}. The particles position is observed to have a probability on both sides of the slits, as well as the origin of a interference pattern.
+	Here, $x$ and $y$ are defined as dimensionless position, $x, y\in[0, 1]$ in units pixels. We have then the system at time $t = 10^{-3}$ in figure \ref{fig:prob8_P1}. The particles position is observed to have a probability on both sides of the slits, as well as the origin of a interference pattern.
 
-	\begin{figure}[h!]
+	\begin{figure}[H]
 		\centering
 		\includegraphics[clip,width=0.49\textwidth]{figures/problem8_P_0.001.pdf}
 		\caption{}
 		\label{fig:prob8_P1}
 	\end{figure}
-The simulation is run until time $t=2\cross10^{-3}$, which can be seen in figure \ref{fig:prob8_P2}
-	\begin{figure}[h!]
+	The simulation is run until time $t=2\cross10^{-3}$, which can be seen in figure \ref{fig:prob8_P2}.
+
+	\begin{figure}[H]
 		\centering
 		\includegraphics[clip,width=0.49\textwidth]{figures/problem8_P_0.002.pdf}
 		\caption{}
 		\label{fig:prob8_P2}
 	\end{figure}
+	We observe the probability bounces back from the "infinite" potentials of the walls. Next up we will look at how the real and imaginary parts of the Schrödinger equation evolves. The real part of the dimensionless wave function $u$, and how it evolves with time $t \in[0, 2\cross10^{-3}]$ can be seen in figure \ref{fig:prob8_Re0}, \ref{fig:prob8_Re1} and \ref{fig:prob8_Re2}.
 
-	\begin{figure}[h!]
+	\begin{figure}[H]
 		\centering
-		\includegraphics[clip,width=0.49\textwidth]{figures/problem8_U_Re_0.000.pdf}
-		\caption{}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/problem8_U_Re_0.000.pdf}
+		\caption{The real part of the wave function $u$ at time $t = 0$.}
 		\label{fig:prob8_Re0}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[clip,width=0.49\textwidth]{figures/problem8_U_Re_0.001.pdf}
-		\caption{}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/problem8_U_Re_0.001.pdf}
+		\caption{The real part of the wave function $u$ at time $t = 10^{-3}$.}
 		\label{fig:prob8_Re1}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[clip,width=0.49\textwidth]{figures/problem8_U_Re_0.002.pdf}
-		\caption{}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/problem8_U_Re_0.002.pdf}
+		\caption{The real part of the wave function $u$ at time $t = 2\cross10^{-3}$.}
 		\label{fig:prob8_Re2}
 	\end{figure}
-
+	We then look at the imaginary part at the equal times.
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[clip,width=0.49\textwidth]{figures/problem8_U_Im_0.000.pdf}
-		\caption{}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/problem8_U_Im_0.000.pdf}
+		\caption{The imaginary part of the wave function $u$ at time $t = 0$}
 		\label{fig:prob8_Im0}
 	\end{figure}
 	
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[clip,width=0.49\textwidth]{figures/problem8_U_Im_0.001.pdf}
-		\caption{}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/problem8_U_Im_0.001.pdf}
+		\caption{The imaginary part of the wave function $u$ at time $t = 10^{-3}$}
 		\label{fig:prob8_Im1}
 	\end{figure}
 	
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[clip,width=0.49\textwidth]{figures/problem8_U_Im_0.002.pdf}
-		\caption{}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/problem8_U_Im_0.002.pdf}
+		\caption{The imaginary part of the wave function $u$ at time $t = 2\cross10^{-3}$}
 		\label{fig:prob8_Im2}
 	\end{figure}
 
@@ -401,7 +409,7 @@ The simulation is run until time $t=2\cross10^{-3}$, which can be seen in figure
 		\label{fig:prob9_double}
 	\end{figure}
 	
-	\begin{figure}[h!]
+	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem9_triple_slit.pdf}
 		\caption{}
