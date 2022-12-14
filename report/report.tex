@@ -89,14 +89,12 @@
 	
 	%This is how we create an abstract section.
 	\begin{abstract}
-	This paper solve numerically the 2D time dependent Schrödinger equation for a single particle 
-	interacting through different slit (0,1,2,3 slits). For solving this PDE we will apply the 
-	Crank-Nicolson method. For convergence check we verified that the probability of finding our
-	particle inside the box remain 1 at all time. The total probability was conserved within an 
-	error margin of  $10^{-14}$. We studied the distribution probability of the particle at certain
-	time and we explored the detection probability going through our three kind of slit setup. 
-	You can find all the code in the following Github repo:	
-	\href{https://github.com/christopheblomsen/fys4150_pro5}{https://github.com/christopheblomsen/fys4150\_pro5}
+This paper solves the 2D time-dependent Schrödinger equation numerically for a single particle
+	interacting through the different slits. To solve this PDE, we will apply the
+	Crank-Nicolson method. For convergence check, we verified that the probability of finding our particle inside the box remains 1 at all times. The total probability was conserved within an
+	error margin of  $10^{-14}$. We studied the particle's distribution probability at a certain time and explored the detection probability through our three kinds of slit setup.
+	The code can be found in a GitHub repo:		\href{https://github.com/christopheblomsen/fys4150_pro5}{https://github.com/christopheblomsen/fys4150\_pro5}
+
 \end{abstract}
 	\maketitle	
 	
@@ -105,81 +103,74 @@
 	\section{Introduction} \label{sec:introduction}
 	% ===========================================
 
-	Light as always been an intriguing phenomena in physics. It began during the ancient Greece
-	period were Democritus argued that all things in the universe are composed of indivisible 
-	sub-components, i.e, particles. At the beginning of the eleventh century Ibn al-Haytham 
-	wrote a physics book describing light no longer as a particle but as a wave, using a 
-	pinhole lens to reflect, refract rays of light. This started a heated debate about the 
-	wave-particle duality of light. All physicist joined one of the two side and tried to 
+	Light has always been an intriguing phenomenon in physics. It began in ancient Greece when Democritus argued that all things in the universe are composed of indivisible
+	sub-components, i.e., particles. At the beginning of the eleventh century Ibn al-Haytham
+	wrote a physics book describing light no longer as a particle but as a wave, using a
+	pinhole lens to reflect, and refract rays of light. This started a heated debate about the
+	wave-particle duality of light. All physicists joined one of the two sides and tried to
 	prove that light was either a wave or a particle. \\
-	
-	In 1801, Thomas Young develop the double-slit experiment from Huygens-Fresnel principle
+
+	In 1801, Thomas Young developed the double-slit experiment from the Huygens-Fresnel principle
 	resulting in the discovery of wave interference of light\cite{ThomasYoung}.
 
-	
-	This experiment did not solve the debate but the wave property of light began to dominate 
-	scientific thinking. We will need the introduction of Quantum Mechanics to show that 
-	light can behave as a particle and as a wave with the Schrödinger'equation being derived 
+
+	This experiment did not solve the debate, but the wave property of light began to dominate
+	scientific thinking. We will need the introduction of Quantum Mechanics to show that
+	light can behave as a particle and as a wave, with the Schrödinger'equation being derived
 	from the wave equation. \\
-	
-	In this report we use the 2D time-dependent Schrodinger's equation to simulate a particle's
-	motion in different slit methods, namely no slit, one, two or three slits. Since the 
-	equation is a PDE being similar to the heat equation we will apply the Crank-Nicolson method.
-	This is a finite difference method in time originally used to solve the heat equation\cite{Crank1947APM}. \\
-	
+
+	In this report, we use the 2D time-dependent Schrodinger's equation to simulate a particle's
+	motion in different slit methods, namely no slit, one, two or three slits. Since the equation is a PDE, similar to the heat equation, we will apply the Crank-Nicolson method.
+Originally this finite difference method was used to solve the heat equation\cite{Crank1947APM}. \\
+
 	In section \ref{sec:theory} we will overview the theoretical aspect of our problem by introducing
-	the Schrödinger equation with some light quantum mechanics notion. Then in section \ref{sec:methods}
-	we will introduce the numerical solution applied with the Crank-Nicolson method and the simulation
-	done. After that we will briefly introduce all results obtained from the simulation in section 
-	\ref{sec:results}. Finally we will discuss those results in section \ref{sec:discussion} and
-	in section  \ref{sec:conclusion} we provide a short summary. 
-	
-	
+	the Schrödinger equation with some light quantum mechanical motion. Then in section \ref{sec:methods}
+	we will introduce the numerical solution applied with the Crank-Nicolson method and the simulation. After that, we will briefly introduce all results obtained from the simulation in the section
+	\ref{sec:results}. Finally, we will discuss those results in section \ref{sec:discussion}, and
+	in section  \ref{sec:conclusion}, we provide a summary.
+
 	% ===========================================
 	\section{Theory} \label{sec:theory}
 	% ===========================================
 	The time-dependent Schrödinger equation is defined as
-	
+
 	\begin{equation}
 	i \hbar \frac{d}{d t}|\Psi\rangle=\hat{H}|\Psi\rangle \label{eq:schro_eq}
 	\end{equation}
-	
-	where $\hat{H}$ is the Hamiltonian operator representing the total energy of the system
-	and $|\Psi\rangle$ is the vector state in the Hilbert space. $|\Psi\rangle$ is a vector 
-	containing all possible information on the system at specific time t. However the true 
-	physical meaning of $|\Psi\rangle$ remain an open question as it is impossible to 
-	physically observe $|\Psi\rangle$ \colorbox{red}{maybe ref?}. To obtain the information
-	from $|\Psi\rangle$ we have to apply a certain operator on it giving us a probability 
-	through the Born rule \colorbox{red}{maybe ref?} \\
 
-	
-	In this paper we will consider the case of a single, non-relativistic particle in two dimensions.
-	We will also be working in the position space so we can express our vector
-	in terms of the orthonormal basis of the position space $|x_i\rangle$. This allows us 
-	from the Born rule to calculate the probability of finding our particle between 
+	where $\hat{H}$ is the Hamiltonian operator representing the total energy of the system
+	and $|\Psi\rangle$ is the vector state in the Hilbert space. $|\Psi\rangle$ is a vector
+	containing all possible information on the system at a specific time $t$. However, the actual physical meaning of $|\Psi\rangle$ remains an open question as it is impossible to
+	physically observe $|\Psi\rangle$ \cite{griffiths:quantumn}. To obtain the information
+	from $|\Psi\rangle$, we have to apply a certain operator on it, giving us a probability
+	through the Born rule.\\
+
+
+	In this paper, we will consider the case of a single, non-relativistic particle in two dimensions.
+	We will also work in the position space to express our vector
+	in terms of the orthonormal basis of the position space $|x_i\rangle$. This allows us
+	, from the Born rule to calculate the probability of finding our particle between
 	$x_i$ with the discretization of  $|\Psi\rangle$  at time $t_n$
-	
+
 	\begin{equation}
 		P(x_i;t_n) = \langle x_i |\Psi\rangle = |\Psi^n_i|^2 =  \Psi^{n\dagger}_i\Psi^n_i
 	\end{equation}
-	
+
 	with $\Psi^\dagger$ being the complex-conjugate and assuming normalization of $
 	|\Psi\rangle$. \\
-	
-	By expressing our 2D Hamiltonian operator we can then rewrite our eq. \ref{eq:schro_eq} 
-	
-	
+
+	By expressing our 2D Hamiltonian operator, we can then rewrite our eq. \ref{eq:schro_eq}
+
+
 	\colorbox{red}{look ugly}
-	
+
 	\begin{align*}
 		& \quad i \hbar \frac{\partial}{\partial t} \Psi(x, y, t)= \\
 		& \left[-\frac{\hbar^{2}}{2 m}\left(\frac{\partial^{2}}{\partial x^{2}}+\frac{\partial^{2}}{\partial y^{2}}\right)+V(x, y, t)\right] \Psi(x, y, t) \tag{2} \label{eq:explicit_scho}
 	\end{align*}
-	
-	
-	For simplification in our simulation we will scale away all dimension in Eq.
-	Eq. \ref{eq:explicit_scho}. 
-	
+
+
+	To simplify our simulation, we will scale away all dimensions in \eqref{eq:explicit_scho}.
 	
 	% ===========================================
 	\section{Methods}\label{sec:methods}
@@ -278,8 +269,8 @@
 	\end{equation} 
 	which can easily be solved when the initial condition of $u$ is known.\\ \\
 	\noindent
-	For the initial condition of the dimentionless wavefunction in two dimentions,
-	i.e. $u^{0}$, we use an unnormalised Gaussian wave packet given by
+	For the initial condition of the dimensionless wave-function in two dimensions,
+	i.e. $u^{0}$, we use an un-normalized Gaussian wave packet given by
 
 	\begin{equation}\label{eq:wave packet}
 		u(x,y,t=0) = e^{-\frac{(x-x_c)^2}{2 \sigma_x^2} - \frac{(y-y_c)^2}{2 \sigma_y^2} + i p_x (x-x_c) + i p_y (y-y_c)}.
@@ -321,9 +312,8 @@
 	$v_0$             & $0$                                    &\quad $1\cross10^{10}$    \\
 	\hline
 	\end{tabular}
-	\end{table}\\
-	The resulting absolute error of these systems can, as functions of time, be seen in \ref{fig:prob7_error}.
-	
+	\end{table}
+	The resulting absolute error of these systems can, as functions of time, be seen in figure \ref{fig:prob7_error}.
 	
 	\begin{figure}[h!]
 		\centering
@@ -339,6 +329,7 @@
 		\caption{}
 		\label{fig:prob_P0}
 	\end{figure}
+	Here, $x$ and $y$ are defined as the numbers of pixels we use $x, y\in[0, 200]$. We have then the system at time $t = 10^{-4}$ in figure \ref{fig:prob8_P1}. The particles position is observed to have a probability on both sides of the slits, as well as the origin of a interference pattern. The simulation is run until time $t=2\cross10^{-4}$
 
 	\begin{figure}[h!]
 		\centering
@@ -356,42 +347,42 @@
 
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[scale=0.55]{figures/real_plot_0.0.pdf}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/real_plot_0.0.pdf}
 		\caption{}
 		\label{fig:prob8_Re0}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[scale=0.55]{figures/real_plot_0.001.pdf}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/real_plot_0.001.pdf}
 		\caption{}
 		\label{fig:prob8_Re1}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[scale=0.55]{figures/real_plot_0.002.pdf}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/real_plot_0.002.pdf}
 		\caption{}
 		\label{fig:prob8_Re2}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[scale=0.55]{figures/im_plot_0.0.pdf}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/im_plot_0.0.pdf}
 		\caption{}
 		\label{fig:prob8_Im0}
 	\end{figure}
 	
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[scale=0.55]{figures/im_plot_0.001.pdf}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/im_plot_0.001.pdf}
 		\caption{}
 		\label{fig:prob8_Im1}
 	\end{figure}
 	
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[scale=0.55]{figures/im_plot_0.002.pdf}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/im_plot_0.002.pdf}
 		\caption{}
 		\label{fig:prob8_Im2}
 	\end{figure}
@@ -420,7 +411,91 @@
 	% ===========================================
 	\section{Discussion}\label{sec:discussion}
 	% ===========================================
-		heihei
+	
+	\subsection{Total probability deviation} \label{subsec:tot_prob_dev}
+	
+	One important aspect of numerical analysis is to make sure our numerical
+	solution does not diverge. It is a crucial aspect especially when no 
+	analytical solutions exist or are known. For example, in case of an 
+	Newtonian system of equation, we usually have conservation of energy
+	so checking that our energy is conserved is a good indicator that our
+	results are significant. In the case of quantum mechanics, since we 
+	can only observe probabilities one good convergence check is to make sure
+	that our total probability is 1 at all time during our simulation. \\
+	
+	In Fig.	\ref{fig:prob7_error}, we have plotted the absolute error of 
+	the total probability $|P_{\rm tot} - 1|$ for all time step. 
+	We see that our total probability is always close to the theoretical 
+	value of 1 with an error margin of $10^{-14}$.  \\
+	
+	We made a function in our python script to make sure that all further 
+	simulation also pass our benchmark. 
+	
+	\subsection{Color-map of the wave-function and probability distribution}\label{subsec:colormap}
+	
+	Now we have run a simulation with the parameters for the double-slit found in
+	Table \ref{tab:1} and we have plotted the Real, Imaginary and the probability
+	distribution for times $t \in \{0, 0.001, 0.002 \}$s. All colorbar have been 
+	normalized to the maximum value in each plot. \\
+	
+	At $t=0$ Figures \ref{fig:prob8_Im0}, \ref{fig:prob8_Re0} and \ref{fig:prob_P0}
+	shows respectively the imaginary, real part and the distribution probability 
+	of our initial Gaussian wave-packet. We also notice that the Real and Imaginary 
+	part have opposite value making the complex-norm looking like our probability
+	distribution as expected. \\
+	
+	At $t=0.001$ Figures \ref{fig:prob8_Im1}, \ref{fig:prob8_Re1} and \ref{fig:prob8_P1}
+	represent our particle hitting the double-slit configuration. We first see that our 
+	particle only moved in the $x$-direction as it makes sense because we only gave a 
+	momentum in that direction. When our particle it the slit configuration we can see 
+	that it behaves like a wave with some part being reflected with negative and positive 
+	value due to the constructive or destructive interference pattern. On the other side
+	we can see part of the wave went through the slit but has not interacted with itself 
+	yet. \\ 
+	
+		
+	The plot for our final time stamp $t=0.002$ are represented by 
+	Figures \ref{fig:prob8_Im2}, \ref{fig:prob8_Re2} and \ref{fig:prob8_P2}
+	That time shows the wave function after it has passed the slit configuration. 
+	We now observe interference pattern in both reflected and transmitted part. This 
+	is expected as a wave will interact with itself. We can see that the particle has
+	greater probability of being reflected than moving through, due to the size difference
+	between the slit aperture and the wall. We can observe two spots of high probability in 
+	the reflected part around ($x\approx0.3$, $y\approx0.60$ and $y\approx0.30$). This is 
+	probably due to the constructive interference. 
+	
+	On the transmitted part we see three main region with one more probable than the other 
+	two. The wave spreading creates interference pattern meaning that we observe minima and 
+	maxima. \\
+	
+	The Real and Imaginary part of the wave-function can not be describe physically as it 
+	is not possible to observe it. We can only give some sense in our case when we put them
+	together by calculating the complex norm giving us the probability distribution. We can 
+	see from all Imaginary and Real part that they 'follow' the behavior of our wave as 
+	expected. 
+	
+	
+	\subsection{Detection Probability} \label{subsec:detec_prob}
+	
+	One last interesting thing we look at is the detection probability of our particle. 
+	For simulating this we imagine a detector screen at $x=0.8$ and we took the probability
+	distribution along that line. We assume that we detect the particle so we normalized 
+	our "line-distribution" so that the sum of all probability goes to 1. We used this method
+	for our three slit configuration plotted in Figures \ref{fig:prob9_single} \ref{fig:prob9_double}
+	and \ref{fig:prob9_triple}. \\
+	
+	For the single slit we see a Gaussian shape-like profile around the center where the slit
+	is. In that case the wave interact with itself but no interference are present.	For the
+	double slit we see one maxima at the center and two secondary maxima on the edges. We now
+	start to observe some interference pattern due to slit configuration making the wave 
+	interfere constructively on the maxima and destructively in between the pics. Finally for
+	the triple slit we observe once again interference pattern with four maxima and three 
+	minima. However we do not observe the maxima to be around the center in that case. One 
+	interesting thing to do would be to use the classical wave equation and solve the 
+	slit-configuration and compare with our results. 
+	
+	
+	
 	% ===========================================
 	\section{Conclusion}\label{sec:conclusion}
 	% ===========================================
