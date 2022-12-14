@@ -241,7 +241,7 @@ def detector_screen(P_cube, y_points, savefile,
             Nothing, but saves the image
     """
     screen_index = int(x/h)
-    P = P_cube[screen_index, :, time_point]/np.sum(P_cube[screen_index, :, time_point])
+    P = P_cube[:, screen_index, time_point]/np.sum(P_cube[:, screen_index, time_point])
     plt.plot(y_points, P)
     plt.xlabel('y')
     plt.ylabel('Normalised probability')
