@@ -176,7 +176,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\section{Methods}\label{sec:methods}
 	% ===========================================
 	\subsection{The Bare Schrödinger Equation}
-	The bare Schrödinger equation can be written as 
+	The bare Schrödinger equation is dimentionless and can be written as 
 
 	\begin{equation}\label{eq:bare Schrodinger}
 		\begin{split}
@@ -276,10 +276,15 @@ Originally this finite difference method was used to solve the heat equation\cit
 		u(x,y,t=0) = e^{-\frac{(x-x_c)^2}{2 \sigma_x^2} - \frac{(y-y_c)^2}{2 \sigma_y^2} + i p_x (x-x_c) + i p_y (y-y_c)}.
 	\end{equation}
 	
+	\noindent
 	In equation \ref{eq:wave packet}, $x_c$ and $y_c$ are the central
 	coordinates of the wave packet, $\sigma_x$ and $\sigma_y$ are the standard
 	deviations in the $x$ and $y$ directions respectively and $p_x$ and $p_y$
-	are the momenta of the wave packet.
+	are the momenta of the wave packet. Since we use dimentionless units, we let 
+	$x \in [0,1]$, $y \in [0,1]$ and $t \in [0,T]$.\\ \\
+	
+	\noindent
+	The potet
 
 
 	
