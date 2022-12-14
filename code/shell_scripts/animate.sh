@@ -15,5 +15,6 @@ do
     echo "Animating " $FILE
     SAVE=$(basename -s '.bin' $FILE)
     python3 $PYTHON_PATH/anim.py $FILE $SAVE
-    mv $(echo $SAVE.mp4) $ANIMATION
 done
+
+mv *.mp4 $ANIMATION
