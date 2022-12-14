@@ -184,6 +184,7 @@
 	% ===========================================
 	\section{Methods}\label{sec:methods}
 	% ===========================================
+	\subsection{The Bare Schrödinger Equation}
 	The bare Schrödinger equation can be written as 
 
 	\begin{equation}\label{eq:bare Schrodinger}
@@ -216,8 +217,12 @@
 	where the subscript denotes the $x$ and $y$ spatial step and $h$ is the spatial step size.
 	The equation for the $y$ direction is a matter of flipping the variables from
 	$x \rightarrow y$ and $i \rightarrow j$.
-	in equation \ref{ex:double x}. The approximations for the derivatives are used in
-	the Crank-Nicolson approach, which, is given by
+	in equation \ref{ex:double x}.
+	\subsection{The Crank-Nicolson Approach}
+	
+	\noindent
+	The approximations for the derivatives are used in
+	the Crank-Nicolson approach, which is given by
 	
 	\begin{equation}
 		\frac{u^{n+1}-u^{n}}{\Delta t} = \frac{1}{2}    \left(     F^{n+1} + F^n     \right),
@@ -257,6 +262,9 @@
 	step $n+1$ are on the left hand side and terms at time step $n$ are on the right
 	hand side.\\
 	
+
+	\subsection{The Simulated System}
+
 	\noindent
 	By using the Dirichlet boundary conditions in the $xy$ plane, i.e.
 	\begin{itemize}
@@ -270,9 +278,19 @@
 	\begin{equation}
 	Au^{n+1} = Bu^n,	
 	\end{equation} 
-	which can easily be solved.
+	which can easily be solved when the initial condition of $u$ is known.\\ \\
+	\noindent
+	For the initial condition of the dimentionless wavefunction in two dimentions,
+	i.e. $u^{0}$, we use an unnormalised Gaussian wave packet given by
 
+	\begin{equation}\label{eq:wave packet}
+		u(x,y,t=0) = e^{-\frac{(x-x_c)^2}{2 \sigma_x^2} - \frac{(y-y_c)^2}{2 \sigma_y^2} + i p_x (x-x_c) + i p_y (y-y_c)}.
+	\end{equation}
 	
+	In equation \ref{eq:wave packet}, $x_c$ and $y_c$ are the central
+	coordinates of the wave packet, $\sigma_x$ and $\sigma_y$ are the standard
+	deviations in the $x$ and $y$ directions respectively and $p_x$ and $p_y$
+	are the momenta of the wave packet.
 
 
 	
