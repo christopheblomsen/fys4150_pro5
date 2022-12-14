@@ -7,7 +7,11 @@ from functions import get_data, make_colourmap
 import sys
 import os
 
-os.chdir(r'./data')
+try:
+    os.chdir(r'./data')
+except:
+    os.chdir(r'../data')
+
 savefile = ['problem8_P', 'problem8_U_Re', 'problem8_U_Im']
 # The below is more or less taken directly from assigment text
 h = 0.005
