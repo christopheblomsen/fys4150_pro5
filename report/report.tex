@@ -274,7 +274,10 @@ Originally this finite difference method was used to solve the heat equation\cit
 	i.e. $u^{0}$, we use an un-normalized Gaussian wave packet given by
 
 	\begin{equation}\label{eq:wave packet}
-		u(x,y,t=0) = e^{-\frac{(x-x_c)^2}{2 \sigma_x^2} - \frac{(y-y_c)^2}{2 \sigma_y^2} + i p_x (x-x_c) + i p_y (y-y_c)}.
+	\begin{split}
+		u(x,y,t=0) = \exp\Big(&-\frac{(x-x_c)^2}{2 \sigma_x^2} - \frac{(y-y_c)^2}{2 \sigma_y^2} \\
+		&+ i p_x (x-x_c) + i p_y (y-y_c)\Big). \\
+	\end{split}
 	\end{equation}
 	
 	\noindent
@@ -295,7 +298,16 @@ Originally this finite difference method was used to solve the heat equation\cit
 	% ===========================================
 	\section{Results}\label{sec:results}
 	% ===========================================
-	We now present the results for the open box, and the two-slit system, using the initial conditions in table \ref{tab:1}.
+	We now present the results for the open box, and the two-slit system, using the initial conditions in table \ref{tab:1}. We have used the potential in figure \ref{fig:potential} for the double slit.
+	
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[trim={2cm 0cm 2cm 1cm},clip,width=0.49\textwidth]{figures/double_slit.pdf}
+		\caption{The potential used for the double slit with value $v_0$ from table \ref{tab:1}.}
+		\label{fig:potential}
+	\end{figure}
+	
 	\begin{table}[h!]
 	\centering
 	\caption{system parameters used for calculating the probability distribution for the no-slit and double slit.}
@@ -320,15 +332,6 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\end{tabular}
 	\end{table}
 	The resulting absolute error of these systems can, as functions of time, be seen in figure \ref{fig:prob7_error}.
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[scale=0.55]{figures/double_slit.pdf}
-		\caption{}
-		\label{fig:prob7_error}
-	\end{figure}
-
-
 
 	\begin{figure}[H]
 		\centering
@@ -344,7 +347,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 		\caption{Probability function at time $t=0$.}
 		\label{fig:prob_P0}
 	\end{figure}
-	Here, $x$ and $y$ are defined as dimensionless position, $x, y\in[0, 1]$ in units pixels. We have then the system at time $t = 10^{-3}$ in figure \ref{fig:prob8_P1}. The particles position is observed to have a probability on both sides of the slits, as well as the origin of a interference pattern.
+	Here, $x$ and $y$ are defined as dimensionless position, $x, y\in[0, 1]$. We have then the system at time $t = 10^{-3}$ in figure \ref{fig:prob8_P1}. The particles position is observed to have a probability on both sides of the slits, as well as the origin of a interference pattern.
 
 	\begin{figure}[H]
 		\centering
@@ -397,31 +400,32 @@ Originally this finite difference method was used to solve the heat equation\cit
 		\label{fig:prob8_Im1}
 	\end{figure}
 	
-	\begin{figure}[h!]
+	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Im_0.002.pdf}
 		\caption{The imaginary part of the wave function $u$ at time $t = 2\cross10^{-3}$}
 		\label{fig:prob8_Im2}
 	\end{figure}
 
+	We now look at the  interference patterns caused by similar potentials as we see in fig \ref{fig:potential} for single (figure \ref{fig:prob9_single}), double (figure \ref{fig:prob9_double}) and triple (figure \ref{fig:prob9_triple}) slit systems.
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem9_single_slit.pdf}
-		\caption{}
+		\caption{Normalized probability distribution pattern using the single slit system.}
 		\label{fig:prob9_single}
 	\end{figure}
 	
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem9_double_slit.pdf}
-		\caption{}
+		\caption{Normalized probability distribution using the double slit system.}
 		\label{fig:prob9_double}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem9_triple_slit.pdf}
-		\caption{}
+		\caption{Normalized probability distribution using the triple slit system.}
 		\label{fig:prob9_triple}
 	\end{figure}
 
@@ -483,7 +487,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	One last interesting thing we look at is the detection probability of our particle.
 	To simulate this, we imagined a detector screen at $x=0.8$ and took the probability
 	distribution along that line. We assume that we detect the particle, so we normalized our "line distribution" so that the sum of all probability goes to 1. We used this method
-	for our three slit configuration plotted in Figures \ref{fig:prob9_single} \ref{fig:prob9_double}
+	for our three slit configuration plotted in Figures \ref{fig:prob9_single}, \ref{fig:prob9_double}
 	and \ref{fig:prob9_triple}. \\
 
 	For the single slit, we see a Gaussian shape-like profile around the centre where the slit
@@ -497,7 +501,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	% ===========================================
 	
 	In this paper we simulated a single non-relativistic particle obeying 
-	Schrodinger's equation through three types of slit setup, single, double
+	Schrödinger's equation through three types of slit setup, single, double
 	or triple slit. We observed that going through a slit most of the wave-
 	function was reflected while a small part passed through. We saw the 
 	interference pattern characteristic for a wave. \\
