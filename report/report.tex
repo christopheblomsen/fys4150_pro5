@@ -229,8 +229,8 @@ Github link: \href{https://github.com/christopheblomsen/fys4150_pro5}{https://gi
 	\onecolumngrid
 	\begin{equation}
 		\begin{aligned}
-		\frac{u^{n+1}_{i,j}-u^{n}_{i,j}}{\Delta t} &=  \frac{1}{2}\left(\left(i(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n+1}
-	    +   \left(i(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n} \right)\\
+		\frac{u^{n+1}_{i,j}-u^{n}_{i,j}}{\Delta t} &=  \frac{1}{2}\left(\left(i(\frac{\partial^2 u_{i,j}}{\partial x^2} + \frac{\partial^2 u_{i,j}}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n+1}
+	    +   \left(i(\frac{\partial^2 u_{i,j}}{\partial x^2} + \frac{\partial^2 u_{i,j}}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n} \right)\\
 		&=  \frac{1}{2}\Big(    \frac{i}{h^2}\left(  u^{n+1}_{i+1,j}-2u^{n+1}_{i,j}+u^{n+1}_{i-1,j}   +u^{n+1}_{i,j+1}-2u^{n+1}_{i,j}+u^{n+1}_{i,j-1}\right)-iv_{i,j}u^{n+1}_{i,j}\\
 		&+ \frac{i}{h^2}\left(  u^{n}_{i+1,j}-2u^{n}_{i,j}+u^{n}_{i-1,j}   +u^{n}_{i,j+1}-2u^{n}_{i,j}+u^{n}_{i,j-1}\right)-iv_{i,j}u^{n}_{i,j}      \Big)\\ 
 		&\ \\
