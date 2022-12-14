@@ -10,6 +10,8 @@ This repo will solve the Schrödinger equation numerically using `C++` and then 
   - [Utils](#utils)
 - [Build](#build)
 - [Visuailze](#visuailze)
+  - [Plotting](#plotting)
+  - [Animation](#animation)
 - [Report](#report)
 
 ### Dependencies
@@ -67,13 +69,34 @@ The binary files will be saved in a `data` directory that is not in this repo, s
 
 
 ### Visuailze
-After simulation is done it will generate a binary file. This can be used in `Python` as follows
+After simulation is done it will generate a binary file. This can be used in `Python`. 
+The `python` scripts can run from either the [`code`](code/) or [`python`](code/python/) directories and will get the binary data from `data`. 
+Where it will also save the `*pdf`'s. 
 
-```Python
+#### Plotting
+
+All the plots can be generated with
+
+```Shell
+make plot_all
+``` 
+
+Or individually with
+
+```Shell
+python foo.py
+```
+Where `foo.py` is the python script.
+
+#### Animation
+The animation can be made individually with
+
+```Shell
 python anim.py foo.bin savefile
 ```
 
-Where `foo.bin` is the binary file that is to be visualized, and `savefile` is the suffix to the `anim.mp4`. Or if you want to generate all of the animations
+Where `foo.bin` is the binary file that is to be visualized, and `savefile` is the suffix to the `anim.mp4`. 
+Or if you want to generate all of the animations
 
 ```Shell
 make animate
