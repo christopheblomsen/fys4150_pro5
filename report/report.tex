@@ -364,42 +364,42 @@ Originally this finite difference method was used to solve the heat equation\cit
 
 	\begin{figure}[H]
 		\centering
-		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/problem8_U_Re_0.000.pdf}
+		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Re_0.000.pdf}
 		\caption{The real part of the wave function $u$ at time $t = 0$.}
 		\label{fig:prob8_Re0}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/problem8_U_Re_0.001.pdf}
+		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Re_0.001.pdf}
 		\caption{The real part of the wave function $u$ at time $t = 10^{-3}$.}
 		\label{fig:prob8_Re1}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/problem8_U_Re_0.002.pdf}
+		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Re_0.002.pdf}
 		\caption{The real part of the wave function $u$ at time $t = 2\cross10^{-3}$.}
 		\label{fig:prob8_Re2}
 	\end{figure}
 	We then look at the imaginary part at the equal times.
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/problem8_U_Im_0.000.pdf}
+		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Im_0.000.pdf}
 		\caption{The imaginary part of the wave function $u$ at time $t = 0$}
 		\label{fig:prob8_Im0}
 	\end{figure}
 	
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/problem8_U_Im_0.001.pdf}
+		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Im_0.001.pdf}
 		\caption{The imaginary part of the wave function $u$ at time $t = 10^{-3}$}
 		\label{fig:prob8_Im1}
 	\end{figure}
 	
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/problem8_U_Im_0.002.pdf}
+		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Im_0.002.pdf}
 		\caption{The imaginary part of the wave function $u$ at time $t = 2\cross10^{-3}$}
 		\label{fig:prob8_Im2}
 	\end{figure}
@@ -428,90 +428,69 @@ Originally this finite difference method was used to solve the heat equation\cit
 	% ===========================================
 	\section{Discussion}\label{sec:discussion}
 	% ===========================================
-	
-	\subsection{Total probability deviation} \label{subsec:tot_prob_dev}
-	
-	One important aspect of numerical analysis is to make sure our numerical
-	solution does not diverge. It is a crucial aspect especially when no 
-	analytical solutions exist or are known. For example, in case of an 
-	Newtonian system of equation, we usually have conservation of energy
+\subsection{Total probability deviation} \label{subsec:tot_prob_dev}
+
+	One important aspect of numerical analysis is ensuring our numerical
+	solution does not diverge. It is crucial, especially when no
+	analytical solutions exist or are known. For example, in the case of an
+	Newtonian system of equations, we usually have energy conservation,
 	so checking that our energy is conserved is a good indicator that our
-	results are significant. In the case of quantum mechanics, since we 
-	can only observe probabilities one good convergence check is to make sure
-	that our total probability is 1 at all time during our simulation. \\
-	
-	In Fig.	\ref{fig:prob7_error}, we have plotted the absolute error of 
-	the total probability $|P_{\rm tot} - 1|$ for all time step. 
-	We see that our total probability is always close to the theoretical 
+	results are significant. In the case of quantum mechanics, since we
+	can only observe probabilities, one good convergence check is to ensure
+	that our total probability is 1 at all times during our simulation. \\
+
+	In Fig.	\ref{fig:prob7_error}, we have plotted the absolute error of
+	the total probability $|P_{\rm tot} - 1|$ for all time step.
+	Our total probability is always close to the theoretical
 	value of 1 with an error margin of $10^{-14}$.  \\
-	
-	We made a function in our python script to make sure that all further 
-	simulation also pass our benchmark. 
-	
-	\subsection{Color-map of the wave-function and probability distribution}\label{subsec:colormap}
-	
-	Now we have run a simulation with the parameters for the double-slit found in
-	Table \ref{tab:1} and we have plotted the Real, Imaginary and the probability
-	distribution for times $t \in \{0, 0.001, 0.002 \}$s. All colorbar have been 
-	normalized to the maximum value in each plot. \\
-	
-	At $t=0$ Figures \ref{fig:prob8_Im0}, \ref{fig:prob8_Re0} and \ref{fig:prob_P0}
-	shows respectively the imaginary, real part and the distribution probability 
-	of our initial Gaussian wave-packet. We also notice that the Real and Imaginary 
-	part have opposite value making the complex-norm looking like our probability
-	distribution as expected. \\
-	
+
+	We made a function in our python script to make sure that all further
+	simulations also pass our benchmark.
+
+	\subsection{Colour-map of the wave function and probability distribution}\label{subsec:colormap}
+
+	Now we have simulated the parameters for the double-slit found in
+	Table \ref{tab:1} and we have plotted the Real, Imaginary, and probability
+	distribution for times $t \in \{0, 0.001, 0.002 \}$s. All colour bars have been normalized to the maximum value in each plot. \\
+
+	At $t=0$ Figures \ref{fig:prob8_Im0}, \ref{fig:prob8_Re0} and \ref{fig:prob_P0} shows the imaginary, real part and the distribution probability
+	of our initial Gaussian wave-packet. We also notice that the Real and Imaginary
+	parts have opposite values, making the complex norm look like our expected probability distribution. \\
+
 	At $t=0.001$ Figures \ref{fig:prob8_Im1}, \ref{fig:prob8_Re1} and \ref{fig:prob8_P1}
-	represent our particle hitting the double-slit configuration. We first see that our 
-	particle only moved in the $x$-direction as it makes sense because we only gave a 
-	momentum in that direction. When our particle it the slit configuration we can see 
-	that it behaves like a wave with some part being reflected with negative and positive 
-	value due to the constructive or destructive interference pattern. On the other side
-	we can see part of the wave went through the slit but has not interacted with itself 
-	yet. \\ 
-	
-		
-	The plot for our final time stamp $t=0.002$ are represented by 
+	represent our particle hitting the double-slit configuration. We first see that our
+	particle only moved in the $x$-direction, which makes sense because we only gave momentum in that direction. When our particle it the slit configuration, we can see
+	that it behaves like a wave, with some parts being reflected with negative and positive values due to the constructive or destructive interference pattern. On the other side, we can see that part of the wave went through the slit but has not interacted with itself yet. \\
+
+
+	The plot for our final time stamp $t=0.002$ are represented by
 	Figures \ref{fig:prob8_Im2}, \ref{fig:prob8_Re2} and \ref{fig:prob8_P2}
-	That time shows the wave function after it has passed the slit configuration. 
-	We now observe interference pattern in both reflected and transmitted part. This 
-	is expected as a wave will interact with itself. We can see that the particle has
-	greater probability of being reflected than moving through, due to the size difference
-	between the slit aperture and the wall. We can observe two spots of high probability in 
-	the reflected part around ($x\approx0.3$, $y\approx0.60$ and $y\approx0.30$). This is 
-	probably due to the constructive interference. 
-	
-	On the transmitted part we see three main region with one more probable than the other 
-	two. The wave spreading creates interference pattern meaning that we observe minima and 
-	maxima. \\
-	
-	The Real and Imaginary part of the wave-function can not be describe physically as it 
-	is not possible to observe it. We can only give some sense in our case when we put them
-	together by calculating the complex norm giving us the probability distribution. We can 
-	see from all Imaginary and Real part that they 'follow' the behavior of our wave as 
-	expected. 
-	
-	
+	That time shows the wave function after it has passed the slit configuration.
+	We now observe interference patterns in both the reflected and transmitted parts. This is expected as a wave will interact with itself. We can see that the particle has a greater probability of being reflected than moving through due to the size difference
+	between the slit aperture and the wall. We can observe two spots of high probability in
+	the reflected part ($x\approx0.3$, $y\approx0.60$ and $y\approx0.30$). This is
+	probably due to constructive interference.
+
+	We see three main regions on the transmitted part, one more probable than the others. The wave spreading creates an interference pattern, meaning we observe minima and maxima. \\
+
+	The Real and Imaginary parts of the wave function can not be described physically as it is impossible to observe. We can only give some sense when we put them
+	together by calculating the complex norm giving us the probability distribution. We can
+	see from all Imaginary and Real parts that they 'follow' the behaviour of our wave as
+	expected.
+
 	\subsection{Detection Probability} \label{subsec:detec_prob}
-	
-	One last interesting thing we look at is the detection probability of our particle. 
-	For simulating this we imagine a detector screen at $x=0.8$ and we took the probability
-	distribution along that line. We assume that we detect the particle so we normalized 
-	our "line-distribution" so that the sum of all probability goes to 1. We used this method
+
+	One last interesting thing we look at is the detection probability of our particle.
+	To simulate this, we imagined a detector screen at $x=0.8$ and took the probability
+	distribution along that line. We assume that we detect the particle, so we normalized our "line distribution" so that the sum of all probability goes to 1. We used this method
 	for our three slit configuration plotted in Figures \ref{fig:prob9_single} \ref{fig:prob9_double}
 	and \ref{fig:prob9_triple}. \\
-	
-	For the single slit we see a Gaussian shape-like profile around the center where the slit
-	is. In that case the wave interact with itself but no interference are present.	For the
-	double slit we see one maxima at the center and two secondary maxima on the edges. We now
-	start to observe some interference pattern due to slit configuration making the wave 
-	interfere constructively on the maxima and destructively in between the pics. Finally for
-	the triple slit we observe once again interference pattern with four maxima and three 
-	minima. However we do not observe the maxima to be around the center in that case. One 
-	interesting thing to do would be to use the classical wave equation and solve the 
-	slit-configuration and compare with our results. 
-	
-	
+
+	For the single slit, we see a Gaussian shape-like profile around the centre where the slit
+	is. In that case, the wave interacts with itself, but no interference is present.	For the
+	double slit, we see one maximum at the centre and two secondary maxima on the edges. We now observe some interference patterns due to slit configuration. Making the wave interfere constructively on the maxima and destructively in between the pics. Finally, for
+	the triple slit, we observe an interference pattern with four maxima and three
+	minima. However, we do not observe the maxima around the centre. One interesting thing would be to use the classical wave equation, solve the slit configuration, and compare it with our results.
 	
 	% ===========================================
 	\section{Conclusion}\label{sec:conclusion}
