@@ -93,7 +93,8 @@ def make_colourmap(P_cube, savefile, time_index,
     img = ax.imshow(P_cube[:, :, time_index],
                     extent=[x_min, x_max, y_min, y_max],
                     cmap=plt.get_cmap('jet'),
-                    norm=norm)
+                    norm=norm,
+                    origin='lower')
 
     # Axis labels
     plt.xlabel('x[pixels]', fontsize=fontsize)
