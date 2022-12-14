@@ -23,7 +23,10 @@ plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 
 # directory of the data
-os.chdir(r'./data')
+try:
+    os.chdir(r'./data')
+except:
+    os.chdir(r'../data')
 
 # load data
 data_no_slit = get_data('problem7_no_slit.bin')

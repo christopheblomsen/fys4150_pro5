@@ -23,6 +23,9 @@ compile: utils PDESolver box full
 link:
 	g++ -o main main.o utils.o box.o PDESolver.o -larmadillo -O2
 
+plot_all:
+	@shell_scripts/plot_all.sh
+
 run:
 	@shell_scripts/run_all.sh
 
