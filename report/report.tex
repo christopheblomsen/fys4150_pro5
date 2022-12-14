@@ -254,35 +254,58 @@ Originally this finite difference method was used to solve the heat equation\cit
 	
 
 	\subsection{The Simulated System}
-
 	\noindent
-	By using the Dirichlet boundary conditions in the $xy$ plane, i.e.
+	We concider a simulation box where $x \in [0,1]$, $y \in [0,1]$ and $t \in [0,T]$. The $x$ and $y$ axes are discetized such
+	that there are $M-1$ points along each axis including the boundaries. The letter $i$ denotes the
+	spatial point on the $x$ axis and the letter $j$ denotes the spatial point on the $y$ axis.
+	We use the Dirichlet boundary conditions in the $xy$ plane, i.e.
 	\begin{itemize}
 		\item $u(x=0, y, t) = 0$
 		\item $u(x=1, y, t) = 0$
 		\item $u(x, y=0, t) = 0$ 
 		\item $u(x, y=1, t) = 0$,
 	\end{itemize}
-	we can write the result of equation \ref{eq:algo} as a matrix
-	equation on the form 
+	so we do not need to calculate the boundaries for each time point. We do, however, need 
+	to take the boundaries into concideration when calculating the inner points of the $xy$ grid.
+	The inner points of the $xy$ grid are given by the indices $i \in [1,M-2]$ and 
+	$j \in [1,M-2]$. Since we want to solve the system for $u{n+1}$ for all the inner
+	spatial points, there will be one equation associated with every combination of $i$ and $j$. 
+	Since there are $(M-2)^2$ combinations of $i$ and $j$ there will be 
+	$(M-2)^2$ equations for each time point. We will therefore need to solve
+	$(M-2)^2$ equations to get $u$ at the next time step. 
+
+	By organizing all the combinations of $u_{i,j}$ into one column vector, 
+	we see that we can rewrite the result of equation \ref{eq:algo} into
+	
+	
+	%the column vector with the corresponding equations given by equation \ref{eq:algo} can be 
+	%turned into 
+	
+	
+	a matrix equation on the form 
 	\begin{equation}
-	Au^{n+1} = Bu^n,	
-	\end{equation} 
-	which can easily be solved when the initial condition of $u$ is known.\\ \\
+		Au^{n+1} = Bu^n.	
+	\end{equation} 	
+	where $A$ and $B$ are matrices. The $A$ matrix contains all the coefficients of all the equations
+	for the different $u_{i,j}$'s at time point $n+1$. The $B$ matrix is the same matrix for the 
+	$u_{i,j}$'s at time point $n$. Since $A$ and $B$ are time invariant matrices,
+	we only need an initial condition of $u$ to solve the matrix equation and evolve the system forward in time.\\ \\
+	
+	
+	
 	\noindent
 	For the initial condition of the dimensionless wave-function in two dimensions,
 	i.e. $u^{0}$, we use an un-normalized Gaussian wave packet given by
 
 	\begin{equation}\label{eq:wave packet}
-		u(x,y,t=0) = e^{-\frac{(x-x_c)^2}{2 \sigma_x^2} - \frac{(y-y_c)^2}{2 \sigma_y^2} + i p_x (x-x_c) + i p_y (y-y_c)}.
+		\large{u(x,y,t=0) = e^{-\frac{(x-x_c)^2}{2 \sigma_x^2} - \frac{(y-y_c)^2}{2 \sigma_y^2} + i p_x (x-x_c) + i p_y (y-y_c)}}.
 	\end{equation}
 	
 	\noindent
 	In equation \ref{eq:wave packet}, $x_c$ and $y_c$ are the central
 	coordinates of the wave packet, $\sigma_x$ and $\sigma_y$ are the standard
 	deviations in the $x$ and $y$ directions respectively and $p_x$ and $p_y$
-	are the momenta of the wave packet. Since we use dimentionless units, we let 
-	$x \in [0,1]$, $y \in [0,1]$ and $t \in [0,T]$.\\
+	are the momenta of the wave packet.\\
 	
 	\noindent
 	The potential, $V$, we use to simulate the slits is zero everywhere except 
