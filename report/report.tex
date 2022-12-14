@@ -295,7 +295,16 @@ Originally this finite difference method was used to solve the heat equation\cit
 	% ===========================================
 	\section{Results}\label{sec:results}
 	% ===========================================
-	We now present the results for the open box, and the two-slit system, using the initial conditions in table \ref{tab:1}.
+	We now present the results for the open box, and the two-slit system, using the initial conditions in table \ref{tab:1}. We have used the potential in figure \ref{fig:potential} for the double slit.
+	
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[trim={2cm 0cm 2cm 1cm},clip,width=0.49\textwidth]{figures/double_slit.pdf}
+		\caption{The potential used for the double slit with value $v_0$ from table \ref{tab:1}.}
+		\label{fig:potential}
+	\end{figure}
+	
 	\begin{table}[h!]
 	\centering
 	\caption{system parameters used for calculating the probability distribution for the no-slit and double slit.}
@@ -320,15 +329,6 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\end{tabular}
 	\end{table}
 	The resulting absolute error of these systems can, as functions of time, be seen in figure \ref{fig:prob7_error}.
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[scale=0.55]{figures/double_slit.pdf}
-		\caption{}
-		\label{fig:prob7_error}
-	\end{figure}
-
-
 
 	\begin{figure}[H]
 		\centering
@@ -404,24 +404,25 @@ Originally this finite difference method was used to solve the heat equation\cit
 		\label{fig:prob8_Im2}
 	\end{figure}
 
+	We now look at the 
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem9_single_slit.pdf}
-		\caption{}
+		\caption{Normalized probability distribution pattern using the single slit system.}
 		\label{fig:prob9_single}
 	\end{figure}
 	
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem9_double_slit.pdf}
-		\caption{}
+		\caption{Normalized probability distribution using the double slit system.}
 		\label{fig:prob9_double}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem9_triple_slit.pdf}
-		\caption{}
+		\caption{Normalized probability distribution using the triple slit system.}
 		\label{fig:prob9_triple}
 	\end{figure}
 
