@@ -175,6 +175,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	% ===========================================
 	\section{Methods}\label{sec:methods}
 	% ===========================================
+	\subsection{The Bare Schrödinger Equation}
 	The bare Schrödinger equation can be written as 
 
 	\begin{equation}\label{eq:bare Schrodinger}
@@ -190,13 +191,11 @@ Originally this finite difference method was used to solve the heat equation\cit
 	$xy$ plane containing all the values of $x$ and $y$ we will use. The time is discretized by using points, with equal spacing, along the time axis.\\ \\
 	The first order time derivative on the left hand side of equation \ref{eq:bare Schrodinger} is approximated using the forward Euler method given by
 	\begin{equation}
-		\frac{\partial u}{\partial t} \approx \frac{u^{n+1}-u^n}{\Delta t},
+		\frac{\partial u^{n}}{\partial t} \approx \frac{u^{n+1}-u^n}{\Delta t},
 	\end{equation}
 
 	\noindent
 	where $u^n$, in our case, is the dimensionless wave-function in two dimensions.
-
-	\noindent
 	The superscript denotes the time step of $u$ and $\Delta t$ is the length of the time
 	step, i.e. the spacing between points on the time axis.	For the second order spatial derivatives
 	on the right hand side of equation \ref{eq:bare Schrodinger}
@@ -209,8 +208,12 @@ Originally this finite difference method was used to solve the heat equation\cit
 	where the subscript denotes the $x$ and $y$ spatial step and $h$ is the spatial step size.
 	The equation for the $y$ direction is a matter of flipping the variables from
 	$x \rightarrow y$ and $i \rightarrow j$.
-	in equation \ref{ex:double x}. The approximations for the derivatives are used in
-	the Crank-Nicolson approach, which, is given by
+	in equation \ref{ex:double x}.
+	\subsection{The Crank-Nicolson Approach}
+	
+	\noindent
+	The approximations for the derivatives are used in
+	the Crank-Nicolson approach, which is given by
 	
 	\begin{equation}
 		\frac{u^{n+1}-u^{n}}{\Delta t} = \frac{1}{2}    \left(     F^{n+1} + F^n     \right),
@@ -224,7 +227,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\noindent
 	Rewriting equation \ref{eq:bare Schrodinger}
 	according to the Crank-Nicolson approach we get 
-	\begin{equation}
+	\begin{equation}\label{eq:algo}
 		\begin{aligned}
 		\frac{u^{n+1}_{i,j}-u^{n}_{i,j}}{\Delta t} &=  \frac{1}{2}\Big(\left(i\left(\frac{\partial^2 u_{i,j}}{\partial x^2} + \frac{\partial^2 u_{i,j}}{\partial y^2}\right) -i v_{i,j} u_{i,j}\right)^{n+1} \\
 	    &+   \left(i(\frac{\partial^2 u_{i,j}}{\partial x^2} + \frac{\partial^2 u_{i,j}}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n} \Big)\\
@@ -243,24 +246,40 @@ Originally this finite difference method was used to solve the heat equation\cit
 		&+u^{n}_{i,j+1}-2u^{n}_{i,j}+u^{n}_{i,j-1}\Big)-\frac{i\Delta t}{2}v_{i,j}u^{n}_{i,j},
 		\end{aligned}
 	\end{equation}
-	\twocolumngrid
-	
 	\noindent
 	where we have used that $r = \frac{i\Delta t}{2h^2}$. The terms at time
 	step $n+1$ are on the left hand side and terms at time step $n$ are on the right
-	hand side.\\ \\
+	hand side.\\
 	
+
+	\subsection{The Simulated System}
+
 	\noindent
 	By using the Dirichlet boundary conditions in the $xy$ plane, i.e.
 	\begin{itemize}
 		\item $u(x=0, y, t) = 0$
 		\item $u(x=1, y, t) = 0$
 		\item $u(x, y=0, t) = 0$ 
-		\item $u(x, y=1, t) = 0$
+		\item $u(x, y=1, t) = 0$,
 	\end{itemize}
-	The above equation 
+	we can write the result of equation \ref{eq:algo} as a matrix
+	equation on the form 
+	\begin{equation}
+	Au^{n+1} = Bu^n,	
+	\end{equation} 
+	which can easily be solved when the initial condition of $u$ is known.\\ \\
+	\noindent
+	For the initial condition of the dimentionless wavefunction in two dimentions,
+	i.e. $u^{0}$, we use an unnormalised Gaussian wave packet given by
 
+	\begin{equation}\label{eq:wave packet}
+		u(x,y,t=0) = e^{-\frac{(x-x_c)^2}{2 \sigma_x^2} - \frac{(y-y_c)^2}{2 \sigma_y^2} + i p_x (x-x_c) + i p_y (y-y_c)}.
+	\end{equation}
 	
+	In equation \ref{eq:wave packet}, $x_c$ and $y_c$ are the central
+	coordinates of the wave packet, $\sigma_x$ and $\sigma_y$ are the standard
+	deviations in the $x$ and $y$ directions respectively and $p_x$ and $p_y$
+	are the momenta of the wave packet.
 
 
 	
@@ -268,7 +287,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	% ===========================================
 	\section{Results}\label{sec:results}
 	% ===========================================
-	We now present the results using the initial conditions in table \ref{tab:1}
+	We now present the results for the open box, and the two-slit system, using the initial conditions in table \ref{tab:1}.
 	\begin{table}[h!]
 	\centering
 	\caption{system parameters used for calculating the probability distribution for the no-slit and double slit.}
@@ -288,34 +307,35 @@ Originally this finite difference method was used to solve the heat equation\cit
 	$v_0$             & $0$                                    &\quad $1\cross10^{10}$    \\
 	\hline
 	\end{tabular}
-	\end{table}
-	
+	\end{table}\\
+	The resulting absolute error of these systems can, as functions of time, be seen in \ref{fig:prob7_error}.
 	
 	
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem7_error.pdf}
-		\caption{}
+		\caption{Absolute error versus time, using the system parameters in table \ref{tab:1}}
 		\label{fig:prob7_error}
 	\end{figure}
+	We then find how the wave packet probability propagates through the two-slit system. First at time $t=0$.
 
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[scale=0.55]{figures/prob_plot_0.0.pdf}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/prob_plot_0.0.pdf}
 		\caption{}
 		\label{fig:prob_P0}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[scale=0.55]{figures/prob_plot_0.001.pdf}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/prob_plot_0.001.pdf}
 		\caption{}
 		\label{fig:prob8_P1}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[scale=0.55]{figures/prob_plot_0.002.pdf}
+		\includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=0.49\textwidth]{figures/prob_plot_0.002.pdf}
 		\caption{}
 		\label{fig:prob8_P2}
 	\end{figure}
