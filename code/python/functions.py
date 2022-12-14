@@ -96,8 +96,8 @@ def make_colourmap(P_cube, savefile, time_index,
                     norm=norm)
 
     # Axis labels
-    plt.xlabel('x', fontsize=fontsize)
-    plt.ylabel('y', fontsize=fontsize)
+    plt.xlabel('x[pixels]', fontsize=fontsize)
+    plt.ylabel('y[pixels]', fontsize=fontsize)
     plt.xticks(fontsize=fontsize)
     plt.yticks(fontsize=fontsize)
 
@@ -111,7 +111,7 @@ def make_colourmap(P_cube, savefile, time_index,
 
     # Add a text element showing the time
     time_txt = plt.text(0.95, 0.95,
-                        't = {:.3e} [s]'.format(time_points[time_index]),
+                        't = {:.3e}'.format(time_points[time_index]),
                         color='white',
                         horizontalalignment='right',
                         verticalalignment='top',
@@ -169,8 +169,8 @@ def make_animation(P_cube, savefile, t_points,
                     norm=norm)
 
     # Axis labels
-    plt.xlabel('x', fontsize=fontsize)
-    plt.ylabel('y', fontsize=fontsize)
+    plt.xlabel('x[pixels]', fontsize=fontsize)
+    plt.ylabel('y[pixels]', fontsize=fontsize)
     plt.xticks(fontsize=fontsize)
     plt.yticks(fontsize=fontsize)
 
@@ -199,7 +199,7 @@ def make_animation(P_cube, savefile, t_points,
 
         # Update the time label
         current_time = t_min + i * dt
-        time_txt.set_text('t = {:.3e}[s]'.format(current_time))
+        time_txt.set_text('t = {:.3e}'.format(current_time))
 
         return img
 
@@ -243,7 +243,7 @@ def detector_screen(P_cube, y_points, savefile,
     screen_index = int(x/h)
     P = P_cube[:, screen_index, time_point]/np.sum(P_cube[:, screen_index, time_point])
     plt.plot(y_points, P)
-    plt.xlabel('y')
+    plt.xlabel('y[pixels]')
     plt.ylabel('Normalised probability')
     plt.savefig(savefile)
     plt.show()
