@@ -87,7 +87,8 @@ def make_colourmap(P_cube, savefile, time_index,
 
     # Create a colour scale normalization according to the max z value in the first frame
     norm = matplotlib.cm.colors.Normalize(
-            vmin=0.0, vmax=np.max(P_cube[:, :, time_index]))
+            vmin=np.min(P_cube[:, :, time_index]),
+            vmax=np.max(P_cube[:, :, time_index]))
 
     # Plot the first frame
     img = ax.imshow(P_cube[:, :, time_index],
@@ -97,8 +98,8 @@ def make_colourmap(P_cube, savefile, time_index,
                     origin='lower')
 
     # Axis labels
-    plt.xlabel('x[pixels]', fontsize=fontsize)
-    plt.ylabel('y[pixels]', fontsize=fontsize)
+    plt.xlabel('x', fontsize=fontsize)
+    plt.ylabel('y', fontsize=fontsize)
     plt.xticks(fontsize=fontsize)
     plt.yticks(fontsize=fontsize)
 
@@ -112,13 +113,14 @@ def make_colourmap(P_cube, savefile, time_index,
 
     # Add a text element showing the time
     time_txt = plt.text(0.95, 0.95,
-                        't = {:.3e}'.format(time_points[time_index]),
-                        color='white',
+                        't = {:.3f}'.format(time_points[time_index]),
+                        color='red',
                         horizontalalignment='right',
                         verticalalignment='top',
                         fontsize=fontsize)
 
     plt.title(title)
+    plt.tight_layout()
     plt.savefig(f'{savefile}_{time_points[time_index]:.3f}.pdf')
     plt.show()
 
@@ -170,8 +172,8 @@ def make_animation(P_cube, savefile, t_points,
                     norm=norm)
 
     # Axis labels
-    plt.xlabel('x[pixels]', fontsize=fontsize)
-    plt.ylabel('y[pixels]', fontsize=fontsize)
+    plt.xlabel('x', fontsize=fontsize)
+    plt.ylabel('y', fontsize=fontsize)
     plt.xticks(fontsize=fontsize)
     plt.yticks(fontsize=fontsize)
 
@@ -244,7 +246,7 @@ def detector_screen(P_cube, y_points, savefile,
     screen_index = int(x/h)
     P = P_cube[:, screen_index, time_point]/np.sum(P_cube[:, screen_index, time_point])
     plt.plot(y_points, P)
-    plt.xlabel('y[pixels]')
+    plt.xlabel('y')
     plt.ylabel('Normalised probability')
     plt.savefig(savefile)
     plt.show()
