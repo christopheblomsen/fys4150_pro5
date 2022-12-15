@@ -182,11 +182,10 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\begin{equation}\label{eq:bare Schrodinger}
 		\begin{split}
 		i \frac{\partial u}{\partial t} &= -\frac{\partial^2 u}{\partial x^2} - \frac{\partial^2 u}{\partial y^2} + v(x,y) u\\
-		\Rightarrow \ \ \frac{\partial u}{\partial t} &= i\left(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2}\right) - iv(x,y) u.
+		\Rightarrow \ \ \frac{\partial u}{\partial t} &= i\left(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2}\right) - iv(x,y) u,
 		\end{split}
 	\end{equation} 
-	
-	\noindent
+	where $u$ is the dimensionless wave-function in two dimensions.
 	In order to solve equation \ref{eq:bare Schrodinger} numerically, we must discetize all the terms and approximate
 	the derivatives. The discretization is done by introducing a grid of points in the
 	$xy$ plane containing all the values of $x$ and $y$ we will use. The time is discretized by using points, with equal spacing, along the time axis.\\ \\
@@ -196,8 +195,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\end{equation}
 
 	\noindent
-	where $u^n$, in our case, is the dimensionless wave-function in two dimensions.
-	The superscript denotes the time point of $u$ and $\Delta t$ is the length of the time
+	where the superscript of $u^n$ denotes the time point of $u$ and $\Delta t$ is the length of the time
 	step, i.e. the spacing between points on the time axis.	For the second order spatial derivatives
 	on the right hand side of equation \ref{eq:bare Schrodinger}
 	we use Taylor approximations of second order. In the $x$ direction,
@@ -255,9 +253,8 @@ Originally this finite difference method was used to solve the heat equation\cit
 
 	\subsection{The Simulated System}
 	\noindent
-	We concider a simulation box where $x \in [0,1]$, $y \in [0,1]$ and $t \in [0,T]$. The $x$ and $y$ axes are discetized such
-	that there are $M-1$ points along each axis including the boundaries. The letter $i$ denotes the
-	spatial point on the $x$ axis and the letter $j$ denotes the spatial point on the $y$ axis.
+	We consider a simulation box where $x \in [0,1]$, $y \in [0,1]$ and $t \in [0,T]$. The $x$ and $y$ axes are discetized such
+	that there are $M-1$ points along each axis including the boundaries.
 	We use the Dirichlet boundary conditions in the $xy$ plane, i.e.
 	\begin{itemize}
 		\item $u(x=0, y, t) = 0$
@@ -265,45 +262,34 @@ Originally this finite difference method was used to solve the heat equation\cit
 		\item $u(x, y=0, t) = 0$ 
 		\item $u(x, y=1, t) = 0$,
 	\end{itemize}
-	so we do not need to calculate the boundaries for each time point. We do, however, need 
-	to take the boundaries into concideration when calculating the inner points of the $xy$ grid.
+	so we do not need to calculate the boundaries at every time point. We do, however, need 
+	to take the boundaries into consideration when calculating the inner points of the $xy$ grid.
 	The inner points of the $xy$ grid are given by the indices $i \in [1,M-2]$ and 
-	$j \in [1,M-2]$. Since we want to solve the system for $u{n+1}$ for all the inner
-	spatial points, there will be one equation associated with every combination of $i$ and $j$. 
-	Since there are $(M-2)^2$ combinations of $i$ and $j$ there will be 
-	$(M-2)^2$ equations for each time point. We will therefore need to solve
-	$(M-2)^2$ equations to get $u$ at the next time step. 
-
-	By organizing all the combinations of $u_{i,j}$ into one column vector, 
+	$j \in [1,M-2]$. These are the only indices we need in order to
+	calculate the time evolution of the system.	As we see from the result of equation \ref{eq:algo},
+	there will be one equation for each unique combination of $i$ and $j$.
+	Since there are $(M-2)^2$ combinations of $i$ and $j$, there will be 
+	$(M-2)^2$ equations we need to solve.  
+	By organizing all the $u_{i,j}$ variables into one column vector, 
 	we see that we can rewrite the result of equation \ref{eq:algo} into
-	
-	
-	%the column vector with the corresponding equations given by equation \ref{eq:algo} can be 
-	%turned into 
-	
-	
 	a matrix equation on the form 
 	\begin{equation}
-		Au^{n+1} = Bu^n.	
+		Au^{n+1} = Bu^n,	
 	\end{equation} 	
-	where $A$ and $B$ are matrices. The $A$ matrix contains all the coefficients of all the equations
-	for the different $u_{i,j}$'s at time point $n+1$. The $B$ matrix is the same matrix for the 
-	$u_{i,j}$'s at time point $n$. Since $A$ and $B$ are time invariant matrices,
-	we only need an initial condition of $u$ to solve the matrix equation and evolve the system forward in time.\\ \\
-	
-	
-	
+	where $A$ and $B$ are matrices. The $A$ matrix contains all the coefficients in all the equations
+	for the $u_{i,j}$ variables at time point $n+1$. The $B$ matrix is the same matrix as $A$ at time point $n$.
+	Since $A$ and $B$ are time invariant matrices,
+	we only need an initial condition of $u$ to solve the matrix equation and evolve the system forward to
+	time point $n+1$. This can be repeated to get the time evolution of the system.\\ \\
 	\noindent
 	For the initial condition of the dimensionless wave-function in two dimensions,
 	i.e. $u^{0}$, we use an un-normalized Gaussian wave packet given by
-
 	\begin{equation}\label{eq:wave packet}
 	\begin{split}
 		u(x,y,t=0) = \exp\Big(&-\frac{(x-x_c)^2}{2 \sigma_x^2} - \frac{(y-y_c)^2}{2 \sigma_y^2} \\
 		&+ i p_x (x-x_c) + i p_y (y-y_c)\Big). \\
 	\end{split}
 	\end{equation}
-	
 	\noindent
 	In equation \ref{eq:wave packet}, $x_c$ and $y_c$ are the central
 	coordinates of the wave packet, $\sigma_x$ and $\sigma_y$ are the standard
@@ -321,6 +307,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	% ===========================================
 	\section{Results}\label{sec:results}
 	% ===========================================
+	
 	We now present the results for the open box, and the two-slit system, using the initial conditions in table \ref{tab:1}. We have used the potential in figure \ref{fig:potential} for the double slit.
 	
 	
@@ -335,7 +322,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\centering
 	\caption{system parameters used for calculating the probability distribution for the no-slit and double slit.}
 	\label{tab:1}
-	\begin{tabular}{c | c | c} %Frode uses vertical lines, therefore, we can do it
+	\begin{tabular}{c  c  c} %Frode uses vertical lines, therefore, we can do it
 	 Variable& No slit & Double slit\\
 	\hline
 	$h$                & $5\cross10^{-3}$                &\quad $5\cross10^{-3}$   \\
