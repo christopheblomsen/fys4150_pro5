@@ -228,8 +228,8 @@ Originally this finite difference method was used to solve the heat equation\cit
 	according to the Crank-Nicolson approach we get 
 	\begin{equation}\label{eq:algo}
 		\begin{aligned}
-		\frac{u^{n+1}_{i,j}-u^{n}_{i,j}}{\Delta t} &=  \frac{1}{2}\Big(\left(i\left(\frac{\partial^2 u_{i,j}}{\partial x^2} + \frac{\partial^2 u_{i,j}}{\partial y^2}\right) -i v_{i,j} u_{i,j}\right)^{n+1} \\
-	    &+   \left(i(\frac{\partial^2 u_{i,j}}{\partial x^2} + \frac{\partial^2 u_{i,j}}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n} \Big)\\
+		\frac{u^{n+1}_{i,j}-u^{n}_{i,j}}{\Delta t} &=  \frac{1}{2}\Big[\left(i\left(\frac{\partial^2 u_{i,j}}{\partial x^2} + \frac{\partial^2 u_{i,j}}{\partial y^2}\right) -i v_{i,j} u_{i,j}\right)^{n+1} \\
+	    &+   \left(i(\frac{\partial^2 u_{i,j}}{\partial x^2} + \frac{\partial^2 u_{i,j}}{\partial y^2}) -i v_{i,j} u_{i,j}\right)^{n} \Big]\\
 	    &\ \\
 		&=  \frac{1}{2}\Big(    \frac{i}{h^2}\big(  u^{n+1}_{i+1,j}-2u^{n+1}_{i,j}+u^{n+1}_{i-1,j}   +u^{n+1}_{i,j+1}\\
 		&-2u^{n+1}_{i,j}+u^{n+1}_{i,j-1}\big)-iv_{i,j}u^{n+1}_{i,j}\\
@@ -273,7 +273,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	By organizing all the $u_{i,j}$ variables into one column vector, 
 	we see that we can rewrite the result of equation \ref{eq:algo} into
 	a matrix equation on the form 
-	\begin{equation}
+	\begin{equation}\label{eq:matrix equation}
 		Au^{n+1} = Bu^n,	
 	\end{equation} 	
 	where $A$ and $B$ are matrices. The $A$ matrix contains all the coefficients in all the equations
@@ -294,8 +294,18 @@ Originally this finite difference method was used to solve the heat equation\cit
 	In equation \ref{eq:wave packet}, $x_c$ and $y_c$ are the central
 	coordinates of the wave packet, $\sigma_x$ and $\sigma_y$ are the standard
 	deviations in the $x$ and $y$ directions respectively and $p_x$ and $p_y$
-	are the momenta of the wave packet.\\
-	
+	are the momenta of the wave packet. We must also normalize the probability
+	distribution, such that the total probability is one. This can be done by
+	demanding that 
+	\begin{equation}
+		\sum\limits_{i,j} u^{0*}_{ij} \, u^0_{ij} = 1.
+	\end{equation}
+
+	\noindent
+	The wave packet simulates the wavefunction of a particle. The wave packet probability
+	will then simulate the probability for finding the particle at a given 
+	place at a given time. 
+	\\ \\
 	\noindent
 	The potential, $V$, we use to simulate the slits is zero everywhere except 
 	for the locations where the barrier is located. The potential in the
@@ -307,20 +317,24 @@ Originally this finite difference method was used to solve the heat equation\cit
 	% ===========================================
 	\section{Results}\label{sec:results}
 	% ===========================================
+	\noindent
+	We now present the results for the no-slit and the two-slit systems, using the parameter values in table \ref{tab:1}. We have used the potential in figure \ref{fig:potential} for the double slit.
+	The resulting absolute error of the total probability of these systems can, as functions of time, be seen in figure \ref{fig:prob7_error}. We observe
+	that the error is of size $10^{-14}$, and it grows with time.
+
+
 	
-	We now present the results for the open box, and the two-slit system, using the initial conditions in table \ref{tab:1}. We have used the potential in figure \ref{fig:potential} for the double slit.
-	
-	
-	\begin{figure}[H]
+	\begin{figure}
 		\centering
 		\includegraphics[trim={2cm 0cm 2cm 1cm},clip,width=0.49\textwidth]{figures/double_slit.pdf}
-		\caption{The potential used for the double slit with value $v_0$ from table \ref{tab:1}.}
+		\caption{The potential used for the double slit with value $v_0$ at the barrier and zero everywhere else.
+		$v_0$ can be found in table \ref{tab:1}.}
 		\label{fig:potential}
 	\end{figure}
 	
-	\begin{table}[h!]
+	\begin{table}
 	\centering
-	\caption{system parameters used for calculating the probability distribution for the no-slit and double slit.}
+	\caption{System parameters used for calculating the probability distribution for the no-slit and double slit.}
 	\label{tab:1}
 	\begin{tabular}{c  c  c} %Frode uses vertical lines, therefore, we can do it
 	 Variable& No slit & Double slit\\
@@ -340,24 +354,26 @@ Originally this finite difference method was used to solve the heat equation\cit
 	Wall between slits & $5\cross10^{-2}$          & $5\cross10^{-2}$            \\
 	\hline
 	\end{tabular}
-	\end{table}
-	The resulting absolute error of these systems can, as functions of time, be seen in figure \ref{fig:prob7_error}.
-
-	\begin{figure}[H]
+	\end{table}		\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem7_error.pdf}
 		\caption{Absolute error versus time, using the system parameters in table \ref{tab:1}.}
 		\label{fig:prob7_error}
 	\end{figure}
+	\noindent
 	We then find how the wave packet probability propagates through the two-slit system. We created a playlist of animations for the propagation of the probability function though time,  but we included snapshots from the animations here, first at time $t=0$.
-
+	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.49\textwidth]{figures/problem8_P_0.000.pdf}
 		\caption{Probability function at time $t=0$.}
 		\label{fig:prob_P0}
 	\end{figure}
-	Here, $x$ and $y$ are defined as dimensionless position, $x, y\in[0, 1]$. We have then the system at time $t = 10^{-3}$ in figure \ref{fig:prob8_P1}. The particles position is observed to have a probability on both sides of the slits, as well as the origin of a interference pattern.
+	\noindent
+	Here, $x$ and $y$ are defined as dimensionless position, $x, y\in[0, 1]$.
+	We then have the system at time $t = 10^{-3}$ in figure \ref{fig:prob8_P1}.
+	The particles position is observed to have a non-zero probability on
+	both sides of the slits.
 
 	\begin{figure}[H]
 		\centering
@@ -365,6 +381,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 		\caption{Probability function at time $t=10^{-3}$.}
 		\label{fig:prob8_P1}
 	\end{figure}
+	\noindent
 	The simulation is run until time $t=2\cross10^{-3}$, which can be seen in figure \ref{fig:prob8_P2}.
 
 	\begin{figure}[H]
@@ -373,7 +390,8 @@ Originally this finite difference method was used to solve the heat equation\cit
 		\caption{Probability function at time $t=2\cross10^{-3}$.}
 		\label{fig:prob8_P2}
 	\end{figure}
-	We observe the probability bounces back from the "infinite" potentials of the walls. Next up we will look at how the real and imaginary parts of the Schrödinger equation evolves. The real part of the dimensionless wave function $u$, and how it evolves with time $t \in[0, 2\cross10^{-3}]$ can be seen in figure \ref{fig:prob8_Re0}, \ref{fig:prob8_Re1} and \ref{fig:prob8_Re2}.
+	\noindent
+	We observe that the probability bounces back from the "infinite" potential of the walls. Next up we will look at how the real and imaginary parts of the wavefunction evolves. The real part of the dimensionless wave function $u$, and how it evolves with time in the interval $t \in[0, 2\cross10^{-3}]$ can be seen in figure \ref{fig:prob8_Re0}, \ref{fig:prob8_Re1} and \ref{fig:prob8_Re2}.
 
 	\begin{figure}[H]
 		\centering
@@ -395,7 +413,8 @@ Originally this finite difference method was used to solve the heat equation\cit
 		\caption{The real part of the wave function $u$ at time $t = 2\cross10^{-3}$.}
 		\label{fig:prob8_Re2}
 	\end{figure}
-	We then look at the imaginary part at equal times.
+	We then look at the imaginary part at equal times plotted in figures \ref{fig:prob8_Im0}, \ref{fig:prob8_Im1}
+	and \ref{fig:prob8_Im2}.
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Im_0.000.pdf}
@@ -417,7 +436,11 @@ Originally this finite difference method was used to solve the heat equation\cit
 		\label{fig:prob8_Im2}
 	\end{figure}
 
-	We now look at the  interference patterns caused by similar potentials to that in fig \ref{fig:potential} for single (figure \ref{fig:prob9_single}), double (figure \ref{fig:prob9_double}) and triple (figure \ref{fig:prob9_triple}) slit systems.
+	\noindent
+	Lastly, we have plotted the probability function along the $y$ axis at $x = 0.8$
+	and $t= 0.002$. In figure \ref{fig:prob9_single} we see this probability in the single 
+	slit system. In figures \ref{fig:prob9_double} and \ref{fig:prob9_triple} we see the same probability
+	in the double and triple slit systems respectively.
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem9_single_slit.pdf}
@@ -443,77 +466,95 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\section{Discussion}\label{sec:discussion}
 	% ===========================================
 \subsection{Total probability deviation} \label{subsec:tot_prob_dev}
-
-	One important aspect of numerical analysis is ensuring our numerical
+	\noindent
+	An important aspect of numerical analysis is ensuring that the numerical
 	solution does not diverge. It is crucial, especially when no
-	analytical solutions exist or are known. For example, in the case of an
+	analytical solutions exist or are known. For example, in the case of a
 	Newtonian system of equations, we usually have energy conservation,
 	so checking that our energy is conserved is a good indicator that our
-	results are significant. In the case of quantum mechanics, since we
+	results are reasonable. In the case of quantum mechanics, since we
 	can only observe probabilities, one good convergence check is to ensure
 	that our total probability is 1 at all times during our simulation. \\
-
+	\noindent \\
 	In figure \ref{fig:prob7_error}, we have plotted the absolute error of
 	the total probability $|P_{\rm tot} - 1|$ for all time steps.
 	Our total probability is always close to the theoretical
-	value of 1 with an error margin of $10^{-14}$.  \\
-
-	We made a function in our python script to make sure that all further
-	simulations also pass our benchmark.
+	value of 1 with an error margin of $10^{-14}$. This suggests that our results
+	are reasonable.\\
+	
+	\noindent
+	We made a function in our python script to make sure that all our
+	simulations pass the conservation of total probability test.
 
 	\subsection{Color-map of the wave function and probability distribution}\label{subsec:colormap}
+	\noindent
+	We have simulated the double-slit experiment numerically using the parameters found in
+	table \ref{tab:1}. We have also plotted the real and imaginary part of the wavefunction and the probability
+	distribution at times $t \in \{0, 0.001, 0.002 \}$. \\
 
-	Now we have simulated the parameters for the double-slit found in
-	table \ref{tab:1} and we have plotted the real, imaginary, and probability
-	distribution for times $t \in \{0, 0.001, 0.002 \}$s. \\
-
-	At $t=0$ figures \ref{fig:prob8_Im0}, \ref{fig:prob8_Re0} and \ref{fig:prob_P0} shows the imaginary, real part and the distribution probability
+	\noindent
+	At $t=0$ figures \ref{fig:prob8_Im0}, \ref{fig:prob8_Re0} and \ref{fig:prob_P0} show the imaginary part, the real part and the probability distribution
 	of our initial Gaussian wave-packet. We also notice that the real and imaginary
 	parts have opposite values, making the complex norm look like our expected probability distribution. \\
 
+	\noindent
 	At $t=0.001$ Figures \ref{fig:prob8_Im1}, \ref{fig:prob8_Re1} and \ref{fig:prob8_P1}
-	represent our particle hitting the double-slit configuration. We first see that our
-	particle only moved in the $x$-direction, which is as expected because its the direction where momentum were initiated. When our particle hit the slit configuration, we can see that it behaves like a wave, with some parts being reflected with negative and positive values due to the constructive or destructive interference pattern. On the other side, we can see that a part of the wave went through the slit but has not shown self-interaction yet. \\
+	represent our particle hitting the double-slit configuration. We first see that the
+	particle only moves in the $x$-direction, which is as expected because it's the direction where the momentum was initiated. When the particle hits the slit configuration, we can see that it behaves like a wave, with some parts being reflected with negative and positive values due to the constructive or destructive interference pattern. On the other side, we can see that a part of the wave went through the slit but has not shown self-interaction yet. \\
 
-
+	\noindent
 	The plot for our final time stamp $t=0.002$ are represented by
 	figures \ref{fig:prob8_Im2}, \ref{fig:prob8_Re2} and \ref{fig:prob8_P2}.
-	this time shows the wave function after it has passed the slit configuration.
+	This time shows the wave function after it has passed the double slit configuration.
 	We now observe interference patterns in both the reflected and transmitted parts. This is expected, as a wave will interact with itself. We can see that the particle has a greater probability of being reflected than moving through due to the size difference
-	between the slit aperture and the wall. We can observe two spots of high probability in
+	between the slit, the wall and the initial probability wave packet. We can observe two spots of high probability in
 	the reflected part ($x\approx0.3$, $y\approx0.60$ and $y\approx0.30$). This is due to constructive interference.
-
+	\\
+	\noindent \\
 	We see three main regions on the transmitted part, one more probable than the others. The wave spreading creates an interference pattern, meaning we observe minima and maxima. \\
-
-	The real and imaginary parts of the wave function can not be described physically as it is impossible to observe. We can only give some sense when we put them
+	\noindent \\
+	The real and imaginary parts of the wave function can not be described physically as it is impossible to observe. We can only give some physical sense when we put them
 	together by calculating the complex norm giving us the probability distribution. We can
-	see that all imaginary and real parts have a similar behaviour to our wave.\\
+	see that all imaginary and real parts have a similar behaviour to the probability wave.\\
 
 	\subsection{Detection Probability} \label{subsec:detec_prob}
-
+	\noindent
 	One last interesting thing we look at is the detection probability of our particle.
-	To simulate this, we imagined a detector screen at $x=0.8$ and took the probability
-	distribution along that line. We assume that we detect the particle, so we normalized our line distribution so that the sum of all probability goes to 1. We used this method
+	To simulate this, we imagin a detector screen at $x=0.8$ and look at the probability
+	distribution along that line. We assume that we detect the particle somewhere along the line, so we normalized the probability distribtion along the line so that the sum of all probabilities goes to 1. We used this method
 	for our three slit configuration plotted in Figures \ref{fig:prob9_single}, \ref{fig:prob9_double}
 	and \ref{fig:prob9_triple}. \\
-
-	For the single slit, we see a Gaussian shape-like profile around the centre where the slit
-	is. In that case, the wave interacts with itself, but no interference is present.	For the
-	double slit, we see one maximum at the centre and two secondary maxima on the edges. We now observe some interference patterns due to slit configuration. Making the wave interfere constructively on the maxima and destructively in between the pics. Finally, for
+	\noindent \\
+	For the single slit, we see a Gaussian like profile around the centre where the slit
+	is located. In that case, the wave interacts with itself, but no interference is present.	For the
+	double slit, we see one maximum at the centre and two secondary maxima on the edges. We now observe some interference patterns due to the slit configuration making the wave interfere constructively on the maxima and destructively in between them. Finally, for
 	the triple slit, we observe an interference pattern with four maxima and three
 	minima. However, we do not observe the maxima around the centre. One interesting thing would be to use the classical wave equation, solve the slit configuration, and compare it with our results.
-	
+	\subsection{Solving the matrix equation}
+	\noindent
+	The matrix multiplication of $Bu^n$ results in a new vector we call $b$.
+	The matrix equation \ref{eq:matrix equation} can then be rewritten as
+	\begin{equation}\label{eq:matrix equation rewritten}
+		Au^{n+1} = b
+	\end{equation}
+	When solving this equation, we can utilize that the matrix $A$ is a symmetric matrix. The $A$ matrix aslo has
+	the same entries on the diagonal, meaning that $A = L+ D + U$ where $L$ is the lower part,
+	$D$ is the diagonal part and $U$ is the upper part.  
+	An algorithm that is specialized for symmetric matrices with equal entries on the diagonal should therefore be 
+	used when solving equation \ref{eq:matrix equation rewritten}.   
+
+
 	% ===========================================
 	\section{Conclusion}\label{sec:conclusion}
 	% ===========================================
-	
+	\noindent
 	In this paper we simulated a single non-relativistic particle obeying 
 	Schrödinger's equation through three types of slit setup, single, double
 	and triple slit. We observed that most of the wave-
 	function was reflected while a small part passed through when we included slits. We observed the 
 	interference pattern, similar to that for a wave. The detection probability if we would have placed 
 	a detector screen behind the wall at $x=0.8$ was found, and the maxima and 
-	minima of the detection probability due to constructive or destructive interference was observed. All simulation passed the convergence check by conserving the total 
+	minima of the detection probability due to constructive or destructive interference was observed. All simulations passed the convergence check by conserving the total 
 	probability value with a negligible error of order  $10^{-14}$. \\
 	
 	
