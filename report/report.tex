@@ -94,7 +94,7 @@
 	The slits we simulated were the single, double and triple slit configuration.
 	To solve the Schrödinger equation, we used the
 	Crank-Nicolson approach. For the convergence check of our numerical solution, we verified that the probability of finding the particle inside the box remained 1 at all times. The total probability was conserved within an
-	error margin of  $10^{-14}$. We studied the particle's distribution probability at a certain time and explored the detection probability through the three kinds of slit configurations. As expected, we observed interference patterns in the probability distribution for the double and triple slit configurations.
+	error margin of  $10^{-14}$. We studied the particle's probability distribution for the position at a certain time and explored the detection probability through the three kinds of slit configurations. As expected, we observed interference patterns in the probability distribution for the double and triple slit configurations.
 	The code can be found in the GitHub repo:		\href{https://github.com/christopheblomsen/fys4150_pro5}{https://github.com/christopheblomsen/fys4150\_pro5}, 
 	\\and the resulting animations in a YouTube playlist: \\
 	\href{https://www.youtube.com/watch?v=6SQEoxnW6Yk&list=PLkOjS3Q17MZaZeQ6vd_3mROJriEFFc2_S }{https://www.youtube.com/watch?v=6SQEoxnW6Yk$\&$list=PLkOjS3Q17MZaZeQ6vd\_3mROJriEFFc2\_S}
@@ -106,30 +106,31 @@
 	% ===========================================
 	\section{Introduction} \label{sec:introduction}
 	% ===========================================
-
+	\noindent
 	Light has always been an intriguing phenomenon in physics. It began in ancient Greece when Democritus argued that all things in the universe are composed of indivisible
 	sub-components, i.e., particles. At the beginning of the eleventh century Ibn al-Haytham
 	wrote a physics book describing light no longer as a particle but as a wave, using a
 	pinhole lens to reflect, and refract rays of light. This started a heated debate about the
 	wave-particle duality of light. All physicists joined one of the two sides and tried to
 	prove that light was either a wave or a particle. \\
-
+	\noindent \\
 	In 1801, Thomas Young developed the double-slit experiment from the Huygens-Fresnel principle
 	resulting in the discovery of wave interference of light\cite{ThomasYoung}.
-
-
 	This experiment did not solve the debate, but the wave property of light began to dominate
 	scientific thinking. We will need the introduction of Quantum Mechanics to show that
-	light can behave as a particle and as a wave, with the Schrödinger'equation being derived
-	from the wave equation. \\
+	light can behave as a particle and as a wave. The Schrödinger equation, being derived
+	from the wave equation, is an important equation in Quantum mechanics and it can be used to solve the time evolution of the probability for the position 
+	of a particle.  \\
 
-	In this report, we use the 2D time-dependent Schrodinger's equation to simulate a particle's
-	motion in different slit methods, namely no slit, one, two or three slits. Since the equation is a PDE, similar to the heat equation, we will apply the Crank-Nicolson method.
-Originally this finite difference method was used to solve the heat equation\cite{Crank1947APM}. \\
+	\noindent
+	In this report, we use the 2D time-dependent Schrödinger equation to simulate a particle's
+	motion in different slit configurations, namely no slit, one, two or three slits. Since the equation is a partial differential equation (PDE), similar to the heat equation, we will apply the Crank-Nicolson method.
+	Originally this finite difference method was used to solve the heat equation\cite{Crank1947APM}. \\
 
+	\noindent
 	In section \ref{sec:theory} we will overview the theoretical aspect of our problem by introducing
 	the Schrödinger equation with some light quantum mechanical motion. Then in section \ref{sec:methods}
-	we will introduce the numerical solution applied with the Crank-Nicolson method and the simulations. Furthermore, we briefly introduce all results obtained from the simulations in section
+	we will introduce the Crank-Nicolson approach for solving PDEs. We will also go through the simulations setup. Furthermore, we briefly introduce all results obtained from the simulations in section
 	\ref{sec:results}. Finally, we discuss our results in section \ref{sec:discussion}, and provide a summary
 	in section \ref{sec:conclusion}.
 
@@ -139,39 +140,41 @@ Originally this finite difference method was used to solve the heat equation\cit
 	The time-dependent Schrödinger equation is defined as
 
 	\begin{equation}
-	i \hbar \frac{d}{d t}|\Psi\rangle=\hat{H}|\Psi\rangle \label{eq:schro_eq}
+	i \hbar \frac{d}{d t}|\Psi\rangle=\hat{H}|\Psi\rangle \label{eq:schro_eq},
 	\end{equation}
 
+	\noindent
 	where $\hat{H}$ is the Hamiltonian operator representing the total energy of the system
 	and $|\Psi\rangle$ is the vector state in the Hilbert space. $|\Psi\rangle$ is a vector
 	containing all possible information on the system at a specific time $t$. However, the actual physical meaning of $|\Psi\rangle$ remains an open question as it is impossible to
 	physically observe $|\Psi\rangle$ \cite{griffiths:quantumn}. To obtain the information
 	from $|\Psi\rangle$, we have to apply a certain operator on it, giving us a probability
-	through the Born rule.\\
+	through the well known Born rule.\\
 
-
+	\noindent
 	In this paper, we will consider the case of a single, non-relativistic particle in two dimensions.
 	We will also work in the position space to express our vector
-	in terms of the orthonormal basis of the position space $|x_i\rangle$. This allows us
-	, from the Born rule to calculate the probability of finding our particle between
-	$x_i$ with the discretization of  $|\Psi\rangle$  at time $t_n$
+	in terms of the orthonormal basis of the position space $|x_i\rangle$. This allows us, from Born rule, to calculate the probability of finding our particle at
+	$x_i$, with the discretization of  $|\Psi\rangle$,  at time $t_n$
 
 	\begin{equation}
-		P(x_i;t_n) = \langle x_i |\Psi\rangle = |\Psi^n_i|^2 =  \Psi^{n\dagger}_i\Psi^n_i
+		P(x_i;t_n) = \langle x_i |\Psi\rangle = |\Psi^n_i|^2 =  \Psi^{n\dagger}_i\Psi^n_i,
 	\end{equation}
 
+	\noindent
 	with $\Psi^\dagger$ being the complex-conjugate and assuming normalization of $
 	|\Psi\rangle$. \\
 
-	By expressing our 2D Hamiltonian operator, we can then rewrite our eq. \ref{eq:schro_eq}
+	\noindent
+	By writing out the 2D Hamiltonian operator, we can rewrite eq. \ref{eq:schro_eq} into
 
 
 	\begin{align*}
 		& \quad i \hbar \frac{\partial}{\partial t} \Psi(x, y, t)= \\
-		& \left[-\frac{\hbar^{2}}{2 m}\left(\frac{\partial^{2}}{\partial x^{2}}+\frac{\partial^{2}}{\partial y^{2}}\right)+V(x, y, t)\right] \Psi(x, y, t) \tag{2} \label{eq:explicit_scho}
+		& \left[-\frac{\hbar^{2}}{2 m}\left(\frac{\partial^{2}}{\partial x^{2}}+\frac{\partial^{2}}{\partial y^{2}}\right)+V(x, y, t)\right] \Psi(x, y, t) \tag{2}. \label{eq:explicit_scho}
 	\end{align*}
 
-
+	\noindent
 	To simplify our simulation, we will scale away all dimensions in \eqref{eq:explicit_scho}.
 	
 	% ===========================================
@@ -223,7 +226,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\noindent
 	where the $F^{n+1}$ and $F^n$ terms are the right hand side of equation \ref{eq:bare Schrodinger}
 	evaluated at the specified time points. The superscript denotes the time point of the given variable, and $\Delta t$ is the length of the time step,
-	i.e. the spacing between points on the time axis.\\ \\
+	i.e. the spacing between points on the time axis.\\
 
 	\noindent
 	Rewriting equation \ref{eq:bare Schrodinger}
@@ -368,19 +371,19 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.49\textwidth]{figures/problem8_P_0.000.pdf}
-		\caption{Probability function at time $t=0$.}
+		\caption{Probability function for the position of the particle at time $t=0$ in the double slit configuration.}
 		\label{fig:prob_P0}
 	\end{figure}
 	\noindent
 	Here, $x$ and $y$ are defined as dimensionless position, $x, y\in[0, 1]$.
 	We then have the system at time $t = 10^{-3}$ in figure \ref{fig:prob8_P1}.
-	The particles position is observed to have a non-zero probability on
+	The particles position is observed to have a positive non-zero probability on
 	both sides of the slits.
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.49\textwidth]{figures/problem8_P_0.001.pdf}
-		\caption{Probability function at time $t=10^{-3}$.}
+		\caption{Probability function for the position of the particle at time $t=10^{-3}$ in the double slit configuration.}
 		\label{fig:prob8_P1}
 	\end{figure}
 	\noindent
@@ -389,7 +392,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.49\textwidth]{figures/problem8_P_0.002.pdf}
-		\caption{Probability function at time $t=2\cross10^{-3}$.}
+		\caption{Probability function for the position of the particle at time $t=2\cross10^{-3}$ in the double slit configuration.}
 		\label{fig:prob8_P2}
 	\end{figure}
 	\noindent
@@ -398,21 +401,21 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Re_0.000.pdf}
-		\caption{The real part of the wave function $u$ at time $t = 0$.}
+		\caption{The real part of the wave function $u$ at time $t = 0$ in the double slit configuration.}
 		\label{fig:prob8_Re0}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Re_0.001.pdf}
-		\caption{The real part of the wave function $u$ at time $t = 10^{-3}$.}
+		\caption{The real part of the wave function $u$ at time $t = 10^{-3}$ in the double slit configuration.}
 		\label{fig:prob8_Re1}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Re_0.002.pdf}
-		\caption{The real part of the wave function $u$ at time $t = 2\cross10^{-3}$.}
+		\caption{The real part of the wave function $u$ at time $t = 2\cross10^{-3}$ in the double slit configuration.}
 		\label{fig:prob8_Re2}
 	\end{figure}
 	We then look at the imaginary part at equal times plotted in figures \ref{fig:prob8_Im0}, \ref{fig:prob8_Im1}
@@ -420,21 +423,21 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Im_0.000.pdf}
-		\caption{The imaginary part of the wave function $u$ at time $t = 0$.}
+		\caption{The imaginary part of the wave function $u$ at time $t = 0$ in the double slit configuration.}
 		\label{fig:prob8_Im0}
 	\end{figure}
 	
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Im_0.001.pdf}
-		\caption{The imaginary part of the wave function $u$ at time $t = 10^{-3}$.}
+		\caption{The imaginary part of the wave function $u$ at time $t = 10^{-3}$ in the double slit configuration.}
 		\label{fig:prob8_Im1}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.49\textwidth]{figures/problem8_U_Im_0.002.pdf}
-		\caption{The imaginary part of the wave function $u$ at time $t = 2\cross10^{-3}$.}
+		\caption{The imaginary part of the wave function $u$ at time $t = 2\cross10^{-3}$ in the double slit configuration.}
 		\label{fig:prob8_Im2}
 	\end{figure}
 
@@ -446,21 +449,21 @@ Originally this finite difference method was used to solve the heat equation\cit
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem9_single_slit.pdf}
-		\caption{Normalized probability distribution pattern using the single slit system.}
+		\caption{Normalized probability distribution for the position of the particle along the detection screen at $x = 0.8$ and $t = 0.002$ using the single slit configuration.}
 		\label{fig:prob9_single}
 	\end{figure}
 	
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem9_double_slit.pdf}
-		\caption{Normalized probability distribution using the double slit system.}
+		\caption{Normalized probability distribution for the position of the particle along the detection screen at $x = 0.8$ and $t = 0.002$ using the double slit configuration.}
 		\label{fig:prob9_double}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.55]{figures/problem9_triple_slit.pdf}
-		\caption{Normalized probability distribution using the triple slit system.}
+		\caption{Normalized probability distribution for the position of the particle along the detection screen at $x = 0.8$ and $t = 0.002$ using the triple slit configuration.}
 		\label{fig:prob9_triple}
 	\end{figure}
 
@@ -534,15 +537,15 @@ Originally this finite difference method was used to solve the heat equation\cit
 	minima. However, we do not observe the maxima around the centre. One interesting thing would be to use the classical wave equation, solve the slit configuration, and compare it with our results.
 	\subsection{Solving the matrix equation}
 	\noindent
-	The matrix multiplication of $Bu^n$ results in a new vector we call $b$.
+	The matrix multiplication of $Bu^n$ results in a new vector we can call $b$.
 	The matrix equation \ref{eq:matrix equation} can then be rewritten as
 	\begin{equation}\label{eq:matrix equation rewritten}
 		Au^{n+1} = b
 	\end{equation}
 	When solving this equation, we can utilize that the matrix $A$ is a symmetric matrix. The $A$ matrix aslo has
-	the same entries on the diagonal, meaning that $A = L+ D + U$ where $L$ is the lower part,
+	the same entries on the diagonal, meaning that $A$ can be split into three parts, such that $A = L+ D + U$, where $L$ is the lower part,
 	$D$ is the diagonal part and $U$ is the upper part.  
-	An algorithm that is specialized for symmetric matrices with equal entries on the diagonal should therefore be 
+	An algorithm that is specialized for symmetric matrices with equal entries on the diagonal can therefore be 
 	used when solving equation \ref{eq:matrix equation rewritten}.   
 
 
@@ -557,7 +560,7 @@ Originally this finite difference method was used to solve the heat equation\cit
 	interference pattern, similar to that for a wave. The detection probability if we would have placed 
 	a detector screen behind the wall at $x=0.8$ was found, and the maxima and 
 	minima of the detection probability due to constructive or destructive interference was observed. All simulations passed the convergence check by conserving the total 
-	probability value with a negligible error of order  $10^{-14}$. \\
+	probability with a negligible error of $\sim 10^{-14}$. \\
 	
 	
 	
